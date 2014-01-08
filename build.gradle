@@ -46,7 +46,7 @@ minecraft {
 // add some stuff to the version
 version = "${config.minecraft_version}-${config.mod_version}"
 
-processResources {
+processResources () {
     // replace stuff in the files we want.
     from(sourceSets.main.resources.srcDirs) {
         include '**/*.info'
