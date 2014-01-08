@@ -22,4 +22,4 @@
 		
 1.4.0   - Update to 1.7.2
         - Changed to forge gradle build system
-		- Cleaned up code to make more maintainable for udpates
+		- Cleaned up code to make more maintainable for updates
