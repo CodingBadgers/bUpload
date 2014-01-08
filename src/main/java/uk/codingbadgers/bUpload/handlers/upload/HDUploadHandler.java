@@ -47,7 +47,7 @@ public class HDUploadHandler extends UploadHandler {
 
 				ChatComponentTranslation message = new ChatComponentTranslation("image.upload.success");
 				ChatComponentText url = new ChatComponentText("Disk");
-				url.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.GOLD));
+				url.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.GOLD)); // TODO add clickability
 				message.func_150257_a(url);
 
 				MessageHandler.sendChatMessage(message);

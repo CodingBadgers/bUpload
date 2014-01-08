@@ -6,7 +6,10 @@ import uk.codingbadgers.bUpload.Screenshot;
 
 public enum UploadType {
 
-	FTP(FTPUploadHandler.class), IMGUR(ImgurUploadHandler.class), FILE(HDUploadHandler.class), ;
+	FTP(FTPUploadHandler.class), 
+	IMGUR(ImgurUploadHandler.class), 
+	FILE(HDUploadHandler.class), 
+	;
 
 	private Constructor<? extends UploadHandler> ctor;
 

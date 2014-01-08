@@ -88,8 +88,8 @@ public class ImgurUploadHandler extends UploadHandler {
 				HistoryHandler.addUploadedImage(new UploadedImage(title, uploadUrl, screen, false));
 
 				ChatComponentTranslation message = new ChatComponentTranslation("image.upload.success");
-				ChatComponentText url = new ChatComponentText(uploadUrl);
-				url.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.GOLD));
+				ChatComponentText url = new ChatComponentText("Imgur (" + uploadUrl + ")");
+				url.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.GOLD)); // TODO add clickability
 				message.func_150257_a(url);
 
 				MessageHandler.sendChatMessage(message);

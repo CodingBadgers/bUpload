@@ -10,21 +10,18 @@ import cpw.mods.fml.client.IModGuiFactory;
 
 public class GuiFactory implements IModGuiFactory {
 
-	private Minecraft minecraft;
-
 	@Override
-	public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
-		return null;
+	public Class<? extends GuiScreen> mainConfigGuiClass() {
+		return SettingsGui.class;
 	}
 
 	@Override
 	public void initialize(Minecraft minecraftInstance) {
-		minecraft = minecraftInstance;
 	}
 
 	@Override
-	public Class<? extends GuiScreen> mainConfigGuiClass() {
-		return SettingsGui.class;
+	public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
+		return null;
 	}
 
 	@Override
