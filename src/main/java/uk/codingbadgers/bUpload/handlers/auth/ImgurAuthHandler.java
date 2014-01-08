@@ -25,12 +25,12 @@ import com.google.gson.JsonPrimitive;
 public class ImgurAuthHandler extends AuthHandler {
 
 	public static final String CLIENT_ID = "e2d63c64042ba1a";
-	
+
 	public static class ImgurUserData implements Data {
 		public String refreshToken = null;
 		public String username = null;
 	}
-	
+
 	private String accessToken = null;
 	private Date tokenExpire = null;
 	private ImgurUserData data = new ImgurUserData();
@@ -39,8 +39,8 @@ public class ImgurAuthHandler extends AuthHandler {
 		super(database);
 	}
 
-    @Override
-	public void loadData(JsonObject node) {	
+	@Override
+	public void loadData(JsonObject node) {
 		try {
 			refreshData(node);
 		} catch (IOException e) {
@@ -48,37 +48,37 @@ public class ImgurAuthHandler extends AuthHandler {
 		}
 	}
 
-    @Override
+	@Override
 	public JsonObject getSaveData() throws IOException {
-        JsonObject object = new JsonObject();
-        object.add("username", new JsonPrimitive(data.username));
-        object.add("refresh_token", new JsonPrimitive(data.refreshToken));
-        return object;
+		JsonObject object = new JsonObject();
+		object.add("username", new JsonPrimitive(data.username));
+		object.add("refresh_token", new JsonPrimitive(data.refreshToken));
+		return object;
 	}
-	
+
 	@Override
 	public String getJsonReferance() {
-        return "imgur";
-    }
+		return "imgur";
+	}
 
-    @Override
-    public void refreshData(JsonObject node) throws IOException {
-    	if (node == null) {
-    		return;
-    	}
-    	
-    	if (node.has("refresh_token")) {
-    		data.refreshToken = node.get("refresh_token").getAsString();
-    	}
-    	
-    	if (node.has("username")) {
-    		data.username = node.get("username").getAsString();
-    	}
-    	
-        if (data.refreshToken == null || data.refreshToken.length() < 1) {
+	@Override
+	public void refreshData(JsonObject node) throws IOException {
+		if (node == null) {
 			return;
 		}
-		
+
+		if (node.has("refresh_token")) {
+			data.refreshToken = node.get("refresh_token").getAsString();
+		}
+
+		if (node.has("username")) {
+			data.username = node.get("username").getAsString();
+		}
+
+		if (data.refreshToken == null || data.refreshToken.length() < 1) {
+			return;
+		}
+
 		// refresh data		
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
 		nameValuePairs.add(new BasicNameValuePair("client_id", CLIENT_ID));
@@ -89,59 +89,59 @@ public class ImgurAuthHandler extends AuthHandler {
 		HttpPost post = new HttpPost("https://api.imgur.com/oauth2/token");
 		post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 		HttpClient client = HttpClientBuilder.create().build();
-        HttpResponse resp = client.execute(post);
-        String result = EntityUtils.toString(resp.getEntity());
-        
-        JsonObject object = new JsonParser().parse(result).getAsJsonObject();
-        
-        if (object.has("access_token")) {
-        	data.refreshToken = object.get("refresh_token").getAsString();
-        	data.username = object.get("account_username").getAsString();
-        	accessToken = object.get("access_token").getAsString();
-        	tokenExpire = new Date(Calendar.getInstance().getTimeInMillis() + (object.get("expires_in").getAsInt() * 1000));
-        	
-        	saveData();
-        	MessageHandler.sendChatMessage("image.auth.login", "Imgur", data.username);
-        } else {
-        	accessToken = null;
-        	tokenExpire = null;
-        	MessageHandler.sendChatMessage(object.get("data").getAsJsonObject().get("error").getAsString());
-        }
+		HttpResponse resp = client.execute(post);
+		String result = EntityUtils.toString(resp.getEntity());
+
+		JsonObject object = new JsonParser().parse(result).getAsJsonObject();
+
+		if (object.has("access_token")) {
+			data.refreshToken = object.get("refresh_token").getAsString();
+			data.username = object.get("account_username").getAsString();
+			accessToken = object.get("access_token").getAsString();
+			tokenExpire = new Date(Calendar.getInstance().getTimeInMillis() + (object.get("expires_in").getAsInt() * 1000));
+
+			saveData();
+			MessageHandler.sendChatMessage("image.auth.login", "Imgur", data.username);
+		} else {
+			accessToken = null;
+			tokenExpire = null;
+			MessageHandler.sendChatMessage(object.get("data").getAsJsonObject().get("error").getAsString());
+		}
 	}
 
-    @Override
-    public void forgetData() throws IOException {
-        accessToken = null;
-        tokenExpire = null;
-        data.refreshToken = "";
-        data.username = null;
-        
-        saveData();
-        MessageHandler.sendChatMessage("image.auth.logout", "Imgur");
-    }
+	@Override
+	public void forgetData() throws IOException {
+		accessToken = null;
+		tokenExpire = null;
+		data.refreshToken = "";
+		data.username = null;
 
-    @Override
-    public boolean isLoggedIn() {
-        return getAccessToken() != null;
-    }
+		saveData();
+		MessageHandler.sendChatMessage("image.auth.logout", "Imgur");
+	}
 
-    @Override
-    public String getUsername() {
-        return data.username;
-    }
-    
-    // Specific
-    public void setTokens(String refresh) {
-    	data.refreshToken = refresh;
-        
-        try {
-        	saveData();
-            refreshData();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
+	@Override
+	public boolean isLoggedIn() {
+		return getAccessToken() != null;
+	}
+
+	@Override
+	public String getUsername() {
+		return data.username;
+	}
+
+	// Specific
+	public void setTokens(String refresh) {
+		data.refreshToken = refresh;
+
+		try {
+			saveData();
+			refreshData();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public String getAccessToken() {
 		if (accessToken == null || tokenExpire == null || tokenExpire.before(new Date())) {
 			try {
@@ -151,17 +151,17 @@ public class ImgurAuthHandler extends AuthHandler {
 				MessageHandler.sendChatMessage(e.getMessage());
 			}
 		}
-		
+
 		return accessToken;
 	}
-	
+
 	public static ImgurAuthHandler getInstance() {
-	    try {
-            return (ImgurAuthHandler) AuthTypes.IMGUR.getHandler();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+		try {
+			return (ImgurAuthHandler) AuthTypes.IMGUR.getHandler();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override

@@ -12,11 +12,11 @@ public class FTPAuthHandler extends AuthHandler {
 		public String username;
 		public char[] password;
 		public String host;
-		public int port;		
+		public int port;
 	}
-	
+
 	private FTPUserData data = new FTPUserData();
-	
+
 	public FTPAuthHandler(File database) {
 		super(database);
 	}
@@ -28,40 +28,42 @@ public class FTPAuthHandler extends AuthHandler {
 			return null;
 		}
 	}
+
 	@Override
 	public JsonObject getSaveData() throws IOException {
 		JsonObject object = new JsonObject();
 		object.add("username", new JsonPrimitive(data.username));
 		object.add("password", new JsonPrimitive(new String(data.password)));
-			JsonObject server = new JsonObject();
-			server.add("host", new JsonPrimitive(data.host));
-			server.add("port", new JsonPrimitive(data.port));
+		JsonObject server = new JsonObject();
+		server.add("host", new JsonPrimitive(data.host));
+		server.add("port", new JsonPrimitive(data.port));
 		object.add("server", server);
 		return object;
 	}
 
 	@Override
 	public String getJsonReferance() {
-        return "ftp";
+		return "ftp";
 	}
 
 	@Override
 	public void loadData(JsonObject json) throws IOException {
 		data.username = json.get("username").getAsString();
 		data.password = json.get("password").getAsString().toCharArray();
-			JsonObject server = json.get("server").getAsJsonObject();
-			data.host = server.get("host").getAsString();
-			data.port = server.get("port").getAsInt();
+		JsonObject server = json.get("server").getAsJsonObject();
+		data.host = server.get("host").getAsString();
+		data.port = server.get("port").getAsInt();
 	}
 
 	@Override
-	public void refreshData(JsonObject json) throws IOException {}
+	public void refreshData(JsonObject json) throws IOException {
+	}
 
 	@Override
 	public FTPUserData getUserData() {
 		return data;
 	}
-	
+
 	@Override
 	public String getUsername() {
 		return data.username;

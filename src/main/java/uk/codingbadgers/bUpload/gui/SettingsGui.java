@@ -25,7 +25,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 
 public class SettingsGui extends bUploadGuiScreen { // TODO convert to new Forge configuration
-    
+
 	private static final int SAVE_TO_HD = 1;
 	private static final int SAVE_TO_IMGUR = 2;
 	private static final int SAVE_TO_FTP = 3;
@@ -43,36 +43,37 @@ public class SettingsGui extends bUploadGuiScreen { // TODO convert to new Forge
 	public SettingsGui(GuiScreen screen) {
 		super(screen instanceof bUploadGuiScreen ? (bUploadGuiScreen) screen : null);
 	}
-	
+
 	@Override
-	public void updateLogin() {}
+	public void updateLogin() {
+	}
 
 	public void initGui() {
 		int width = field_146294_l;
 		int height = field_146295_m;
-		
+
 		this.field_146292_n.clear();
 		int ypos = (height / 5);
 		int buttonwidth = 100;
 
-		
-		m_saveToImgur = new GuiCheckBox(SAVE_TO_IMGUR, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20,  I18n.getStringParams("image.save.imgur"));
+
+		m_saveToImgur = new GuiCheckBox(SAVE_TO_IMGUR, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, I18n.getStringParams("image.save.imgur"));
 		m_saveToImgur.setChecked(ConfigHandler.SAVE_IMGUR);
 		addControl(m_saveToImgur);
-        ypos += 24;
-        
-        m_saveToFtp = new GuiCheckBox(SAVE_TO_FTP, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20,  I18n.getStringParams("image.save.ftp"));
-        m_saveToFtp.setChecked(ConfigHandler.SAVE_FTP);
-        addControl(m_saveToFtp);
-        ypos += 24;
-        
-        m_saveToHDD = new GuiCheckBox(SAVE_TO_HD, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20,  I18n.getStringParams("image.save.hd"));
-        m_saveToHDD.setChecked(ConfigHandler.SAVE_FILE);
-        addControl(m_saveToHDD);
-        ypos += 24;
-        ypos += 24;
-        buttonwidth = 160;
-        
+		ypos += 24;
+
+		m_saveToFtp = new GuiCheckBox(SAVE_TO_FTP, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, I18n.getStringParams("image.save.ftp"));
+		m_saveToFtp.setChecked(ConfigHandler.SAVE_FTP);
+		addControl(m_saveToFtp);
+		ypos += 24;
+
+		m_saveToHDD = new GuiCheckBox(SAVE_TO_HD, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, I18n.getStringParams("image.save.hd"));
+		m_saveToHDD.setChecked(ConfigHandler.SAVE_FILE);
+		addControl(m_saveToHDD);
+		ypos += 24;
+		ypos += 24;
+		buttonwidth = 160;
+
 		m_copyToClipboard = new GuiCheckBox(COPY_TO_CLIPBOARD, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, I18n.getStringParams("image.options.copy"));
 		m_copyToClipboard.setChecked(ConfigHandler.COPY_URL_TO_CLIPBOARD);
 		addControl(m_copyToClipboard);
@@ -82,7 +83,7 @@ public class SettingsGui extends bUploadGuiScreen { // TODO convert to new Forge
 		addControl(m_auth);
 		ypos += 24;
 		buttonwidth = 75;
-		
+
 		addControl(new GuiButton(HISTORY, width / 2 - 80, ypos, buttonwidth, 20, I18n.getStringParams("image.options.history")));
 		addControl(new GuiButton(EXIT, width / 2 + 5, ypos, buttonwidth, 20, I18n.getStringParams("image.options.cancel")));
 		ypos += 24;
@@ -92,56 +93,56 @@ public class SettingsGui extends bUploadGuiScreen { // TODO convert to new Forge
 	public void actionPerformed(GuiButton button) {
 		performScreenshotAction(button.field_146127_k);
 	}
-	
+
 	private void performScreenshotAction(int id) {
 		switch (id) {
-		case SAVE_TO_HD: {
-			ConfigHandler.SAVE_FILE = m_saveToHDD.getChecked();
-			updatedSettings();
-			break;
-		}
+			case SAVE_TO_HD: {
+				ConfigHandler.SAVE_FILE = m_saveToHDD.getChecked();
+				updatedSettings();
+				break;
+			}
 
-		case SAVE_TO_IMGUR: {
-            ConfigHandler.SAVE_IMGUR = m_saveToImgur.getChecked();
-			updatedSettings();
-			break;
-		}
+			case SAVE_TO_IMGUR: {
+				ConfigHandler.SAVE_IMGUR = m_saveToImgur.getChecked();
+				updatedSettings();
+				break;
+			}
 
-		case SAVE_TO_FTP: {
-            ConfigHandler.SAVE_FTP = m_saveToFtp.getChecked();
-			updatedSettings();
-			break;
-		}
+			case SAVE_TO_FTP: {
+				ConfigHandler.SAVE_FTP = m_saveToFtp.getChecked();
+				updatedSettings();
+				break;
+			}
 
-		case COPY_TO_CLIPBOARD: {
-			ConfigHandler.COPY_URL_TO_CLIPBOARD = m_copyToClipboard.getChecked();
-			updatedSettings();
-			break;
-		}
+			case COPY_TO_CLIPBOARD: {
+				ConfigHandler.COPY_URL_TO_CLIPBOARD = m_copyToClipboard.getChecked();
+				updatedSettings();
+				break;
+			}
 
-		case HISTORY: {
-			displayGuiScreen(new UploadHistoryGUI(this));
-			break;
-		}
+			case HISTORY: {
+				displayGuiScreen(new UploadHistoryGUI(this));
+				break;
+			}
 
-		case EXIT: {
-			displayGuiScreen(this.parent);
-			break;
-		}
+			case EXIT: {
+				displayGuiScreen(this.parent);
+				break;
+			}
 
-		case AUTH: {
-			displayGuiScreen(new AuthGui(this));
-			break;
-		}
+			case AUTH: {
+				displayGuiScreen(new AuthGui(this));
+				break;
+			}
 
-		default: {
-			break;
-		}
+			default: {
+				break;
+			}
 		}
 	}
-	
+
 	private void updatedSettings() {
-	    ConfigHandler.save();
+		ConfigHandler.save();
 	}
 
 	public void drawScreen(int i, int j, float f) {

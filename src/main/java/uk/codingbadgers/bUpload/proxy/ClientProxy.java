@@ -14,28 +14,28 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class ClientProxy implements Proxy {
 
-    @Override
-    public void preInit(FMLPreInitializationEvent event) {
-        try {
-            ConfigHandler.loadConfig(event.getSuggestedConfigurationFile());
-            File configFolder = event.getSuggestedConfigurationFile().getParentFile();
-            bUpload.AUTH_DATABASE = new File(configFolder, "bUpload-auth.dtb");
-            
-            if (!bUpload.AUTH_DATABASE.exists()) {
-            	bUpload.AUTH_DATABASE.createNewFile();
-            }
-            
-            AuthTypes.loadData();
+	@Override
+	public void preInit(FMLPreInitializationEvent event) {
+		try {
+			ConfigHandler.loadConfig(event.getSuggestedConfigurationFile());
+			File configFolder = event.getSuggestedConfigurationFile().getParentFile();
+			bUpload.AUTH_DATABASE = new File(configFolder, "bUpload-auth.dtb");
 
-        	MinecraftForge.EVENT_BUS.register(new KeyBindingHandler());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+			if (!bUpload.AUTH_DATABASE.exists()) {
+				bUpload.AUTH_DATABASE.createNewFile();
+			}
 
-    @Override
-    public void load(FMLInitializationEvent event) {
-    	new KeyBindingHandler();
-    }
+			AuthTypes.loadData();
+
+			MinecraftForge.EVENT_BUS.register(new KeyBindingHandler());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void load(FMLInitializationEvent event) {
+		new KeyBindingHandler();
+	}
 
 }

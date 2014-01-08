@@ -19,9 +19,8 @@ package uk.codingbadgers.bUpload;
 
 import java.awt.image.BufferedImage;
 
-public class Screenshot
-{
-    public BufferedImage image = null;
+public class Screenshot {
+	public BufferedImage image = null;
 
-    public int imageID = 0;
+	public int imageID = 0;
 }

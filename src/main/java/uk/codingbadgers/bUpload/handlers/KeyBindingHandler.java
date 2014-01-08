@@ -31,22 +31,22 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
 
 public class KeyBindingHandler {
-	
-    public static KeyBinding onScreenShot = new KeyBinding(I18n.getStringParams("image.binding.screenshot"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_ADV_SS), I18n.getStringParams("image.binding.screenshot"));
-    public static KeyBinding onUploadHistory = new KeyBinding(I18n.getStringParams("image.binding.history"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_HISTORY), I18n.getStringParams("image.binding.history"));
 
-    public KeyBindingHandler() {
-    	System.out.println(onScreenShot.func_151469_h());
-    	System.out.println(onUploadHistory.func_151469_h());
-    	
-    	ClientRegistry.registerKeyBinding(onScreenShot);
-    	ClientRegistry.registerKeyBinding(onUploadHistory);
-    }
-    
+	public static KeyBinding onScreenShot = new KeyBinding(I18n.getStringParams("image.binding.screenshot"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_ADV_SS), I18n.getStringParams("image.binding.screenshot"));
+	public static KeyBinding onUploadHistory = new KeyBinding(I18n.getStringParams("image.binding.history"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_HISTORY), I18n.getStringParams("image.binding.history"));
+
+	public KeyBindingHandler() {
+		System.out.println(onScreenShot.func_151469_h());
+		System.out.println(onUploadHistory.func_151469_h());
+
+		ClientRegistry.registerKeyBinding(onScreenShot);
+		ClientRegistry.registerKeyBinding(onUploadHistory);
+	}
+
 	@EventHandler
 	public void onKeyPress(KeyInputEvent event) {
 		System.out.println("EVENT");
-		
+
 		Minecraft minecraft = Minecraft.getMinecraft();
 
 		if (Keyboard.isKeyDown(onScreenShot.func_151469_h())) {
@@ -55,5 +55,5 @@ public class KeyBindingHandler {
 			minecraft.func_147108_a(new UploadHistoryGUI(minecraft.currentScreen instanceof bUploadGuiScreen ? (bUploadGuiScreen) minecraft.currentScreen : null));
 		}
 	}
-    
+
 }

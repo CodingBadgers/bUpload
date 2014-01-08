@@ -11,20 +11,21 @@ public class CipherUtils {
 
 	private static Cipher cipher;
 	private static SecretKey myDesKey;
- 
+
 	static {
 		try {
 			DESKeySpec dks = new DESKeySpec(("db51d01dcbd534680e1c79254c6595cc70baec1f" + System.getProperty("user.name")).getBytes("ISO-8859-1"));
 			SecretKeyFactory skf = SecretKeyFactory.getInstance("DES");
 			myDesKey = skf.generateSecret(dks);
 			cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	   }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
-	private CipherUtils() {} // Utils class
-	
+
+	private CipherUtils() {
+	} // Utils class
+
 	public static String encryptString(String string) {
 		try {
 			byte[] text = string.getBytes("ISO-8859-1");

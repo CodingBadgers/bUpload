@@ -28,7 +28,7 @@ public class UploadedImage {
 
 	/**
 	 * Instantiates a new uploaded image.
-	 *
+	 * 
 	 * @param name the name
 	 * @param url the url of the image
 	 * @param image the image
@@ -43,7 +43,7 @@ public class UploadedImage {
 
 	/**
 	 * Gets the name.
-	 *
+	 * 
 	 * @return the name
 	 */
 	public String getName() {
@@ -52,7 +52,7 @@ public class UploadedImage {
 
 	/**
 	 * Gets the url.
-	 *
+	 * 
 	 * @return the url
 	 */
 	public String getUrl() {
@@ -61,16 +61,16 @@ public class UploadedImage {
 
 	/**
 	 * Gets the image id.
-	 *
+	 * 
 	 * @return the image id
 	 */
 	public int getImageID() {
 		return m_imageID;
 	}
-	
+
 	/**
 	 * Checks if is local.
-	 *
+	 * 
 	 * @return true, if is local
 	 */
 	public boolean isLocal() {

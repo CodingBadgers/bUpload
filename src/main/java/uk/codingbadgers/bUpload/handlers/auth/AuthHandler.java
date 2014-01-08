@@ -19,8 +19,9 @@ import com.google.gson.JsonPrimitive;
 
 public abstract class AuthHandler {
 
-	public static interface Data {}
-	
+	public static interface Data {
+	}
+
 	private final File database;
 
 	public AuthHandler(File database) {
@@ -29,11 +30,11 @@ public abstract class AuthHandler {
 
 	public final void loadData() throws IOException {
 		JsonObject json = getJson();
-		
+
 		if (!json.has("data") || !json.get("data").isJsonObject()) {
 			return;
 		}
-		
+
 		loadData(getJson().get("data").getAsJsonObject());
 	}
 
@@ -44,11 +45,11 @@ public abstract class AuthHandler {
 		JsonObject data = getFullJson();
 
 		JsonElement profiles = data.get("profiles");
-		
+
 		if (profiles == null || !profiles.isJsonArray()) {
 			profiles = new JsonArray();
 		}
-		
+
 		JsonArray profilesArray = profiles.getAsJsonArray();
 		boolean found = false;
 
@@ -78,11 +79,11 @@ public abstract class AuthHandler {
 		try {
 			writer = new FileWriter(database);
 			String output = data.toString();
-			
+
 			if (ConfigHandler.ENCRYPT_DATA) {
 				output = CipherUtils.encryptString(output);
 			}
-			
+
 			writer.write(output);
 		} finally {
 			if (writer != null) {
@@ -96,17 +97,18 @@ public abstract class AuthHandler {
 
 	public final void refreshData() throws IOException {
 		JsonObject json = getJson();
-		
+
 		if (!json.has("data") || !json.get("data").isJsonObject()) {
 			return;
 		}
-		
+
 		refreshData(getJson().get("data").getAsJsonObject());
 	}
 
 	public abstract void refreshData(JsonObject json) throws IOException;
 
-	public void forgetData() throws IOException {}
+	public void forgetData() throws IOException {
+	}
 
 	public boolean isLoggedIn() throws IOException {
 		return false;
@@ -117,14 +119,14 @@ public abstract class AuthHandler {
 	public abstract String getJsonReferance();
 
 	public abstract Data getUserData();
-	
+
 	private final JsonObject getJson() throws IOException {
 		JsonObject json = getFullJson();
 
 		if (json == null || !json.has("profiles")) {
 			return new JsonObject();
 		}
-		
+
 		for (JsonElement profile : json.get("profiles").getAsJsonArray()) {
 			JsonObject objProfile = profile.getAsJsonObject();
 			if (objProfile.getAsJsonObject().get("type").getAsString().equalsIgnoreCase(getJsonReferance())) {
@@ -141,19 +143,19 @@ public abstract class AuthHandler {
 		try {
 			JsonParser parser = new JsonParser();
 			reader = new FileReader(database);
-			
+
 			String input = StringUtils.join(IOUtils.readLines(reader), "");
-			
+
 			if (ConfigHandler.ENCRYPT_DATA) {
 				input = CipherUtils.decryptString(input);
 			}
-			
+
 			JsonElement element = parser.parse(input);
-			
+
 			if (element == null || !element.isJsonObject()) {
 				return new JsonObject();
 			}
-			
+
 			return element.getAsJsonObject();
 		} catch (IOException e) {
 			throw e;

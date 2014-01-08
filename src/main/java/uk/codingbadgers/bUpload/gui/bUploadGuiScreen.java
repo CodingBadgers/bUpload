@@ -9,13 +9,15 @@ public class bUploadGuiScreen extends GuiScreen {
 
 	protected bUploadGuiScreen parent;
 
-    public bUploadGuiScreen(bUploadGuiScreen screen) {
-        this.parent = screen;
-    }
+	public bUploadGuiScreen(bUploadGuiScreen screen) {
+		this.parent = screen;
+	}
 
-	protected void actionPerformed(GuiButton button) {}
+	protected void actionPerformed(GuiButton button) {
+	}
 
-	protected void updateLogin() {}
+	protected void updateLogin() {
+	}
 
 	@SuppressWarnings("unchecked")
 	public void addControl(GuiButton button) {
@@ -32,9 +34,9 @@ public class bUploadGuiScreen extends GuiScreen {
 	}
 
 	public void drawBackground() {
-		func_146276_q_();	
+		func_146276_q_();
 	}
-	
+
 	public void drawTexturedModalRectSized(int x, int y, int u, int v, int width, int height, int uvwidth, int uvheight) {
 		final float var7 = 0.00390625F;
 		final float var8 = 0.00390625F;

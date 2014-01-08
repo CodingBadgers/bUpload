@@ -12,7 +12,7 @@ public class AuthGui extends bUploadGuiScreen {
 
 	private static final int ADD_AUTH_OFFSET = 2 << 2;
 	private static final int CANCEL = 1;
-	
+
 	public AuthGui(bUploadGuiScreen screen) {
 		super(screen);
 	}
@@ -23,7 +23,7 @@ public class AuthGui extends bUploadGuiScreen {
 		drawCenteredString(field_146289_q, I18n.getStringParams("image.auth.title"), field_146294_l / 2, field_146295_m / 5 - 20, 0xffffff);
 		super.drawScreen(i, j, f);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initGui() {
@@ -33,11 +33,11 @@ public class AuthGui extends bUploadGuiScreen {
 		for (AuthTypes handler : AuthTypes.values()) {
 			GuiButton button = new GuiButton(handler.ordinal() + ADD_AUTH_OFFSET, field_146294_l / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, I18n.getStringParams("image.auth.type." + handler.toString().toLowerCase()));
 			this.field_146292_n.add(button);
-	        ypos += 24;
+			ypos += 24;
 		}
 
 		ypos = (field_146295_m / 5) * 4;
-		addControl(new GuiButton(CANCEL,field_146294_l / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, I18n.getStringParams("image.auth.cancel")));
+		addControl(new GuiButton(CANCEL, field_146294_l / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, I18n.getStringParams("image.auth.cancel")));
 	}
 
 	@Override
@@ -46,15 +46,15 @@ public class AuthGui extends bUploadGuiScreen {
 			displayGuiScreen(parent);
 			return;
 		}
-		
+
 		try {
 			AuthTypes type = AuthTypes.getByID(par1GuiButton.field_146127_k - ADD_AUTH_OFFSET);
 			AddAuthGui gui = type.getAuthGui(this);
-			
+
 			if (gui == null) {
 				return;
 			}
-			
+
 			displayGuiScreen(gui);
 		} catch (Exception e) {
 			e.printStackTrace();

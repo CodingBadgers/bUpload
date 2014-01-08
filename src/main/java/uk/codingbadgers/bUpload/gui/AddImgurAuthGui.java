@@ -36,7 +36,7 @@ public class AddImgurAuthGui extends AddAuthGui {
 	private boolean linkGiven = false;
 
 	public AddImgurAuthGui(bUploadGuiScreen parent) {
-	    super(parent);
+		super(parent);
 	}
 
 	@Override
@@ -48,25 +48,25 @@ public class AddImgurAuthGui extends AddAuthGui {
 		pinCode.func_146201_a(par1, par2);
 		super.keyTyped(par1, par2);
 	}
-	
+
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		switch (button.field_146127_k) {
-		case ACCEPT:
-			try {
-				getAccessToken();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			parent.updateLogin();
-			displayGuiScreen(parent);
-			break;
-		case CANCEL:
-			parent.updateLogin();
-			displayGuiScreen(parent);
-			break;
-		default:
-			break;
+			case ACCEPT:
+				try {
+					getAccessToken();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				parent.updateLogin();
+				displayGuiScreen(parent);
+				break;
+			case CANCEL:
+				parent.updateLogin();
+				displayGuiScreen(parent);
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -127,7 +127,7 @@ public class AddImgurAuthGui extends AddAuthGui {
 		int buttonWidth = 100;
 		int buttonHeight = 20;
 
-		addControl(new GuiButton(ACCEPT, this.field_146294_l / 2 - buttonWidth - 8, this.field_146295_m / 6 + 96, buttonWidth, buttonHeight,I18n.getStringParams("image.auth.accept")));
+		addControl(new GuiButton(ACCEPT, this.field_146294_l / 2 - buttonWidth - 8, this.field_146295_m / 6 + 96, buttonWidth, buttonHeight, I18n.getStringParams("image.auth.accept")));
 		addControl(new GuiButton(CANCEL, this.field_146294_l / 2 + 8, this.field_146295_m / 6 + 96, buttonWidth, buttonHeight, I18n.getStringParams("image.auth.cancel")));
 
 		pinCode = new GuiTextField(this.field_146289_q, this.field_146294_l / 2 - buttonWidth - 8, this.field_146295_m / 6 + 64, buttonWidth * 2 + 16, buttonHeight);

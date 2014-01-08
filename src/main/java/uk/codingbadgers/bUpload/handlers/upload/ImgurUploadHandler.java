@@ -37,79 +37,78 @@ import uk.codingbadgers.bUpload.handlers.auth.ImgurAuthHandler;
 
 public class ImgurUploadHandler extends UploadHandler {
 
-    public ImgurUploadHandler(Screenshot screen) {
-        super(screen);
-    }
+	public ImgurUploadHandler(Screenshot screen) {
+		super(screen);
+	}
 
-    @Override
-    public boolean run(Screenshot screen) {
-        try {
-            String title = ConfigHandler.SAVE_DATE_FORMAT.format(new Date());
-            String description = "A minecraft screenshot ";
-            
-            if (Minecraft.getMinecraft().isSingleplayer()) {
-                description += "in " + Minecraft.getMinecraft().getIntegratedServer().getFolderName();
-            } else {
-            	ServerData data = Minecraft.getMinecraft().func_147104_D();
-                description += "on " + data.serverIP + (data.field_82821_f != 25565 ? ":" + data.field_82821_f : "");
-            }
-            
-            
-            
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(screen.image, "png", baos);
-            String data = Base64.encodeBase64String(baos.toByteArray());
+	@Override
+	public boolean run(Screenshot screen) {
+		try {
+			String title = ConfigHandler.SAVE_DATE_FORMAT.format(new Date());
+			String description = "A minecraft screenshot ";
 
-            List<NameValuePair> arguments = new ArrayList<NameValuePair>(3);
-            arguments.add(new BasicNameValuePair("client_id", ImgurAuthHandler.CLIENT_ID));
-            arguments.add(new BasicNameValuePair("image", data));
-            arguments.add(new BasicNameValuePair("type", "base64"));
-            arguments.add(new BasicNameValuePair("title", title));
-            arguments.add(new BasicNameValuePair("description", description));
+			if (Minecraft.getMinecraft().isSingleplayer()) {
+				description += "in " + Minecraft.getMinecraft().getIntegratedServer().getFolderName();
+			} else {
+				ServerData data = Minecraft.getMinecraft().func_147104_D();
+				description += "on " + data.serverIP + (data.field_82821_f != 25565 ? ":" + data.field_82821_f : "");
+			}
 
-            HttpPost hpost = new HttpPost("https://api.imgur.com/3/upload");
-            hpost.setEntity(new UrlEncodedFormEntity(arguments));
 
-            if (ImgurAuthHandler.getInstance().getAccessToken() != null) {
-                hpost.addHeader("Authorization", "Bearer " + ImgurAuthHandler.getInstance().getAccessToken());
-            } else {
-                hpost.addHeader("Authorization", "Client-ID " + ImgurAuthHandler.CLIENT_ID);
-            }
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(screen.image, "png", baos);
+			String data = Base64.encodeBase64String(baos.toByteArray());
 
-            HttpClient client = HttpClientBuilder.create().build();
-            HttpResponse resp = client.execute(hpost);
-            String result = EntityUtils.toString(resp.getEntity());
+			List<NameValuePair> arguments = new ArrayList<NameValuePair>(3);
+			arguments.add(new BasicNameValuePair("client_id", ImgurAuthHandler.CLIENT_ID));
+			arguments.add(new BasicNameValuePair("image", data));
+			arguments.add(new BasicNameValuePair("type", "base64"));
+			arguments.add(new BasicNameValuePair("title", title));
+			arguments.add(new BasicNameValuePair("description", description));
 
-            JsonObject responce = new JsonParser().parse(result).getAsJsonObject();
-            JsonObject responceData = responce.get("data").getAsJsonObject();
+			HttpPost hpost = new HttpPost("https://api.imgur.com/3/upload");
+			hpost.setEntity(new UrlEncodedFormEntity(arguments));
 
-            if (responce.has("success") && responce.get("success").getAsBoolean()) {
-                final String uploadUrl = responceData.get("link").getAsString();
+			if (ImgurAuthHandler.getInstance().getAccessToken() != null) {
+				hpost.addHeader("Authorization", "Bearer " + ImgurAuthHandler.getInstance().getAccessToken());
+			} else {
+				hpost.addHeader("Authorization", "Client-ID " + ImgurAuthHandler.CLIENT_ID);
+			}
 
-                HistoryHandler.addUploadedImage(new UploadedImage(title, uploadUrl, screen, false));
+			HttpClient client = HttpClientBuilder.create().build();
+			HttpResponse resp = client.execute(hpost);
+			String result = EntityUtils.toString(resp.getEntity());
 
-            	ChatComponentTranslation message = new ChatComponentTranslation("image.upload.success");
-                ChatComponentText url = new ChatComponentText(uploadUrl);
-                url.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.GOLD));
-                message.func_150257_a(url);
-                
-                MessageHandler.sendChatMessage(message);
+			JsonObject responce = new JsonParser().parse(result).getAsJsonObject();
+			JsonObject responceData = responce.get("data").getAsJsonObject();
 
-                if (ConfigHandler.COPY_URL_TO_CLIPBOARD) {
-                    GuiScreen.func_146275_d(uploadUrl);
-                    MessageHandler.sendChatMessage("image.upload.copy");
-                }
-            } else {
-                MessageHandler.sendChatMessage("image.upload.fail", "Imgur", responce.get("status").getAsInt());
-                MessageHandler.sendChatMessage(responceData.get("error").getAsString());
-                return false;
-            }
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageHandler.sendChatMessage("image.upload.fail", "Imgur", ex.getMessage());
-            return false;
-        }
-    }
+			if (responce.has("success") && responce.get("success").getAsBoolean()) {
+				final String uploadUrl = responceData.get("link").getAsString();
+
+				HistoryHandler.addUploadedImage(new UploadedImage(title, uploadUrl, screen, false));
+
+				ChatComponentTranslation message = new ChatComponentTranslation("image.upload.success");
+				ChatComponentText url = new ChatComponentText(uploadUrl);
+				url.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.GOLD));
+				message.func_150257_a(url);
+
+				MessageHandler.sendChatMessage(message);
+
+				if (ConfigHandler.COPY_URL_TO_CLIPBOARD) {
+					GuiScreen.func_146275_d(uploadUrl);
+					MessageHandler.sendChatMessage("image.upload.copy");
+				}
+			} else {
+				MessageHandler.sendChatMessage("image.upload.fail", "Imgur", responce.get("status").getAsInt());
+				MessageHandler.sendChatMessage(responceData.get("error").getAsString());
+				return false;
+			}
+			return true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			MessageHandler.sendChatMessage("image.upload.fail", "Imgur", ex.getMessage());
+			return false;
+		}
+	}
 
 }

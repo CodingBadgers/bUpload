@@ -29,7 +29,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 @SideOnly(Side.CLIENT)
 public class GuiCheckBox extends GuiButton {
-    
+
 	/** The current checked state of the check box */
 	private boolean m_checked = false;
 
@@ -39,18 +39,12 @@ public class GuiCheckBox extends GuiButton {
 	/**
 	 * Default check box constructor
 	 * 
-	 * @param id
-	 *            The id of the callback used in actionPerformed.
-	 * @param xPosition
-	 *            The x coordinate of the position of the check box
-	 * @param yPosition
-	 *            The y coordinate of the position of the check box
-	 * @param width
-	 *            The width of the check box
-	 * @param height
-	 *            The height of the check box
-	 * @param label
-	 *            The label of the check box
+	 * @param id The id of the callback used in actionPerformed.
+	 * @param xPosition The x coordinate of the position of the check box
+	 * @param yPosition The y coordinate of the position of the check box
+	 * @param width The width of the check box
+	 * @param height The height of the check box
+	 * @param label The label of the check box
 	 */
 	public GuiCheckBox(int id, int xPosition, int yPosition, int width, int height, String label) {
 		super(id, xPosition, yPosition, width, height, label);
@@ -60,8 +54,7 @@ public class GuiCheckBox extends GuiButton {
 	 * Returns 0 if the check box is disabled, 1 if the mouse is NOT hovering
 	 * over this check box and 2 if it is hovering over this check box.
 	 * 
-	 * @param isMouseOver
-	 *            if the mouse is over the check box
+	 * @param isMouseOver if the mouse is over the check box
 	 */
 	@Override
 	protected int func_146114_a(boolean isMouseOver) {
@@ -79,8 +72,7 @@ public class GuiCheckBox extends GuiButton {
 	/**
 	 * Sets the current checked state of the check box
 	 * 
-	 * @param check
-	 *            True to set the checked state to true, false otherwise
+	 * @param check True to set the checked state to true, false otherwise
 	 */
 	public void setChecked(boolean check) {
 		m_checked = check;
@@ -98,12 +90,9 @@ public class GuiCheckBox extends GuiButton {
 	/**
 	 * Draws the check box to the screen.
 	 * 
-	 * @param minecraft
-	 *            The minecraft instance
-	 * @param mouseX
-	 *            The x coordinate of the mouse
-	 * @param mouseY
-	 *            The y coordinate of the mouse
+	 * @param minecraft The minecraft instance
+	 * @param mouseX The x coordinate of the mouse
+	 * @param mouseY The y coordinate of the mouse
 	 */
 	@Override
 	public void func_146112_a(Minecraft minecraft, int mouseX, int mouseY) {
@@ -113,9 +102,9 @@ public class GuiCheckBox extends GuiButton {
 
 		// field_146123_n represents if the mouse is over the check box region
 		this.field_146123_n = mouseX >= this.field_146128_h && mouseY >= this.field_146129_i && mouseX < this.field_146128_h + this.field_146120_f && mouseY < this.field_146129_i + this.field_146121_g;
-        // get the hover state of the mouse and check box
+		// get the hover state of the mouse and check box
 		final int hoverState = func_146114_a(field_146123_n);
-		
+
 		// work out the local offset into the image atlas
 		final int localYoffset = hoverState == 2 ? 186 : (m_checked ? 146 : 166);
 		final int hoverColor = field_146124_l == false ? -6250336 : hoverState == 2 ? 16777120 : 14737632;
@@ -132,8 +121,7 @@ public class GuiCheckBox extends GuiButton {
 	/**
 	 * Handle a mouse pressed event
 	 * 
-	 * @param handler
-	 *            the current sound handler
+	 * @param handler the current sound handler
 	 */
 	@Override
 	public void func_146113_a(SoundHandler handler) {
@@ -143,7 +131,7 @@ public class GuiCheckBox extends GuiButton {
 
 	/**
 	 * Gets whether the mouse is currently over the check box.
-	 *
+	 * 
 	 * @return if the mouse is currently over the check box
 	 * @see {@link GuiButton#func_146115_a()}
 	 */

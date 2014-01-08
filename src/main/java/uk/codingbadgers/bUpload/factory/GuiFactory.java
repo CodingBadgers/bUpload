@@ -11,7 +11,7 @@ import cpw.mods.fml.client.IModGuiFactory;
 public class GuiFactory implements IModGuiFactory {
 
 	private Minecraft minecraft;
-	
+
 	@Override
 	public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
 		return null;

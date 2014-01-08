@@ -19,43 +19,43 @@ import uk.codingbadgers.bUpload.handlers.MessageHandler;
 
 public class HDUploadHandler extends UploadHandler {
 
-    public HDUploadHandler(Screenshot screen) {
-        super(screen);
-    }
+	public HDUploadHandler(Screenshot screen) {
+		super(screen);
+	}
 
-    @Override
-    public boolean run(Screenshot screenshot) {
-        Minecraft minecraft = Minecraft.getMinecraft();
+	@Override
+	public boolean run(Screenshot screenshot) {
+		Minecraft minecraft = Minecraft.getMinecraft();
 
-        if (screenshot != null && screenshot.imageID != 0) {
+		if (screenshot != null && screenshot.imageID != 0) {
 
-            String path = ConfigHandler.formatImagePath(minecraft);
-            File outputFile = new File(minecraft.mcDataDir, path);
+			String path = ConfigHandler.formatImagePath(minecraft);
+			File outputFile = new File(minecraft.mcDataDir, path);
 
-            if (outputFile != null) {
-                if (!outputFile.getParentFile().exists()) {
-                    outputFile.getParentFile().mkdirs();
-                }
+			if (outputFile != null) {
+				if (!outputFile.getParentFile().exists()) {
+					outputFile.getParentFile().mkdirs();
+				}
 
-                try {
-                    ImageIO.write(screenshot.image, ConfigHandler.IMAGE_FORMAT, outputFile);
-                } catch (IOException e) {
-                    MessageHandler.sendChatMessage("image.upload.fail", e.getMessage());
-                    e.printStackTrace();
-                    return false;
-                }
+				try {
+					ImageIO.write(screenshot.image, ConfigHandler.IMAGE_FORMAT, outputFile);
+				} catch (IOException e) {
+					MessageHandler.sendChatMessage("image.upload.fail", e.getMessage());
+					e.printStackTrace();
+					return false;
+				}
 
-            	ChatComponentTranslation message = new ChatComponentTranslation("image.upload.success");
-                ChatComponentText url = new ChatComponentText("Disk");
-                url.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.GOLD));
-                message.func_150257_a(url);
-                
-                MessageHandler.sendChatMessage(message);
-                HistoryHandler.addUploadedImage(new UploadedImage(outputFile.getParent(), path, screenshot, true));
-                return true;
-            }
-        }
-        return false;
-    }
+				ChatComponentTranslation message = new ChatComponentTranslation("image.upload.success");
+				ChatComponentText url = new ChatComponentText("Disk");
+				url.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.GOLD));
+				message.func_150257_a(url);
+
+				MessageHandler.sendChatMessage(message);
+				HistoryHandler.addUploadedImage(new UploadedImage(outputFile.getParent(), path, screenshot, true));
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

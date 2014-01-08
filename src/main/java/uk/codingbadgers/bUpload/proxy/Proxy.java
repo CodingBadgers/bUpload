@@ -9,18 +9,18 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
  */
 public interface Proxy {
 
-    /**
-     * Called pre initialisation of the mod.
-     *
-     * @param event the pre initialisation event
-     */
-    public void preInit(FMLPreInitializationEvent event);
+	/**
+	 * Called pre initialisation of the mod.
+	 * 
+	 * @param event the pre initialisation event
+	 */
+	public void preInit(FMLPreInitializationEvent event);
 
-    /**
-     * Called on initialisation of the mod.
-     *
-     * @param event the initialisation event
-     */
-    public void load(FMLInitializationEvent event);
-    
+	/**
+	 * Called on initialisation of the mod.
+	 * 
+	 * @param event the initialisation event
+	 */
+	public void load(FMLInitializationEvent event);
+
 }

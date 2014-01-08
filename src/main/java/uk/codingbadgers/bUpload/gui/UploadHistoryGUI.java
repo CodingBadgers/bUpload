@@ -35,21 +35,21 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 public class UploadHistoryGUI extends bUploadGuiScreen {
-	
+
 	private static final int COTAINER_WIDTH = 176;
 	private static final int CONTAINER_HIGHT = 222;
-	
+
 	private static final int PREVIOUS = 0;
 	private static final int NEXT = 1;
 	private static final int SETTINGS = 2;
-	
+
 	private int m_currentImage = 0;
 
 	/**
 	 * Default constructor
 	 */
 	public UploadHistoryGUI(bUploadGuiScreen screen) {
-	    super(screen);
+		super(screen);
 	}
 
 	/**
@@ -108,29 +108,29 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 		switch (button.field_146127_k) {
 			case PREVIOUS: {
 				m_currentImage--;
-	
+
 				if (m_currentImage < 0) {
 					m_currentImage = HistoryHandler.uploadHistorySize() - 1;
 				}
-	
+
 				if (m_currentImage < 0) {
 					m_currentImage = 0;
 				}
-				
+
 				break;
 			}
 
 			case NEXT: {
 				m_currentImage++;
-	
+
 				if (m_currentImage >= HistoryHandler.uploadHistorySize()) {
 					m_currentImage = 0;
 				}
-				
+
 				break;
 			}
 
-			case SETTINGS: {				
+			case SETTINGS: {
 				displayGuiScreen(new SettingsGui(this));
 				break;
 			}
@@ -187,16 +187,17 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 	}
 
 	/**
-	 * Called when the user clicks a button on the 'should i open that link' gui
+	 * Called when the user clicks a button on the 'should i open that link'
+	 * gui
 	 */
 	public void confirmClicked(boolean openUrl, int par2) {
 		if (openUrl) {
 			openUrl();
 		}
-		
+
 		displayGuiScreen(this);
 	}
-	
+
 	public void openUrl() {
 		UploadedImage imageInfo = HistoryHandler.getUploadedImage(m_currentImage);
 
