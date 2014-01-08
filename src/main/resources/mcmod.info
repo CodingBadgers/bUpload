@@ -1,0 +1,16 @@
+[
+{
+  "modid": "bUpload",
+  "name": "bUpload",
+  "description": "A minecraft mod that allows advanced screenshot management",
+  "version": "${mod_version}",
+  "mcversion": "${minecraft_version}",
+  "url": "${mod_url}",
+  "updateUrl": "http://mcbadgercraft.com/download/bUpload/bUpload-${mod_version}",
+  "authors": ["TheFish97, n3wton"],
+  "credits": "All of you people for downloading this mod",
+  "logoFile": "logo-bupload.jpg",
+  "screenshots": [],
+  "dependencies": []
+}
+]

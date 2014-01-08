@@ -1,0 +1,34 @@
+image.upload.success= Image téléchargé vers§6 %1$s
+image.upload.fail= Faillite de télécharger l'image
+image.upload.copy= Url copié aux clipboard
+image.upload.start= Téléchargement de l'image à imgur...
+image.disk.fail= Faillite de sauvegardé l'image au disque
+image.disk.success= Sauvegardé  l'image au disque
+     
+image.auth.login=  Connexion à %1$s par %2$s
+image.auth.logout= Disconnexion de %1$s
+     
+image.history.next= Prochain
+image.history.previous= Antérieur
+image.history.login= Connexion à Imgur
+image.history.settings= Réglage
+image.history.open= Ouvrir image sauvegardée  
+image.history.empty= Aucun dossier de téléchargement
+image.history.open.fail.1= Faillite d'ouvrir l'image du disque
+image.history.open.fail.2= Tentative d’ouverture d’emplacement du fichier...
+image.history.oepn.fail.3= Faillite d’ouverture d’emplacement du fichier
+     
+     
+image.options.hdd= Sauvegardé  l'image au disque
+image.options.imgur= Sauvegardé  l'image à imgur.com
+image.options.both= Sauvegardé  l'image aux deux
+image.options.remember= Souviens-toi de mon choix
+image.options.copy= Copié url au clipboard
+image.options.history= l’histoire
+image.options.cancel= Fermé
+image.options.login= Connexion  à Imgur
+image.options.loggedIn= Bienvenue %1$s
+image.options.logout= disconnecter
+image.options.title=bUpload – gérant de saisie  d'écran avancé
+     
+image.settings.title= Réglages bUpload

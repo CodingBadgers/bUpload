@@ -1,0 +1,33 @@
+image.upload.success=Image uploaded to§6 %1$s
+image.upload.fail=Sorry, we failed to upload image
+image.upload.copy=Url copied to clipboard
+image.upload.start=Uploading image to imgur...
+image.disk.fail=Sorry, we failed to save image to disk
+image.disk.success=Saved image to disk
+
+image.auth.login=Successfully logged in on %1$s as %2$s
+image.auth.logout=Successfully logged out from %1$s
+
+image.history.next=Next
+image.history.previous=Previous
+image.history.login=Login to Imgur
+image.history.settings=Settings
+image.history.open=Open saved image
+image.history.empty=No upload history
+image.history.open.fail.1=I'm so sorry, We failed to open image from disk
+image.history.open.fail.2=Opening file location instead...
+image.history.oepn.fail.3=I'm so sorry, We failed to open file location
+
+image.options.hdd=Save image to harddrive
+image.options.imgur=Save image to imgur.com
+image.options.both=Save image to both
+image.options.remember=Remember Choice
+image.options.copy=Copy url to clipboard
+image.options.history=History
+image.options.cancel=Close
+image.options.login=Login to Imgur
+image.options.loggedIn=Welcome %1$s
+image.options.logout=Log Out
+image.options.title=bUpload - Advanced Screenshot Manager
+
+image.settings.title=bUpload Settings
