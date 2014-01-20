@@ -32,7 +32,7 @@ public class MessageHandler {
 		ChatComponentText prefix = new ChatComponentText("[bUpload] ");
 		prefix.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.GOLD));
 		ChatComponentText main = new ChatComponentText(message);
-		main.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.GOLD));
+		main.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.WHITE));
 		chat.func_150257_a(prefix);
 		chat.func_150257_a(main);
 

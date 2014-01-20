@@ -6,10 +6,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.event.ClickEvent;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 
 import uk.codingbadgers.bUpload.Screenshot;
 import uk.codingbadgers.bUpload.UploadedImage;
@@ -45,9 +47,13 @@ public class HDUploadHandler extends UploadHandler {
 					return false;
 				}
 
-				ChatComponentTranslation message = new ChatComponentTranslation("image.upload.success");
-				ChatComponentText url = new ChatComponentText("Disk");
-				url.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.GOLD)); // TODO add clickability
+				IChatComponent message = new ChatComponentTranslation("image.upload.success");
+				IChatComponent url = new ChatComponentText("Disk");
+				
+				url.func_150255_a(new ChatStyle()
+									.func_150238_a(EnumChatFormatting.GOLD)
+									.func_150241_a(new ClickEvent(ClickEvent.Action.OPEN_FILE, outputFile.getAbsolutePath())));
+				
 				message.func_150257_a(url);
 
 				MessageHandler.sendChatMessage(message);

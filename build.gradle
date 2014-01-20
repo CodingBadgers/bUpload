@@ -1,23 +1,22 @@
 buildscript {
     repositories {
         mavenCentral()
+		mavenLocal()
         maven {
             name = "ForgeFS"
             url = "http://files.minecraftforge.net/maven"
         }
-		maven {
-            name 'Shadow'
-            url 'http://dl.bintray.com/content/johnrengelman/gradle-plugins'
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
-		classpath 'org.gradle.plugins:shadow:0.7.4'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.1-SNAPSHOT'
     }
 }
 
 apply plugin: "forge"
-apply plugin: 'shadow'
 
 // define the properties file
 ext.configFile = file "build.properties"
@@ -40,7 +39,7 @@ archivesBaseName = "bUpload"
 
 minecraft {
     version = config.minecraft_version + "-" + config.forge_version // grab latest forge
-    assetDir = "run/assets"
+    assetDir = "eclipse/assets"
 }
 
 // add some stuff to the version

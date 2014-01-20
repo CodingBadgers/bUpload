@@ -10,10 +10,13 @@ import javax.imageio.ImageIO;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.ServerData;
+import net.minecraft.event.ClickEvent;
+import net.minecraft.event.HoverEvent;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpResponse;
@@ -87,9 +90,17 @@ public class ImgurUploadHandler extends UploadHandler {
 
 				HistoryHandler.addUploadedImage(new UploadedImage(title, uploadUrl, screen, false));
 
-				ChatComponentTranslation message = new ChatComponentTranslation("image.upload.success");
-				ChatComponentText url = new ChatComponentText("Imgur (" + uploadUrl + ")");
-				url.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.GOLD)); // TODO add clickability
+				IChatComponent message = new ChatComponentTranslation("image.upload.success");
+				IChatComponent url = new ChatComponentText("Imgur");
+				IChatComponent tooltip = new ChatComponentText(uploadUrl)
+													.func_150255_a(new ChatStyle()
+																.func_150238_a(EnumChatFormatting.AQUA));
+				
+				url.func_150255_a(new ChatStyle()
+									.func_150238_a(EnumChatFormatting.GOLD)
+									.func_150209_a(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))
+									.func_150241_a(new ClickEvent(ClickEvent.Action.OPEN_URL, uploadUrl)));
+				
 				message.func_150257_a(url);
 
 				MessageHandler.sendChatMessage(message);
