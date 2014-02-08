@@ -53,7 +53,7 @@ public class HDUploadHandler extends UploadHandler {
 				
 				url.setChatStyle(new ChatStyle()
 									.setColor(EnumChatFormatting.GOLD)
-									.setUnderlined(true)
+									.setBold(true)
 									.setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ChatComponentTranslation("image.disk.click")))
 									.setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, outputFile.getAbsolutePath())));
 				

@@ -98,6 +98,7 @@ public class ImgurUploadHandler extends UploadHandler {
 				
 				url.setChatStyle(new ChatStyle()
 									.setColor(EnumChatFormatting.GOLD)
+									.setBold(true)
 									.setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))
 									.setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, uploadUrl)));
 				
