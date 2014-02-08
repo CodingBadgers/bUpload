@@ -25,20 +25,17 @@ import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 import uk.codingbadgers.bUpload.gui.UploadHistoryGUI;
 import uk.codingbadgers.bUpload.gui.bUploadGuiScreen;
+import uk.codingbadgers.bUpload.manager.TranslationManager;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
 
 public class KeyBindingHandler {
 
-	public static KeyBinding onScreenShot = new KeyBinding(I18n.getStringParams("image.binding.screenshot"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_ADV_SS), I18n.getStringParams("image.binding.screenshot"));
-	public static KeyBinding onUploadHistory = new KeyBinding(I18n.getStringParams("image.binding.history"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_HISTORY), I18n.getStringParams("image.binding.history"));
+	public static KeyBinding onScreenShot = new KeyBinding(TranslationManager.getTranslation("image.binding.screenshot"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_ADV_SS), TranslationManager.getTranslation("image.binding.screenshot"));
+	public static KeyBinding onUploadHistory = new KeyBinding(TranslationManager.getTranslation("image.binding.history"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_HISTORY), TranslationManager.getTranslation("image.binding.history"));
 
 	public KeyBindingHandler() {
-		System.out.println(onScreenShot.func_151469_h());
-		System.out.println(onUploadHistory.func_151469_h());
-
 		ClientRegistry.registerKeyBinding(onScreenShot);
 		ClientRegistry.registerKeyBinding(onUploadHistory);
 	}
@@ -49,10 +46,10 @@ public class KeyBindingHandler {
 
 		Minecraft minecraft = Minecraft.getMinecraft();
 
-		if (Keyboard.isKeyDown(onScreenShot.func_151469_h())) {
+		if (onScreenShot.getIsKeyPressed()) {
 			ScreenshotHandler.handleScreenshot();
-		} else if (Keyboard.isKeyDown(onUploadHistory.func_151469_h()) && minecraft.currentScreen == null) {
-			minecraft.func_147108_a(new UploadHistoryGUI(minecraft.currentScreen instanceof bUploadGuiScreen ? (bUploadGuiScreen) minecraft.currentScreen : null));
+		} else if (onScreenShot.getIsKeyPressed() && minecraft.currentScreen == null) {
+			minecraft.displayGuiScreen(new UploadHistoryGUI(minecraft.currentScreen instanceof bUploadGuiScreen ? (bUploadGuiScreen) minecraft.currentScreen : null));
 		}
 	}
 

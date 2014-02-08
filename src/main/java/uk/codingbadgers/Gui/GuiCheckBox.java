@@ -56,8 +56,8 @@ public class GuiCheckBox extends GuiButton {
 	 * @param isMouseOver if the mouse is over the check box
 	 */
 	@Override
-	protected int func_146114_a(boolean isMouseOver) {
-		if (!field_146124_l) {
+	protected int getHoverState(boolean isMouseOver) {
+		if (!this.enabled) {
 			return 0;
 		}
 
@@ -94,27 +94,27 @@ public class GuiCheckBox extends GuiButton {
 	 * @param mouseY The y coordinate of the mouse
 	 */
 	@Override
-	public void func_146112_a(Minecraft minecraft, int mouseX, int mouseY) {
-		if (!field_146125_m) {
+	public void drawButton(Minecraft minecraft, int mouseX, int mouseY) {
+		if (!this.visible) {
 			return;
 		}
 
 		// field_146123_n represents if the mouse is over the check box region
-		this.field_146123_n = mouseX >= this.field_146128_h && mouseY >= this.field_146129_i && mouseX < this.field_146128_h + this.field_146120_f && mouseY < this.field_146129_i + this.field_146121_g;
-		// get the hover state of the mouse and check box
-		final int hoverState = func_146114_a(field_146123_n);
+		 this.field_146123_n = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
+         // get the hover state of the mouse and check box
+		final int hoverState = getHoverState(field_146123_n);
 
 		// work out the local offset into the image atlas
 		final int localYoffset = hoverState == 2 ? 186 : (m_checked ? 146 : 166);
-		final int hoverColor = field_146124_l == false ? -6250336 : hoverState == 2 ? 16777120 : 14737632;
-		final int labelWidth = minecraft.fontRenderer.getStringWidth(field_146126_j);
+		final int hoverColor = enabled == false ? -6250336 : hoverState == 2 ? 16777120 : 14737632;
+		final int labelWidth = minecraft.fontRenderer.getStringWidth(displayString);
 		final int checkboxImageSize = 20;
-		final int xOffset = field_146128_h + checkboxImageSize + BOX_LABEL_SPACER + (((field_146120_f - checkboxImageSize - BOX_LABEL_SPACER) / 2) - ((labelWidth) / 2));
+		final int xOffset = xPosition + checkboxImageSize + BOX_LABEL_SPACER + (((width - checkboxImageSize - BOX_LABEL_SPACER) / 2) - ((labelWidth) / 2));
 
-		drawString(minecraft.fontRenderer, field_146126_j, xOffset, field_146129_i + (field_146121_g - 8) / 2, hoverColor);
+		drawString(minecraft.fontRenderer, displayString, xOffset, yPosition + (height - 8) / 2, hoverColor);
 		minecraft.renderEngine.bindTexture(new ResourceLocation("bUpload:textures/gui/tcb-gui.png"));
 		glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		drawTexturedModalRect(field_146128_h, field_146129_i, 0, localYoffset, checkboxImageSize, checkboxImageSize);
+		drawTexturedModalRect(xPosition, yPosition, 0, localYoffset, checkboxImageSize, checkboxImageSize);
 	}
 
 	/**

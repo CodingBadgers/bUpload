@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.event.ClickEvent;
+import net.minecraft.event.HoverEvent;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
@@ -50,11 +51,13 @@ public class HDUploadHandler extends UploadHandler {
 				IChatComponent message = new ChatComponentTranslation("image.upload.success");
 				IChatComponent url = new ChatComponentText("Disk");
 				
-				url.func_150255_a(new ChatStyle()
-									.func_150238_a(EnumChatFormatting.GOLD)
-									.func_150241_a(new ClickEvent(ClickEvent.Action.OPEN_FILE, outputFile.getAbsolutePath())));
+				url.setChatStyle(new ChatStyle()
+									.setColor(EnumChatFormatting.GOLD)
+									.setUnderlined(true)
+									.setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ChatComponentTranslation("image.disk.click")))
+									.setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, outputFile.getAbsolutePath())));
 				
-				message.func_150257_a(url);
+				message.appendSibling(url);
 
 				MessageHandler.sendChatMessage(message);
 				HistoryHandler.addUploadedImage(new UploadedImage(outputFile.getParent(), path, screenshot, true));

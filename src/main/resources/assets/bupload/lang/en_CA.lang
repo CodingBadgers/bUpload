@@ -1,19 +1,20 @@
-image.upload.ftp.incorrectlogin=Unknown login details given (%1$s)
-image.upload.ftp.cannotconnect=Cannot connect to server (%1$s)
+image.upload.ftp.incorrectlogin=Sorry I do not recognise those login details(%1$s)
+image.upload.ftp.cannotconnect=Sorry I cannot connect to FTP server (%1$s)
 
 image.upload.start=Uploading image to %1$s...
-image.upload.fail=Failed to upload image to %1$s (%2$s)
-image.upload.noupload=No sources to upload to selected
+image.upload.fail=Sorry we failed to upload image to %1$s (%2$s)
+image.upload.noupload=Sorry you have not selected any sources to upload to.
 image.upload.success=Image uploaded to 
 image.upload.copy=Url copied to clipboard
 
 image.disk.fail=Failed to save image to disk
 image.disk.success=Saved image to disk
+image.disk.click=Click to open file...
 
 image.auth.login=Successfully logged in on %1$s as %2$s
 image.auth.logout=Successfully logged out from %1$s
 
-image.imgur.login.ln1=Please enter the pin you get given
+image.imgur.login.ln1=Please enter the pin you were given
 image.imgur.login.ln2=from imgur
 
 image.save.imgur=Save To Imgur
@@ -26,7 +27,7 @@ image.history.login=Login to Imgur
 image.history.settings=Settings
 image.history.open=Open saved image
 image.history.empty=No upload history
-image.history.open.fail.1=Failed to open image from disk
+image.history.open.fail.1=Sorry we failed to open image from disk
 image.history.open.fail.2=Opening file location instead...
 image.history.oepn.fail.3=Failed to open file location
 

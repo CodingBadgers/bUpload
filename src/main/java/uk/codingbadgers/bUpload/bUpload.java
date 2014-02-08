@@ -94,10 +94,10 @@ public class bUpload {
 	public void onKeyPress(KeyInputEvent event) {
 		Minecraft minecraft = Minecraft.getMinecraft();
 
-		if (KeyBindingHandler.onScreenShot.func_151470_d()) {
+		if (KeyBindingHandler.onScreenShot.getIsKeyPressed()) {
 			ScreenshotHandler.handleScreenshot();
-		} else if (KeyBindingHandler.onUploadHistory.func_151470_d() && minecraft.currentScreen == null) {
-			minecraft.func_147108_a(new UploadHistoryGUI(minecraft.currentScreen instanceof bUploadGuiScreen ? (bUploadGuiScreen) minecraft.currentScreen : null));
+		} else if (KeyBindingHandler.onUploadHistory.getIsKeyPressed() && minecraft.currentScreen == null) {
+			minecraft.displayGuiScreen(new UploadHistoryGUI(minecraft.currentScreen instanceof bUploadGuiScreen ? (bUploadGuiScreen) minecraft.currentScreen : null));
 		}
 	}
 

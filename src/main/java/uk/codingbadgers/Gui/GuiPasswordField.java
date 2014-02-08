@@ -97,7 +97,7 @@ public class GuiPasswordField extends Gui {
 	/**
 	 * @return returns the text between the cursor and selectionEnd
 	 */
-	public String getSelectedtext() {
+	public String getSelectedText() {
 		int i = this.cursorPosition < this.selectionEnd ? this.cursorPosition : this.selectionEnd;
 		int j = this.cursorPosition < this.selectionEnd ? this.selectionEnd : this.cursorPosition;
 		return this.text.substring(i, j);
@@ -271,96 +271,152 @@ public class GuiPasswordField extends Gui {
 	 * Call this method from you GuiScreen to process the keys into textbox.
 	 */
 	public boolean textboxKeyTyped(char par1, int par2) {
-		if (this.isEnabled && this.isFocused) {
-			switch (par1) {
-				case 1:
-					this.setCursorPositionEnd();
-					this.setSelectionPos(0);
-					return true;
-				case 3:
-					GuiScreen.func_146275_d(this.getSelectedtext());
-					return true;
-				case 22:
-					this.writeText(GuiScreen.func_146277_j());
-					return true;
-				case 24:
-					GuiScreen.func_146275_d(this.getSelectedtext());
-					this.writeText("");
-					return true;
-				default:
-					switch (par2) {
-						case 14:
-							if (GuiScreen.func_146271_m()) {
-								this.deleteWords(-1);
-							} else {
-								this.deleteFromCursor(-1);
-							}
 
-							return true;
-						case 199:
-							if (GuiScreen.func_146272_n()) {
-								this.setSelectionPos(0);
-							} else {
-								this.setCursorPositionZero();
-							}
+        if (!this.isFocused)
+        {
+            return false;
+        }
+        else
+        {
+            switch (par1)
+            {
+                case 1:
+                    this.setCursorPositionEnd();
+                    this.setSelectionPos(0);
+                    return true;
+                case 3:
+                    GuiScreen.setClipboardString(this.getSelectedText());
+                    return true;
+                case 22:
+                    if (this.isEnabled)
+                    {
+                        this.writeText(GuiScreen.getClipboardString());
+                    }
 
-							return true;
-						case 203:
-							if (GuiScreen.func_146272_n()) {
-								if (GuiScreen.func_146271_m()) {
-									this.setSelectionPos(this.getNthWordFromPos(-1, this.getSelectionEnd()));
-								} else {
-									this.setSelectionPos(this.getSelectionEnd() - 1);
-								}
-							} else if (GuiScreen.func_146271_m()) {
-								this.setCursorPosition(this.getNthWordFromCursor(-1));
-							} else {
-								this.moveCursorBy(-1);
-							}
+                    return true;
+                case 24:
+                    GuiScreen.setClipboardString(this.getSelectedText());
 
-							return true;
-						case 205:
-							if (GuiScreen.func_146272_n()) {
-								if (GuiScreen.func_146271_m()) {
-									this.setSelectionPos(this.getNthWordFromPos(1, this.getSelectionEnd()));
-								} else {
-									this.setSelectionPos(this.getSelectionEnd() + 1);
-								}
-							} else if (GuiScreen.func_146271_m()) {
-								this.setCursorPosition(this.getNthWordFromCursor(1));
-							} else {
-								this.moveCursorBy(1);
-							}
+                    if (this.isEnabled)
+                    {
+                        this.writeText("");
+                    }
 
-							return true;
-						case 207:
-							if (GuiScreen.func_146272_n()) {
-								this.setSelectionPos(this.text.length());
-							} else {
-								this.setCursorPositionEnd();
-							}
+                    return true;
+                default:
+                    switch (par2)
+                    {
+                        case 14:
+                            if (GuiScreen.isCtrlKeyDown())
+                            {
+                                if (this.isEnabled)
+                                {
+                                    this.deleteWords(-1);
+                                }
+                            }
+                            else if (this.isEnabled)
+                            {
+                                this.deleteFromCursor(-1);
+                            }
 
-							return true;
-						case 211:
-							if (GuiScreen.func_146271_m()) {
-								this.deleteWords(1);
-							} else {
-								this.deleteFromCursor(1);
-							}
+                            return true;
+                        case 199:
+                            if (GuiScreen.isShiftKeyDown())
+                            {
+                                this.setSelectionPos(0);
+                            }
+                            else
+                            {
+                                this.setCursorPositionZero();
+                            }
 
-							return true;
-						default:
-							if (ChatAllowedCharacters.isAllowedCharacter(par1)) {
-								this.writeText(Character.toString(par1));
-								return true;
-							} else {
-								return false;
-							}
-					}
-			}
-		} else {
-			return false;
-		}
+                            return true;
+                        case 203:
+                            if (GuiScreen.isShiftKeyDown())
+                            {
+                                if (GuiScreen.isCtrlKeyDown())
+                                {
+                                    this.setSelectionPos(this.getNthWordFromPos(-1, this.getSelectionEnd()));
+                                }
+                                else
+                                {
+                                    this.setSelectionPos(this.getSelectionEnd() - 1);
+                                }
+                            }
+                            else if (GuiScreen.isCtrlKeyDown())
+                            {
+                                this.setCursorPosition(this.getNthWordFromCursor(-1));
+                            }
+                            else
+                            {
+                                this.moveCursorBy(-1);
+                            }
+
+                            return true;
+                        case 205:
+                            if (GuiScreen.isShiftKeyDown())
+                            {
+                                if (GuiScreen.isCtrlKeyDown())
+                                {
+                                    this.setSelectionPos(this.getNthWordFromPos(1, this.getSelectionEnd()));
+                                }
+                                else
+                                {
+                                    this.setSelectionPos(this.getSelectionEnd() + 1);
+                                }
+                            }
+                            else if (GuiScreen.isCtrlKeyDown())
+                            {
+                                this.setCursorPosition(this.getNthWordFromCursor(1));
+                            }
+                            else
+                            {
+                                this.moveCursorBy(1);
+                            }
+
+                            return true;
+                        case 207:
+                            if (GuiScreen.isShiftKeyDown())
+                            {
+                                this.setSelectionPos(this.text.length());
+                            }
+                            else
+                            {
+                                this.setCursorPositionEnd();
+                            }
+
+                            return true;
+                        case 211:
+                            if (GuiScreen.isCtrlKeyDown())
+                            {
+                                if (this.isEnabled)
+                                {
+                                    this.deleteWords(1);
+                                }
+                            }
+                            else if (this.isEnabled)
+                            {
+                                this.deleteFromCursor(1);
+                            }
+
+                            return true;
+                        default:
+                            if (ChatAllowedCharacters.isAllowedCharacter(par1))
+                            {
+                                if (this.isEnabled)
+                                {
+                                    this.writeText(Character.toString(par1));
+                                }
+
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                    }
+            }
+        }
 	}
 
 	/**

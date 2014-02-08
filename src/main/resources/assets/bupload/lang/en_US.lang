@@ -9,11 +9,12 @@ image.upload.copy=Url copied to clipboard
 
 image.disk.fail=Failed to save image to disk
 image.disk.success=Saved image to disk
+image.disk.click=Click to open file...
 
 image.auth.login=Successfully logged in on %1$s as %2$s
 image.auth.logout=Successfully logged out from %1$s
 
-image.imgur.login.ln1=Please enter the pin you get given
+image.imgur.login.ln1=Please enter the pin you were given
 image.imgur.login.ln2=from imgur
 
 image.save.imgur=Save To Imgur

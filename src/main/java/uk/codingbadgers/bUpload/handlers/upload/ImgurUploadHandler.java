@@ -93,20 +93,20 @@ public class ImgurUploadHandler extends UploadHandler {
 				IChatComponent message = new ChatComponentTranslation("image.upload.success");
 				IChatComponent url = new ChatComponentText("Imgur");
 				IChatComponent tooltip = new ChatComponentText(uploadUrl)
-													.func_150255_a(new ChatStyle()
-																.func_150238_a(EnumChatFormatting.AQUA));
+													.setChatStyle(new ChatStyle()
+																.setColor(EnumChatFormatting.AQUA));
 				
-				url.func_150255_a(new ChatStyle()
-									.func_150238_a(EnumChatFormatting.GOLD)
-									.func_150209_a(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))
-									.func_150241_a(new ClickEvent(ClickEvent.Action.OPEN_URL, uploadUrl)));
+				url.setChatStyle(new ChatStyle()
+									.setColor(EnumChatFormatting.GOLD)
+									.setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))
+									.setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, uploadUrl)));
 				
-				message.func_150257_a(url);
+				message.appendSibling(url);
 
 				MessageHandler.sendChatMessage(message);
 
 				if (ConfigHandler.COPY_URL_TO_CLIPBOARD) {
-					GuiScreen.func_146275_d(uploadUrl);
+					GuiScreen.setClipboardString(uploadUrl);
 					MessageHandler.sendChatMessage("image.upload.copy");
 				}
 			} else {

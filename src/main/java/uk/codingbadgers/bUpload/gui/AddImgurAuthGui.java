@@ -18,6 +18,7 @@ import org.apache.http.util.EntityUtils;
 
 import uk.codingbadgers.bUpload.handlers.MessageHandler;
 import uk.codingbadgers.bUpload.handlers.auth.ImgurAuthHandler;
+import uk.codingbadgers.bUpload.manager.TranslationManager;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -25,7 +26,6 @@ import com.google.gson.JsonParser;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiConfirmOpenLink;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.resources.I18n;
 
 public class AddImgurAuthGui extends AddAuthGui {
 
@@ -41,17 +41,17 @@ public class AddImgurAuthGui extends AddAuthGui {
 
 	@Override
 	protected void keyTyped(char par1, int par2) {
-		if (!pinCode.func_146176_q()) {
-			pinCode.func_146195_b(true);
+		if (!pinCode.isFocused()) {
+			pinCode.setFocused(true);
 		}
 
-		pinCode.func_146201_a(par1, par2);
+		pinCode.textboxKeyTyped(par1, par2);
 		super.keyTyped(par1, par2);
 	}
 
 	@Override
 	protected void actionPerformed(GuiButton button) {
-		switch (button.field_146127_k) {
+		switch (button.id) {
 			case ACCEPT:
 				try {
 					getAccessToken();
@@ -76,7 +76,7 @@ public class AddImgurAuthGui extends AddAuthGui {
 		nameValuePairs.add(new BasicNameValuePair("client_id", ImgurAuthHandler.CLIENT_ID));
 		nameValuePairs.add(new BasicNameValuePair("client_secret", "d435f03cf62b7ec5589ae4f122354d4a435105d7"));
 		nameValuePairs.add(new BasicNameValuePair("grant_type", "pin"));
-		nameValuePairs.add(new BasicNameValuePair("pin", pinCode.func_146179_b()));
+		nameValuePairs.add(new BasicNameValuePair("pin", pinCode.getText()));
 		post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpResponse resp = client.execute(post);
@@ -117,7 +117,7 @@ public class AddImgurAuthGui extends AddAuthGui {
 	@Override
 	public void initGui() {
 		if (!linkGiven) {
-			if (this.field_146297_k.gameSettings.chatLinksPrompt) {
+			if (this.mc.gameSettings.chatLinksPrompt) {
 				displayGuiScreen(new GuiConfirmOpenLink(this, URL, 0, false));
 			} else {
 				openLink();
@@ -127,18 +127,18 @@ public class AddImgurAuthGui extends AddAuthGui {
 		int buttonWidth = 100;
 		int buttonHeight = 20;
 
-		addControl(new GuiButton(ACCEPT, this.field_146294_l / 2 - buttonWidth - 8, this.field_146295_m / 6 + 96, buttonWidth, buttonHeight, I18n.getStringParams("image.auth.accept")));
-		addControl(new GuiButton(CANCEL, this.field_146294_l / 2 + 8, this.field_146295_m / 6 + 96, buttonWidth, buttonHeight, I18n.getStringParams("image.auth.cancel")));
+		addControl(new GuiButton(ACCEPT, this.width / 2 - buttonWidth - 8, this.height / 6 + 96, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.auth.accept")));
+		addControl(new GuiButton(CANCEL, this.width / 2 + 8, this.height / 6 + 96, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.auth.cancel")));
 
-		pinCode = new GuiTextField(this.field_146289_q, this.field_146294_l / 2 - buttonWidth - 8, this.field_146295_m / 6 + 64, buttonWidth * 2 + 16, buttonHeight);
+		pinCode = new GuiTextField(this.fontRendererObj, this.width / 2 - buttonWidth - 8, this.height / 6 + 64, buttonWidth * 2 + 16, buttonHeight);
 	}
 
 	@Override
 	public void drawScreen(int par1, int par2, float par3) {
 		drawBackground();
-		drawCenteredString(field_146289_q, I18n.getStringParams("image.imgur.login.ln1"), this.field_146294_l / 2, this.field_146295_m / 6 + 30, 0xFFFFFF);
-		drawCenteredString(field_146289_q, I18n.getStringParams("image.imgur.login.ln2"), this.field_146294_l / 2, this.field_146295_m / 6 + 40, 0xFFFFFF);
-		pinCode.func_146194_f();
+		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.imgur.login.ln1"), this.width / 2, this.height / 6 + 30, 0xFFFFFF);
+		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.imgur.login.ln2"), this.width / 2, this.height / 6 + 40, 0xFFFFFF);
+		pinCode.drawTextBox();
 		super.drawScreen(par1, par2, par3);
 	}
 }

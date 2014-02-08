@@ -5,13 +5,12 @@ import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.client.resources.I18n;
-
 import uk.codingbadgers.bUpload.bUpload;
 import uk.codingbadgers.bUpload.gui.AddAuthGui;
 import uk.codingbadgers.bUpload.gui.AddFTPAuthGui;
 import uk.codingbadgers.bUpload.gui.AddImgurAuthGui;
 import uk.codingbadgers.bUpload.gui.bUploadGuiScreen;
+import uk.codingbadgers.bUpload.manager.TranslationManager;
 
 public enum AuthTypes {
 
@@ -65,7 +64,7 @@ public enum AuthTypes {
 	}
 
 	public String getLocalisedName() {
-		return I18n.getStringParams("image.auth.type." + this.name().toLowerCase());
+		return TranslationManager.getTranslation("image.auth.type." + this.name().toLowerCase());
 	}
 
 	public static AuthTypes getByID(int id) {

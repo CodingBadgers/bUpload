@@ -27,11 +27,11 @@ import org.lwjgl.opengl.GL11;
 import uk.codingbadgers.bUpload.UploadedImage;
 import uk.codingbadgers.bUpload.handlers.HistoryHandler;
 import uk.codingbadgers.bUpload.handlers.MessageHandler;
+import uk.codingbadgers.bUpload.manager.TranslationManager;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiConfirmOpenLink;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 public class UploadHistoryGUI extends bUploadGuiScreen {
@@ -56,11 +56,11 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 	 * Initialise the gui, adding buttons to the screen
 	 */
 	public void initGui() {
-		this.field_146292_n.clear();
-		addControl(new GuiButton(PREVIOUS, (field_146294_l / 2) - (COTAINER_WIDTH / 2) - (70), ((field_146295_m / 2) - (CONTAINER_HIGHT / 2) + CONTAINER_HIGHT) - 25, 60, 20, I18n.getStringParams("image.history.previous")));
-		addControl(new GuiButton(NEXT, (field_146294_l / 2) + (COTAINER_WIDTH / 2) + (10), ((field_146295_m / 2) - (CONTAINER_HIGHT / 2) + CONTAINER_HIGHT) - 25, 60, 20, I18n.getStringParams("image.history.next")));
+		this.buttonList.clear();
+		addControl(new GuiButton(PREVIOUS, (width / 2) - (COTAINER_WIDTH / 2) - (70), ((height / 2) - (CONTAINER_HIGHT / 2) + CONTAINER_HIGHT) - 25, 60, 20, TranslationManager.getTranslation("image.history.previous")));
+		addControl(new GuiButton(NEXT, (width / 2) + (COTAINER_WIDTH / 2) + (10), ((height / 2) - (CONTAINER_HIGHT / 2) + CONTAINER_HIGHT) - 25, 60, 20, TranslationManager.getTranslation("image.history.next")));
 
-		addControl(new GuiButton(SETTINGS, (field_146294_l / 2) + (COTAINER_WIDTH / 2) + (10), (this.field_146295_m / 2) - (CONTAINER_HIGHT / 2) + 5, 60, 20, I18n.getStringParams("image.history.settings")));
+		addControl(new GuiButton(SETTINGS, (width / 2) + (COTAINER_WIDTH / 2) + (10), (this.height / 2) - (CONTAINER_HIGHT / 2) + 5, 60, 20, TranslationManager.getTranslation("image.history.settings")));
 	}
 
 	/**
@@ -76,26 +76,26 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 		// load our container image
 		minecraft.renderEngine.bindTexture(new ResourceLocation("bUpload:textures/gui/bupload-history.png"));
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		drawTexturedModalRect((field_146294_l / 2) - (COTAINER_WIDTH / 2), (field_146295_m / 2) - (CONTAINER_HIGHT / 2), 0, 0, COTAINER_WIDTH, CONTAINER_HIGHT);
+		drawTexturedModalRect((width / 2) - (COTAINER_WIDTH / 2), (height / 2) - (CONTAINER_HIGHT / 2), 0, 0, COTAINER_WIDTH, CONTAINER_HIGHT);
 		UploadedImage imageInfo = HistoryHandler.getUploadedImage(m_currentImage);
 
 		if (imageInfo != null) {
 			// draw the image information
 			int yOffset = 132;
-			drawCenteredString(minecraft.fontRenderer, imageInfo.getName(), (field_146294_l / 2), ((field_146295_m / 2) - (CONTAINER_HIGHT / 2)) + yOffset, 0xFFFFFFFF);
+			drawCenteredString(minecraft.fontRenderer, imageInfo.getName(), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + yOffset, 0xFFFFFFFF);
 			yOffset += 16;
 
 			if (!imageInfo.isLocal()) {
-				drawCenteredString(minecraft.fontRenderer, imageInfo.getUrl(), (field_146294_l / 2), ((field_146295_m / 2) - (CONTAINER_HIGHT / 2)) + yOffset, 0xFFFFAA00);
+				drawCenteredString(minecraft.fontRenderer, imageInfo.getUrl(), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + yOffset, 0xFFFFAA00);
 			} else {
-				drawCenteredString(minecraft.fontRenderer, I18n.getStringParams("image.history.open"), (field_146295_m / 2), ((field_146295_m / 2) - (CONTAINER_HIGHT / 2)) + yOffset, 0xFFFFAA00);
+				drawCenteredString(minecraft.fontRenderer, TranslationManager.getTranslation("image.history.open"), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + yOffset, 0xFFFFAA00);
 			}
 
 			// draw the image preview
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, imageInfo.getImageID());
-			drawTexturedModalRectSized((field_146294_l / 2) - (COTAINER_WIDTH / 2) + 8, (field_146295_m / 2) - (CONTAINER_HIGHT / 2) + 18, 0, 0, 160, 101, 256, 256);
+			drawTexturedModalRectSized((width / 2) - (COTAINER_WIDTH / 2) + 8, (height / 2) - (CONTAINER_HIGHT / 2) + 18, 0, 0, 160, 101, 256, 256);
 		} else {
-			drawCenteredString(minecraft.fontRenderer, I18n.getStringParams("image.history.empty"), (field_146294_l / 2), ((field_146295_m / 2) - (CONTAINER_HIGHT / 2)) + 132, 0xFFFFFFFF);
+			drawCenteredString(minecraft.fontRenderer, TranslationManager.getTranslation("image.history.empty"), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + 132, 0xFFFFFFFF);
 		}
 
 		super.drawScreen(i, j, f);
@@ -105,7 +105,7 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 	 * Called when a button is pressed by a user
 	 */
 	public void actionPerformed(GuiButton button) {
-		switch (button.field_146127_k) {
+		switch (button.id) {
 			case PREVIOUS: {
 				m_currentImage--;
 
@@ -143,19 +143,19 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 	protected void mouseClicked(int x, int y, int button) {
 		super.mouseClicked(x, y, button);
 
-		if (x < (field_146294_l / 2) - (COTAINER_WIDTH / 2) + 12) {
+		if (x < (width / 2) - (COTAINER_WIDTH / 2) + 12) {
 			return;
 		}
 
-		if (x > (field_146294_l / 2) - (COTAINER_WIDTH / 2) + COTAINER_WIDTH - 12) {
+		if (x > (width / 2) - (COTAINER_WIDTH / 2) + COTAINER_WIDTH - 12) {
 			return;
 		}
 
-		if (y < ((field_146295_m / 2) - (CONTAINER_HIGHT / 2)) + 148) {
+		if (y < ((height / 2) - (CONTAINER_HIGHT / 2)) + 148) {
 			return;
 		}
 
-		if (y > ((field_146295_m / 2) - (CONTAINER_HIGHT / 2)) + 158) {
+		if (y > ((height / 2) - (CONTAINER_HIGHT / 2)) + 158) {
 			return;
 		}
 
@@ -163,7 +163,7 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 
 		if (imageInfo != null) {
 			if (!imageInfo.isLocal()) {
-				if (this.field_146297_k.gameSettings.chatLinksPrompt) {
+				if (this.mc.gameSettings.chatLinksPrompt) {
 					displayGuiScreen(new GuiConfirmOpenLink(this, imageInfo.getUrl(), 0, false));
 				} else {
 					openUrl();
@@ -173,7 +173,7 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 				try {
 					dt.open(new File(imageInfo.getUrl()));
 				} catch (IOException e) {
-					this.field_146297_k.func_147108_a(null);
+					displayGuiScreen(null);
 					MessageHandler.sendChatMessage("image.history.open.fail.1");
 					MessageHandler.sendChatMessage("image.history.open.fail.2");
 					try {

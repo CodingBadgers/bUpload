@@ -14,6 +14,7 @@ public class bUploadGuiScreen extends GuiScreen {
 		this.parent = screen;
 	}
 
+	@Override
 	protected void actionPerformed(GuiButton button) {
 	}
 
@@ -22,20 +23,15 @@ public class bUploadGuiScreen extends GuiScreen {
 
 	@SuppressWarnings("unchecked")
 	public void addControl(GuiButton button) {
-		this.field_146292_n.add(button);
+		this.buttonList.add(button);
 	}
 
 	public void displayGuiScreen(GuiScreen screen) {
-		Minecraft.getMinecraft().func_147108_a(screen);
-	}
-
-	@Override
-	protected void func_146284_a(GuiButton button) {
-		this.actionPerformed(button);
+		Minecraft.getMinecraft().displayGuiScreen(screen);
 	}
 
 	public void drawBackground() {
-		func_146276_q_();
+		super.drawDefaultBackground();
 	}
 
 	public void drawTexturedModalRectSized(int x, int y, int u, int v, int width, int height, int uvwidth, int uvheight) {

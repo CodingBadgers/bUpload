@@ -20,13 +20,12 @@ import org.apache.commons.net.ftp.FTPReply;
 
 import com.google.common.base.Splitter;
 
-import static net.minecraft.client.resources.I18n.*;
-
 import uk.codingbadgers.bUpload.Screenshot;
 import uk.codingbadgers.bUpload.handlers.ConfigHandler;
 import uk.codingbadgers.bUpload.handlers.MessageHandler;
 import uk.codingbadgers.bUpload.handlers.auth.FTPAuthHandler;
 import uk.codingbadgers.bUpload.handlers.auth.FTPAuthHandler.FTPUserData;
+import uk.codingbadgers.bUpload.manager.TranslationManager;
 
 public class FTPUploadHandler extends UploadHandler {
 
@@ -50,12 +49,12 @@ public class FTPUploadHandler extends UploadHandler {
 			int reply = client.getReplyCode();
 
 			if (!FTPReply.isPositiveCompletion(reply)) {
-				throw new IOException(getStringParams("image.upload.ftp.cannotconnect", reply));
+				throw new IOException(TranslationManager.getTranslation("image.upload.ftp.cannotconnect", reply));
 			}
 
 			if (!client.login(data.username, new String(data.password))) {
 				client.logout();
-				throw new IOException(getStringParams("image.upload.ftp.incorrectlogin", auth.getUserData().username));
+				throw new IOException(TranslationManager.getTranslation("image.upload.ftp.incorrectlogin", auth.getUserData().username));
 			}
 
 			client.setListHiddenFiles(false);
@@ -74,8 +73,8 @@ public class FTPUploadHandler extends UploadHandler {
 			if (uploaded) {
 				ChatComponentTranslation message = new ChatComponentTranslation("image.upload.success");
 				ChatComponentText url = new ChatComponentText("FTP server");
-				url.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.GOLD));
-				message.func_150257_a(url);
+				url.setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD));
+				message.appendSibling(url);
 
 				MessageHandler.sendChatMessage(message);
 			} else {

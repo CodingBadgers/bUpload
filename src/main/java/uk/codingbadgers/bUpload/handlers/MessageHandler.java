@@ -1,7 +1,7 @@
 package uk.codingbadgers.bUpload.handlers;
 
+import uk.codingbadgers.bUpload.manager.TranslationManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
@@ -20,23 +20,23 @@ public class MessageHandler {
 		String message = key;
 
 		if (translate) {
-			message = I18n.getStringParams(key);
+			message = TranslationManager.getTranslation(key);
 		}
 
-		if (mc == null || mc.thePlayer == null || mc.ingameGUI == null || mc.ingameGUI.func_146158_b() == null) {
+		if (mc == null || mc.thePlayer == null || mc.ingameGUI == null || mc.ingameGUI.getChatGUI() == null) {
 			System.err.println(message);
 			return;
 		}
 
 		ChatComponentText chat = new ChatComponentText("");
 		ChatComponentText prefix = new ChatComponentText("[bUpload] ");
-		prefix.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.GOLD));
+		prefix.setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD));
 		ChatComponentText main = new ChatComponentText(message);
-		main.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.WHITE));
-		chat.func_150257_a(prefix);
-		chat.func_150257_a(main);
+		main.setChatStyle(new ChatStyle().setColor(EnumChatFormatting.WHITE));
+		chat.appendSibling(prefix);
+		chat.appendSibling(main);
 
-		mc.ingameGUI.func_146158_b().func_146227_a(chat);
+		mc.ingameGUI.getChatGUI().printChatMessage(chat);
 	}
 
 	public static void sendChatMessage(String key, Object... object) {
@@ -48,34 +48,34 @@ public class MessageHandler {
 		String message = key;
 
 		if (translate) {
-			message = I18n.getStringParams(key, object);
+			message = TranslationManager.getTranslation(key, object);
 		}
 
-		if (mc == null || mc.thePlayer == null || mc.ingameGUI == null || mc.ingameGUI.func_146158_b() == null) {
+		if (mc == null || mc.thePlayer == null || mc.ingameGUI == null || mc.ingameGUI.getChatGUI() == null) {
 			System.err.println(message);
 			return;
 		}
 
 		ChatComponentText chat = new ChatComponentText("");
 		ChatComponentText prefix = new ChatComponentText("[bUpload] ");
-		prefix.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.GOLD));
+		prefix.setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD));
 		ChatComponentText main = new ChatComponentText(message);
-		main.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.GOLD));
-		chat.func_150257_a(prefix);
-		chat.func_150257_a(main);
-
-		mc.ingameGUI.func_146158_b().func_146227_a(chat);
+		main.setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD));
+		chat.appendSibling(prefix);
+		chat.appendSibling(main);
+		
+		mc.ingameGUI.getChatGUI().printChatMessage(chat);
 	}
 
 	public static void sendChatMessage(IChatComponent message) {
 
 		ChatComponentText chat = new ChatComponentText("");
 		ChatComponentText prefix = new ChatComponentText("[bUpload] ");
-		prefix.func_150255_a(new ChatStyle().func_150238_a(EnumChatFormatting.GOLD));
-		chat.func_150257_a(prefix);
-		chat.func_150257_a(message);
+		prefix.setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD));
+		chat.appendSibling(prefix);
+		chat.appendSibling(message);
 
-		mc.ingameGUI.func_146158_b().func_146227_a(chat);
+		mc.ingameGUI.getChatGUI().printChatMessage(chat);
 	}
 
 }

@@ -20,35 +20,34 @@ public class AuthGui extends bUploadGuiScreen {
 	@Override
 	public void drawScreen(int i, int j, float f) {
 		drawBackground();
-		drawCenteredString(field_146289_q, TranslationManager.getTranslation("image.auth.title"), field_146294_l / 2, field_146295_m / 5 - 20, 0xffffff);
+		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.auth.title"), width / 2, height / 5 - 20, 0xffffff);
 		super.drawScreen(i, j, f);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void initGui() {
-		int ypos = (field_146295_m / 5);
+		int ypos = (height / 5);
 		int buttonwidth = 160;
 
 		for (AuthTypes handler : AuthTypes.values()) {
-			GuiButton button = new GuiButton(handler.ordinal() + ADD_AUTH_OFFSET, field_146294_l / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.auth.type." + handler.toString().toLowerCase()));
-			this.field_146292_n.add(button);
+			GuiButton button = new GuiButton(handler.ordinal() + ADD_AUTH_OFFSET, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.auth.type." + handler.toString().toLowerCase()));
+			this.addControl(button);
 			ypos += 24;
 		}
 
-		ypos = (field_146295_m / 5) * 4;
-		addControl(new GuiButton(CANCEL, field_146294_l / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.auth.cancel")));
+		ypos = (height / 5) * 4;
+		addControl(new GuiButton(CANCEL, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.auth.cancel")));
 	}
 
 	@Override
-	protected void func_146284_a(GuiButton par1GuiButton) {
-		if (par1GuiButton.field_146127_k == CANCEL) {
+	protected void actionPerformed(GuiButton par1GuiButton) {
+		if (par1GuiButton.id == CANCEL) {
 			displayGuiScreen(parent);
 			return;
 		}
 
 		try {
-			AuthTypes type = AuthTypes.getByID(par1GuiButton.field_146127_k - ADD_AUTH_OFFSET);
+			AuthTypes type = AuthTypes.getByID(par1GuiButton.id - ADD_AUTH_OFFSET);
 			AddAuthGui gui = type.getAuthGui(this);
 
 			if (gui == null) {

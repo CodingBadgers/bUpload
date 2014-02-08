@@ -53,10 +53,7 @@ public class SettingsGui extends bUploadGuiScreen {
 	}
 
 	public void initGui() {
-		int width = field_146294_l;
-		int height = field_146295_m;
-
-		this.field_146292_n.clear();
+		this.buttonList.clear();
 		int ypos = (height / 5);
 		int buttonwidth = 100;
 
@@ -95,11 +92,7 @@ public class SettingsGui extends bUploadGuiScreen {
 
 	@Override
 	public void actionPerformed(GuiButton button) {
-		performScreenshotAction(button.field_146127_k);
-	}
-
-	private void performScreenshotAction(int id) {
-		switch (id) {
+		switch (button.id) {
 			case SAVE_TO_HD: {
 				ConfigHandler.SAVE_FILE = m_saveToHDD.getChecked();
 				updatedSettings();
@@ -151,7 +144,7 @@ public class SettingsGui extends bUploadGuiScreen {
 
 	public void drawScreen(int i, int j, float f) {
 		drawBackground();
-		drawCenteredString(this.field_146289_q, TranslationManager.getTranslation("image.settings.title"), field_146294_l / 2, field_146295_m / 5 - 20, 0xffffff);
+		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.settings.title"), width / 2, height / 5 - 20, 0xffffff);
 		super.drawScreen(i, j, f);
 	}
 }
