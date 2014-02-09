@@ -19,16 +19,9 @@ package uk.codingbadgers.bUpload;
 
 import java.io.File;
 
-import net.minecraft.client.Minecraft;
-
-import uk.codingbadgers.bUpload.gui.UploadHistoryGUI;
-import uk.codingbadgers.bUpload.gui.bUploadGuiScreen;
 import uk.codingbadgers.bUpload.handlers.ConfigHandler;
-import uk.codingbadgers.bUpload.handlers.KeyBindingHandler;
-import uk.codingbadgers.bUpload.handlers.ScreenshotHandler;
 import uk.codingbadgers.bUpload.proxy.Proxy;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -37,8 +30,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 /**
  * The main mod class for bUpload, entry point for the whole mod.
@@ -71,8 +62,6 @@ public class bUpload {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		proxy.preInit(event);
-
-		FMLCommonHandler.instance().bus().register(this);
 	}
 
 	@EventHandler
@@ -88,17 +77,6 @@ public class bUpload {
 	@EventHandler
 	public void serverStop(FMLServerStoppingEvent event) {
 		ConfigHandler.save();
-	}
-
-	@SubscribeEvent
-	public void onKeyPress(KeyInputEvent event) {
-		Minecraft minecraft = Minecraft.getMinecraft();
-
-		if (KeyBindingHandler.onScreenShot.getIsKeyPressed()) {
-			ScreenshotHandler.handleScreenshot();
-		} else if (KeyBindingHandler.onUploadHistory.getIsKeyPressed() && minecraft.currentScreen == null) {
-			minecraft.displayGuiScreen(new UploadHistoryGUI(minecraft.currentScreen instanceof bUploadGuiScreen ? (bUploadGuiScreen) minecraft.currentScreen : null));
-		}
 	}
 
 }

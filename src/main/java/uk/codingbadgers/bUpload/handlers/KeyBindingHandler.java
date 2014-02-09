@@ -20,7 +20,7 @@ package uk.codingbadgers.bUpload.handlers;
 import org.lwjgl.input.Keyboard;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 import uk.codingbadgers.bUpload.gui.UploadHistoryGUI;
@@ -40,7 +40,7 @@ public class KeyBindingHandler {
 		ClientRegistry.registerKeyBinding(onUploadHistory);
 	}
 
-	@EventHandler
+	@SubscribeEvent
 	public void onKeyPress(KeyInputEvent event) {
 		System.out.println("EVENT");
 

@@ -15,6 +15,7 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 
+import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
@@ -28,8 +29,6 @@ import uk.codingbadgers.bUpload.handlers.auth.FTPAuthHandler.FTPUserData;
 import uk.codingbadgers.bUpload.manager.TranslationManager;
 
 public class FTPUploadHandler extends UploadHandler {
-
-	private static final int BINARY_TRANSFER_MODE = 0x02;
 
 	private static final Minecraft minecraft = Minecraft.getMinecraft();
 
@@ -58,7 +57,7 @@ public class FTPUploadHandler extends UploadHandler {
 			}
 
 			client.setListHiddenFiles(false);
-			client.setFileType(BINARY_TRANSFER_MODE);
+			client.setFileType(FTP.BINARY_FILE_TYPE);
 
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 			ImageIO.write(screen.image, ConfigHandler.IMAGE_FORMAT, os);

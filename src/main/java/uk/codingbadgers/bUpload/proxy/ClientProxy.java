@@ -3,12 +3,12 @@ package uk.codingbadgers.bUpload.proxy;
 import java.io.File;
 import java.io.IOException;
 
-import net.minecraftforge.common.MinecraftForge;
-
 import uk.codingbadgers.bUpload.bUpload;
 import uk.codingbadgers.bUpload.handlers.ConfigHandler;
 import uk.codingbadgers.bUpload.handlers.KeyBindingHandler;
 import uk.codingbadgers.bUpload.handlers.auth.AuthTypes;
+
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
@@ -27,7 +27,6 @@ public class ClientProxy implements Proxy {
 
 			AuthTypes.loadData();
 
-			MinecraftForge.EVENT_BUS.register(new KeyBindingHandler());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -35,6 +34,8 @@ public class ClientProxy implements Proxy {
 
 	@Override
 	public void load(FMLInitializationEvent event) {
+		FMLCommonHandler.instance().bus().register(this);
+		
 		new KeyBindingHandler();
 	}
 
