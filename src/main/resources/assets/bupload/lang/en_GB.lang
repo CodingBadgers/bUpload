@@ -14,8 +14,18 @@ image.disk.click=Click to open file...
 image.auth.login=Successfully logged in on %1$s as %2$s
 image.auth.logout=Successfully logged out from %1$s
 
+image.ftp.title=FTP Auth Handler
+
+image.imgur.title=Imgur Auth Handler
 image.imgur.login.ln1=Please enter the pin you were given
 image.imgur.login.ln2=from imgur
+
+image.imgur.result.ok=Ok
+
+image.imgur.confirm.ln1=You are currently logged in as %1$s
+image.imgur.confirm.ln2=Do you want to logout of this account?
+image.imgur.confirm.logout=Logout
+image.imgur.confirm.cancel=Cancel
 
 image.save.imgur=Save To Imgur
 image.save.ftp=Save To Ftp
@@ -23,6 +33,7 @@ image.save.hd=Save To File
 
 image.history.next=Next
 image.history.previous=Previous
+image.history.exit=Exit
 image.history.login=Login to Imgur
 image.history.settings=Settings
 image.history.open=Open saved image
@@ -55,3 +66,4 @@ image.auth.cancel=Cancel
 
 image.binding.history=Screenshot history
 image.binding.screenshot=Take advanced screenshot
+image.binding.group=bUpload

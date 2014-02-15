@@ -44,5 +44,8 @@ public class bUploadGuiScreen extends GuiScreen {
 		quad.draw();
 	}
 
+	public void resetGui() {
+	}
+
 
 }

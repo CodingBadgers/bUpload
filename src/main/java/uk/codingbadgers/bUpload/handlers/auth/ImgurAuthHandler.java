@@ -18,6 +18,7 @@ import org.apache.http.util.EntityUtils;
 
 import uk.codingbadgers.bUpload.handlers.MessageHandler;
 
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
@@ -51,8 +52,8 @@ public class ImgurAuthHandler extends AuthHandler {
 	@Override
 	public JsonObject getSaveData() throws IOException {
 		JsonObject object = new JsonObject();
-		object.add("username", new JsonPrimitive(data.username));
-		object.add("refresh_token", new JsonPrimitive(data.refreshToken));
+		object.add("username", data.username == null ? JsonNull.INSTANCE : new JsonPrimitive(data.username));
+		object.add("refresh_token", data.username == null ? JsonNull.INSTANCE : new JsonPrimitive(data.refreshToken));
 		return object;
 	}
 
@@ -63,16 +64,14 @@ public class ImgurAuthHandler extends AuthHandler {
 
 	@Override
 	public void refreshData(JsonObject node) throws IOException {
-		if (node == null) {
-			return;
-		}
-
-		if (node.has("refresh_token")) {
-			data.refreshToken = node.get("refresh_token").getAsString();
-		}
-
-		if (node.has("username")) {
-			data.username = node.get("username").getAsString();
+		if (node != null) {
+			if (node.has("refresh_token") && node.get("refresh_token").isJsonPrimitive()) {
+				data.refreshToken = node.get("refresh_token").getAsString();
+			}
+	
+			if (node.has("username") && node.get("username").isJsonPrimitive()) {
+				data.username = node.get("username").getAsString();
+			}
 		}
 
 		if (data.refreshToken == null || data.refreshToken.length() < 1) {
@@ -135,8 +134,7 @@ public class ImgurAuthHandler extends AuthHandler {
 		data.refreshToken = refresh;
 
 		try {
-			saveData();
-			refreshData();
+			refreshData(null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

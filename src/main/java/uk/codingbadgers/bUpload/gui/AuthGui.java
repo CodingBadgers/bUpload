@@ -1,6 +1,7 @@
 package uk.codingbadgers.bUpload.gui;
 
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 
 import uk.codingbadgers.bUpload.handlers.auth.AuthTypes;
@@ -20,7 +21,7 @@ public class AuthGui extends bUploadGuiScreen {
 	@Override
 	public void drawScreen(int i, int j, float f) {
 		drawBackground();
-		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.auth.title"), width / 2, height / 5 - 20, 0xffffff);
+		drawCenteredString(this.fontRendererObj, EnumChatFormatting.UNDERLINE + TranslationManager.getTranslation("image.auth.title"), width / 2, height / 5 - 20, 0xffffff);
 		super.drawScreen(i, j, f);
 	}
 

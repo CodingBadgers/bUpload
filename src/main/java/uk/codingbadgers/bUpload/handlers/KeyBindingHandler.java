@@ -32,8 +32,8 @@ import net.minecraft.client.settings.KeyBinding;
 
 public class KeyBindingHandler {
 
-	public static KeyBinding onScreenShot = new KeyBinding(TranslationManager.getTranslation("image.binding.screenshot"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_ADV_SS), TranslationManager.getTranslation("image.binding.screenshot"));
-	public static KeyBinding onUploadHistory = new KeyBinding(TranslationManager.getTranslation("image.binding.history"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_HISTORY), TranslationManager.getTranslation("image.binding.history"));
+	public static KeyBinding onScreenShot = new KeyBinding(TranslationManager.getTranslation("image.binding.screenshot"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_ADV_SS), TranslationManager.getTranslation("image.binding.group"));
+	public static KeyBinding onUploadHistory = new KeyBinding(TranslationManager.getTranslation("image.binding.history"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_HISTORY), TranslationManager.getTranslation("image.binding.group"));
 
 	public KeyBindingHandler() {
 		ClientRegistry.registerKeyBinding(onScreenShot);

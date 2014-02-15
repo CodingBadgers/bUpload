@@ -55,7 +55,7 @@ processResources () {
         expand ([
             'mod_version': project.config.mod_version,
             'minecraft_version': project.config.minecraft_version,
-			'mod_url': "http://www.minecraftforum.net/topic/1432205-16x-bupload-upload-screenshots-straight-to-imgurcom/"
+			'mod_url': config.mod_url
         ])
     }
 

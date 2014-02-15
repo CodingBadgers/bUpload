@@ -36,14 +36,12 @@ import cpw.mods.fml.common.event.FMLServerStoppingEvent;
  */
 @Mod(
 		modid = bUpload.MOD_NAME, 
-		name = bUpload.MOD_NAME, 
-		version = bUpload.MOD_VERSION, 
+		name = bUpload.MOD_NAME,
 		guiFactory = bUpload.GUI_FACTORY
 	)
 public class bUpload {
 
 	public static final String MOD_NAME = "bUpload";
-	public static final String MOD_VERSION = "Unknown Version Detected";
 	public static final String GUI_FACTORY = "uk.codingbadgers.bUpload.factory.GuiFactory";
 
 	@Instance(

@@ -12,7 +12,7 @@ public class FTPAuthHandler extends AuthHandler {
 		public String username;
 		public char[] password;
 		public String host;
-		public int port;
+		public int port = 21;
 	}
 
 	private FTPUserData data = new FTPUserData();

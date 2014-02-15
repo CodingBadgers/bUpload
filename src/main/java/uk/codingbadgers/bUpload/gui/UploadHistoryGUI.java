@@ -32,6 +32,7 @@ import uk.codingbadgers.bUpload.manager.TranslationManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiConfirmOpenLink;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
 public class UploadHistoryGUI extends bUploadGuiScreen {
@@ -42,14 +43,16 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 	private static final int PREVIOUS = 0;
 	private static final int NEXT = 1;
 	private static final int SETTINGS = 2;
+	private static final int EXIT = 3;
 
 	private int m_currentImage = 0;
 
-	/**
-	 * Default constructor
-	 */
-	public UploadHistoryGUI(bUploadGuiScreen screen) {
-		super(screen);
+	private GuiScreen screen;
+
+	public UploadHistoryGUI(GuiScreen screen) {
+		super(screen instanceof bUploadGuiScreen ? (bUploadGuiScreen) screen : null);
+		
+		this.screen = screen;
 	}
 
 	/**
@@ -57,9 +60,15 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 	 */
 	public void initGui() {
 		this.buttonList.clear();
-		addControl(new GuiButton(PREVIOUS, (width / 2) - (COTAINER_WIDTH / 2) - (70), ((height / 2) - (CONTAINER_HIGHT / 2) + CONTAINER_HIGHT) - 25, 60, 20, TranslationManager.getTranslation("image.history.previous")));
-		addControl(new GuiButton(NEXT, (width / 2) + (COTAINER_WIDTH / 2) + (10), ((height / 2) - (CONTAINER_HIGHT / 2) + CONTAINER_HIGHT) - 25, 60, 20, TranslationManager.getTranslation("image.history.next")));
-
+		
+		int buttonHeight = 20;
+		int buttonWidth = 50;
+		int ypos =  ((height / 2) - (CONTAINER_HIGHT / 2) + CONTAINER_HIGHT) - 25;
+		
+		addControl(new GuiButton(PREVIOUS, (width / 2) - (80), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.previous")));
+		addControl(new GuiButton(NEXT, (width / 2) + (30), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.next")));
+		addControl(new GuiButton(EXIT, (width / 2) - (25), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.exit")));
+		
 		addControl(new GuiButton(SETTINGS, (width / 2) + (COTAINER_WIDTH / 2) + (10), (this.height / 2) - (CONTAINER_HIGHT / 2) + 5, 60, 20, TranslationManager.getTranslation("image.history.settings")));
 	}
 
@@ -129,9 +138,13 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 
 				break;
 			}
+			
+			case EXIT: {
+				displayGuiScreen(this.screen);
+			}
 
 			case SETTINGS: {
-				displayGuiScreen(new SettingsGui(this));
+				displayGuiScreen(new SettingsGui(this.screen));
 				break;
 			}
 		}

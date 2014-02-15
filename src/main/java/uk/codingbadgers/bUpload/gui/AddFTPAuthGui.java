@@ -9,6 +9,7 @@ import uk.codingbadgers.bUpload.manager.TranslationManager;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.util.EnumChatFormatting;
 
 public class AddFTPAuthGui extends AddAuthGui {
 
@@ -87,8 +88,10 @@ public class AddFTPAuthGui extends AddAuthGui {
 	public void drawScreen(int i, int j, float k) {
 		drawBackground();
 		int textOffset = 24 / 2 - fontRendererObj.FONT_HEIGHT / 2;
-		int ypos = this.height / 5;
+		int ypos = (this.height / 4) - 12;
 
+		drawCenteredString(this.fontRendererObj, EnumChatFormatting.UNDERLINE + TranslationManager.getTranslation("image.ftp.title"), this.width / 2, ypos, 0xFFFFFF);
+		ypos += 24;
 		fontRendererObj.drawString(TranslationManager.getTranslation("image.auth.username"), this.width / 2 - 108, ypos + textOffset, 0xFFFFFF);
 		ypos += 24;
 		fontRendererObj.drawString(TranslationManager.getTranslation("image.auth.password"), this.width / 2 - 108, ypos + textOffset, 0xFFFFFF);
@@ -134,9 +137,11 @@ public class AddFTPAuthGui extends AddAuthGui {
 	public void initGui() {
 		int buttonWidth = 160;
 		int buttonHeight = 20;
-		int ypos = height / 5;
+		int ypos = height / 4;
 
 		FTPUserData data = FTPAuthHandler.getInstance().getUserData();
+
+		ypos += 12;
 		userTxtBox = new GuiTextField(this.fontRendererObj, this.width / 2 - (buttonWidth - 108), ypos, buttonWidth, buttonHeight);
 		userTxtBox.setText(data.username == null ? "" : data.username);
 		ypos += 24;
@@ -148,9 +153,7 @@ public class AddFTPAuthGui extends AddAuthGui {
 		ypos += 24;
 		portTxtBox = new GuiTextField(fontRendererObj, this.width / 2 - (buttonWidth - 108), ypos, buttonWidth, buttonHeight);
 		portTxtBox.setText("" + (data.port == -1 ? 21 : data.port));
-		ypos += 24;
-
-		ypos = (height / 5) * 4;
+		ypos += 48;
 
 		buttonWidth = 100;
 		this.buttonList.add(new GuiButton(ACCEPT, this.width / 2 - buttonWidth - 8, ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.auth.accept")));

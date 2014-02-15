@@ -105,7 +105,7 @@ public class GuiCheckBox extends GuiButton {
 		final int hoverState = getHoverState(field_146123_n);
 
 		// work out the local offset into the image atlas
-		final int localYoffset = hoverState == 2 ? 186 : (m_checked ? 146 : 166);
+		final int localYoffset = m_checked ? 146 : (hoverState == 2 ? 186 : 166);
 		final int hoverColor = enabled == false ? -6250336 : hoverState == 2 ? 16777120 : 14737632;
 		final int labelWidth = minecraft.fontRenderer.getStringWidth(displayString);
 		final int checkboxImageSize = 20;

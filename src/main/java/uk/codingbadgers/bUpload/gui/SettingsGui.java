@@ -23,6 +23,7 @@ import uk.codingbadgers.bUpload.manager.TranslationManager;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.EnumChatFormatting;
 
 public class SettingsGui extends bUploadGuiScreen {
 
@@ -118,7 +119,7 @@ public class SettingsGui extends bUploadGuiScreen {
 			}
 
 			case HISTORY: {
-				displayGuiScreen(new UploadHistoryGUI(this));
+				displayGuiScreen(new UploadHistoryGUI(this.screen));
 				break;
 			}
 
@@ -144,7 +145,7 @@ public class SettingsGui extends bUploadGuiScreen {
 
 	public void drawScreen(int i, int j, float f) {
 		drawBackground();
-		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.settings.title"), width / 2, height / 5 - 20, 0xffffff);
+		drawCenteredString(this.fontRendererObj, EnumChatFormatting.UNDERLINE +  TranslationManager.getTranslation("image.settings.title"), width / 2, height / 5 - 20, 0xffffff);
 		super.drawScreen(i, j, f);
 	}
 }

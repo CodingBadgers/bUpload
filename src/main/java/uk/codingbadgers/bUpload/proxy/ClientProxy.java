@@ -34,9 +34,7 @@ public class ClientProxy implements Proxy {
 
 	@Override
 	public void load(FMLInitializationEvent event) {
-		FMLCommonHandler.instance().bus().register(this);
-		
-		new KeyBindingHandler();
+		FMLCommonHandler.instance().bus().register(new KeyBindingHandler());
 	}
 
 }
