@@ -138,13 +138,14 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 
 				break;
 			}
-			
-			case EXIT: {
-				displayGuiScreen(this.screen);
-			}
 
 			case SETTINGS: {
 				displayGuiScreen(new SettingsGui(this.screen));
+				break;
+			}
+			
+			case EXIT: {
+				displayGuiScreen(this.screen);
 				break;
 			}
 		}

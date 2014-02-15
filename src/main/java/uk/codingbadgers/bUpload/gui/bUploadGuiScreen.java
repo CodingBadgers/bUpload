@@ -1,5 +1,7 @@
 package uk.codingbadgers.bUpload.gui;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -22,8 +24,9 @@ public class bUploadGuiScreen extends GuiScreen {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void addControl(GuiButton button) {
+	public GuiButton addControl(GuiButton button) {
 		this.buttonList.add(button);
+		return button;
 	}
 
 	public void displayGuiScreen(GuiScreen screen) {
@@ -36,6 +39,7 @@ public class bUploadGuiScreen extends GuiScreen {
 
 	public void drawTexturedModalRectSized(int x, int y, int u, int v, int width, int height, int uvwidth, int uvheight) {
 		Tessellator quad = Tessellator.instance;
+		GL11.glColor3f(255f, 255f, 255f);
 		quad.startDrawingQuads();
 		quad.addVertexWithUV((double) (x), (double) (y + height), (double) zLevel, (double) (u * SCALE), (double) ((v + uvheight) * SCALE));
 		quad.addVertexWithUV((double) (x + width), (double) (y + height), (double) zLevel, (double) ((u + uvwidth) * SCALE), (double) ((v + uvheight) * SCALE));

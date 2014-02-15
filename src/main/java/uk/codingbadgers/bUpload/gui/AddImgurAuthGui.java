@@ -22,6 +22,7 @@ import uk.codingbadgers.bUpload.manager.TranslationManager;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiConfirmOpenLink;
 import net.minecraft.client.gui.GuiTextField;
@@ -33,8 +34,12 @@ public class AddImgurAuthGui extends AddAuthGui {
 	private static final int ACCEPT = 0;
 	private static final int CANCEL = 1;
 	private GuiTextField pinCode;
+	private GuiButton btnAccept;
+	private GuiButton btnCancel;
 	
 	private boolean linkGiven = false;
+	private boolean busy = false;
+	private boolean init = false;
 
 	public AddImgurAuthGui(bUploadGuiScreen parent) {
 		super(parent);
@@ -54,12 +59,28 @@ public class AddImgurAuthGui extends AddAuthGui {
 	protected void actionPerformed(GuiButton button) {
 		switch (button.id) {
 			case ACCEPT:
-				try {
-					getAccessToken();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				parent.updateLogin();
+				busy = true;
+
+				this.pinCode.setEnabled(false);
+				this.btnAccept.enabled = false;
+				this.btnCancel.enabled = false;
+
+				Thread worker = new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						try {
+							getAccessToken();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						
+						parent.updateLogin();
+					}
+					
+				});
+				worker.start();
+				
 				break;
 			case CANCEL:
 				parent.updateLogin();
@@ -134,24 +155,45 @@ public class AddImgurAuthGui extends AddAuthGui {
 		int buttonWidth = 100;
 		int buttonHeight = 20;
 
-		addControl(new GuiButton(ACCEPT, this.width / 2 - buttonWidth - 8, this.height / 6 + 96, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.auth.accept")));
-		addControl(new GuiButton(CANCEL, this.width / 2 + 8, this.height / 6 + 96, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.auth.cancel")));
+		btnAccept = addControl(new GuiButton(ACCEPT, this.width / 2 - buttonWidth - 8, this.height / 6 + 96, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.auth.accept")));
+		btnCancel = addControl(new GuiButton(CANCEL, this.width / 2 + 8, this.height / 6 + 96, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.auth.cancel")));
 
 		pinCode = new GuiTextField(this.fontRendererObj, this.width / 2 - buttonWidth - 8, this.height / 6 + 64, buttonWidth * 2 + 16, buttonHeight);
+		init = true;
 	}
 
 	@Override
 	public void drawScreen(int par1, int par2, float par3) {
 		drawBackground();
+		
 		drawCenteredString(this.fontRendererObj, EnumChatFormatting.UNDERLINE + TranslationManager.getTranslation("image.imgur.title"), this.width / 2, this.height / 6 + 20, 0xFFFFFF);
-		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.imgur.login.ln1"), this.width / 2, this.height / 6 + 30, 0xFFFFFF);
-		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.imgur.login.ln2"), this.width / 2, this.height / 6 + 40, 0xFFFFFF);
+		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.imgur.login.ln1"), this.width / 2, this.height / 6 + 32, 0xFFFFFF);
+		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.imgur.login.ln2"), this.width / 2, this.height / 6 + 44, 0xFFFFFF);
+		
 		pinCode.drawTextBox();
 		super.drawScreen(par1, par2, par3);
+		
+		if (busy) {
+			int x = (this.width / 2) - 65;
+			int y = this.height / 6 + 66;
+			
+			Gui.drawRect(x, y, x + 130, y + 16, 0xBEBEBEFF);
+			
+			drawCenteredString(this.fontRendererObj, "Checking Authentication...", this.width / 2, y + 4, 0xFFFFFF);
+		}
 	}
 	
 	@Override
 	public void resetGui() {
+		if (!init) {
+			return;
+		}
+		
 		this.linkGiven = false;
+		this.busy = false;
+		
+		this.pinCode.setEnabled(true);
+		this.btnAccept.enabled = true;
+		this.btnCancel.enabled = true;
 	}
 }

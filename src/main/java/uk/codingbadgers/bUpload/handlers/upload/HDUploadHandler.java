@@ -60,7 +60,7 @@ public class HDUploadHandler extends UploadHandler {
 				message.appendSibling(url);
 
 				MessageHandler.sendChatMessage(message);
-				HistoryHandler.addUploadedImage(new UploadedImage(outputFile.getParent(), path, screenshot, true));
+				HistoryHandler.addUploadedImage(new UploadedImage(outputFile.getName().substring(0, outputFile.getName().length() - 4), path, screenshot, true));
 				return true;
 			}
 		}

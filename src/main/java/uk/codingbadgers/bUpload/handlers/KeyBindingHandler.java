@@ -24,7 +24,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 import uk.codingbadgers.bUpload.gui.UploadHistoryGUI;
-import uk.codingbadgers.bUpload.gui.bUploadGuiScreen;
 import uk.codingbadgers.bUpload.manager.TranslationManager;
 
 import net.minecraft.client.Minecraft;
@@ -42,14 +41,12 @@ public class KeyBindingHandler {
 
 	@SubscribeEvent
 	public void onKeyPress(KeyInputEvent event) {
-		System.out.println("EVENT");
-
 		Minecraft minecraft = Minecraft.getMinecraft();
 
 		if (onScreenShot.getIsKeyPressed()) {
 			ScreenshotHandler.handleScreenshot();
-		} else if (onScreenShot.getIsKeyPressed() && minecraft.currentScreen == null) {
-			minecraft.displayGuiScreen(new UploadHistoryGUI(minecraft.currentScreen instanceof bUploadGuiScreen ? (bUploadGuiScreen) minecraft.currentScreen : null));
+		} else if (onUploadHistory.getIsKeyPressed() && minecraft.currentScreen == null) {
+			minecraft.displayGuiScreen(new UploadHistoryGUI(null));
 		}
 	}
 
