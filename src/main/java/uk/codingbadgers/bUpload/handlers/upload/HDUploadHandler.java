@@ -41,7 +41,7 @@ public class HDUploadHandler extends UploadHandler {
 				}
 
 				try {
-					ImageIO.write(screenshot.image, ConfigHandler.IMAGE_FORMAT, outputFile);
+					ImageIO.write(screenshot.image, ConfigHandler.SAVE_FORMAT, outputFile);
 				} catch (IOException e) {
 					MessageHandler.sendChatMessage("image.upload.fail", e.getMessage());
 					e.printStackTrace();

@@ -60,7 +60,7 @@ public class FTPUploadHandler extends UploadHandler {
 			client.setFileType(FTP.BINARY_FILE_TYPE);
 
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
-			ImageIO.write(screen.image, ConfigHandler.IMAGE_FORMAT, os);
+			ImageIO.write(screen.image, ConfigHandler.SAVE_FORMAT, os);
 			InputStream fis = new ByteArrayInputStream(os.toByteArray());
 
 			String path = ConfigHandler.formatImagePath(minecraft);

@@ -16,7 +16,7 @@ public class ConfigHandler {
 	private static Configuration config;
 
 	/* Internal config counter */
-	public static int CONFIG_VERSION = 3;
+	public static int CONFIG_VERSION = 4;
 	public static boolean COPY_URL_TO_CLIPBOARD = false;
 
 	/* save */
@@ -34,9 +34,6 @@ public class ConfigHandler {
 	public static String KEYBIND_ADV_SS = "";
 	public static String KEYBIND_HISTORY = "";
 
-	/* image */
-	public static String IMAGE_FORMAT = "";
-
 	public static void loadConfig(File file) throws IOException {
 		ConfigHandler.config = new Configuration(file);
 		config.load();
@@ -45,10 +42,11 @@ public class ConfigHandler {
 		version.comment = "Do not change this value, it will reset your config";
 
 		if (version.getInt() != CONFIG_VERSION) {
-			FileUtils.copyFile(file, new File(file + ".outdated"));
+			FileUtils.copyFile(file, new File(file + ".out." + version.getInt()));
 			for (String string : config.getCategoryNames()) {
 				config.removeCategory(config.getCategory(string));
 			}
+			version.set(CONFIG_VERSION);
 		}
 
 		Property encrypt = config.get("auth", "encrypt", true);
@@ -60,7 +58,7 @@ public class ConfigHandler {
 		SAVE_IMGUR = config.get("save", "imgur", false).getBoolean(false);
 		SAVE_FILE = config.get("save", "file", false).getBoolean(false);
 		SAVE_PATH = config.get("save", "path", "${player}/${mode}/${server}/${date}${extention}").getString();
-		SAVE_FORMAT = config.get("save", "format","PNG").getString();
+		SAVE_FORMAT = config.get("save", "format", "PNG").getString();
 		SAVE_DATE_FORMAT = new SimpleDateFormat(config.get("save", "dateformat", "yyyy-MM-dd_HH.mm.ss").getString());
 
 		ENCRYPT_DATA = encrypt.getBoolean(true);
@@ -68,13 +66,12 @@ public class ConfigHandler {
 		KEYBIND_ADV_SS = config.get("keybindings", "advanced_screenshot", "F12").getString();
 		KEYBIND_HISTORY = config.get("keybindings", "history", "EQUALS").getString();
 
-		IMAGE_FORMAT = config.get("image", "format", "PNG").getString();
 		save();
 	}
 
 	public static void save() {
 		config.load();
-		config.get(Configuration.CATEGORY_GENERAL, "version", 1).set(CONFIG_VERSION);
+		config.get(Configuration.CATEGORY_GENERAL, "version", CONFIG_VERSION).set(CONFIG_VERSION);
 		config.get(Configuration.CATEGORY_GENERAL, "copy-to-clipboard", false).getBoolean(COPY_URL_TO_CLIPBOARD);
 
 		config.get("save", "ftp", false).set(SAVE_FTP);
@@ -89,7 +86,6 @@ public class ConfigHandler {
 		config.get("keybindings", "advanced_screenshot", "F12").set(KEYBIND_ADV_SS);
 		config.get("keybindings", "history", "EQUALS").set(KEYBIND_HISTORY);
 
-		config.get("image", "format", "").set(IMAGE_FORMAT);
 		config.save();
 	}
 
