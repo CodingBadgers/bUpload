@@ -19,7 +19,6 @@ public class HistoryHandler {
 			
 			for (UploadedImage image : m_uploadHistory) {
 				if (image.getName().equals(newImage.getName()) && image.getImageID() == newImage.getImageID()) {
-					System.out.println("Adding new source to image");
 					image.addSource(newImage.getSource());
 					return;
 				}
