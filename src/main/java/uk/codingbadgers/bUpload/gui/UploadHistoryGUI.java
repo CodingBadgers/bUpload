@@ -17,21 +17,17 @@
  */
 package uk.codingbadgers.bUpload.gui;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
+import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import uk.codingbadgers.bUpload.UploadedImage;
 import uk.codingbadgers.bUpload.handlers.HistoryHandler;
-import uk.codingbadgers.bUpload.handlers.MessageHandler;
+import uk.codingbadgers.bUpload.image.ImageSource;
+import uk.codingbadgers.bUpload.image.UploadedImage;
 import uk.codingbadgers.bUpload.manager.TranslationManager;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiConfirmOpenLink;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
@@ -58,6 +54,7 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 	/**
 	 * Initialise the gui, adding buttons to the screen
 	 */
+	@Override
 	public void initGui() {
 		this.buttonList.clear();
 		
@@ -79,6 +76,7 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 	 * @param
 	 * @param
 	 */
+	@Override
 	public void drawScreen(int i, int j, float f) {
 		Minecraft minecraft = Minecraft.getMinecraft();
 		drawBackground();
@@ -94,25 +92,26 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 			drawCenteredString(minecraft.fontRenderer, imageInfo.getName(), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + yOffset, 0xFFFFFFFF);
 			yOffset += 16;
 
-			if (!imageInfo.isLocal()) {
-				drawCenteredString(minecraft.fontRenderer, imageInfo.getUrl(), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + yOffset, 0xFFFFAA00);
-			} else {
-				drawCenteredString(minecraft.fontRenderer, TranslationManager.getTranslation("image.history.open"), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + yOffset, 0xFFFFAA00);
+			for (ImageSource source : imageInfo.getSources()) {
+				drawCenteredString(minecraft.fontRenderer, source.getDescription(), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + yOffset, 0xFFFFAA00);
+				yOffset += 12;
 			}
-
+			
 			// draw the image preview
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, imageInfo.getImageID());
 			drawTexturedModalRectSized((width / 2) - (COTAINER_WIDTH / 2) + 8, (height / 2) - (CONTAINER_HIGHT / 2) + 18, 0, 0, 160, 101, 256, 256);
 		} else {
 			drawCenteredString(minecraft.fontRenderer, TranslationManager.getTranslation("image.history.empty"), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + 132, 0xFFFFFFFF);
 		}
-
+		
 		super.drawScreen(i, j, f);
+		
 	}
 
 	/**
 	 * Called when a button is pressed by a user
 	 */
+	@Override
 	public void actionPerformed(GuiButton button) {
 		switch (button.id) {
 			case PREVIOUS: {
@@ -154,6 +153,7 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 	/**
 	 * Called when the mouse is clicked.
 	 */
+	@Override
 	protected void mouseClicked(int x, int y, int button) {
 		super.mouseClicked(x, y, button);
 
@@ -169,58 +169,20 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 			return;
 		}
 
-		if (y > ((height / 2) - (CONTAINER_HIGHT / 2)) + 158) {
+		if (y > ((height / 2) - (CONTAINER_HIGHT / 2)) + 182) {
 			return;
 		}
-
+		
+		int i = (y - ((height / 2) - (CONTAINER_HIGHT / 2) + 148)) / 12;
+		
 		UploadedImage imageInfo = HistoryHandler.getUploadedImage(m_currentImage);
 
 		if (imageInfo != null) {
-			if (!imageInfo.isLocal()) {
-				if (this.mc.gameSettings.chatLinksPrompt) {
-					displayGuiScreen(new GuiConfirmOpenLink(this, imageInfo.getUrl(), 0, false));
-				} else {
-					openUrl();
-				}
-			} else {
-				Desktop dt = Desktop.getDesktop();
-				try {
-					dt.open(new File(imageInfo.getUrl()));
-				} catch (IOException e) {
-					displayGuiScreen(null);
-					MessageHandler.sendChatMessage("image.history.open.fail.1");
-					MessageHandler.sendChatMessage("image.history.open.fail.2");
-					try {
-						dt.open(new File(imageInfo.getUrl().replace(imageInfo.getName(), "")));
-					} catch (IOException e1) {
-						MessageHandler.sendChatMessage("image.history.open.fail.3");
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * Called when the user clicks a button on the 'should i open that link'
-	 * gui
-	 */
-	public void confirmClicked(boolean openUrl, int par2) {
-		if (openUrl) {
-			openUrl();
-		}
-
-		displayGuiScreen(this);
-	}
-
-	public void openUrl() {
-		UploadedImage imageInfo = HistoryHandler.getUploadedImage(m_currentImage);
-
-		if (imageInfo != null) {
-			try {
-				Desktop dt = Desktop.getDesktop();
-				dt.browse(URI.create(imageInfo.getUrl()));
-			} catch (Throwable var4) {
-				var4.printStackTrace();
+			List<ImageSource> sources = imageInfo.getSources();
+			
+			if (i >= 0 && i < sources.size()) {
+				ImageSource source = imageInfo.getSources().get(i);
+				source.onClick();
 			}
 		}
 	}

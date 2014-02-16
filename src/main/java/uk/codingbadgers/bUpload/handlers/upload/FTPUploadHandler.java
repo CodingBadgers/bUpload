@@ -21,11 +21,14 @@ import org.apache.commons.net.ftp.FTPReply;
 
 import com.google.common.base.Splitter;
 
-import uk.codingbadgers.bUpload.Screenshot;
 import uk.codingbadgers.bUpload.handlers.ConfigHandler;
+import uk.codingbadgers.bUpload.handlers.HistoryHandler;
 import uk.codingbadgers.bUpload.handlers.MessageHandler;
 import uk.codingbadgers.bUpload.handlers.auth.FTPAuthHandler;
 import uk.codingbadgers.bUpload.handlers.auth.FTPAuthHandler.FTPUserData;
+import uk.codingbadgers.bUpload.image.FTPImageSource;
+import uk.codingbadgers.bUpload.image.Screenshot;
+import uk.codingbadgers.bUpload.image.UploadedImage;
 import uk.codingbadgers.bUpload.manager.TranslationManager;
 
 public class FTPUploadHandler extends UploadHandler {
@@ -37,7 +40,7 @@ public class FTPUploadHandler extends UploadHandler {
 	}
 
 	@Override
-	public boolean run(Screenshot screen) {
+	public boolean run(Screenshot screenshot) {
 		FTPClient client = new FTPClient();
 
 		try {
@@ -60,7 +63,7 @@ public class FTPUploadHandler extends UploadHandler {
 			client.setFileType(FTP.BINARY_FILE_TYPE);
 
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
-			ImageIO.write(screen.image, ConfigHandler.SAVE_FORMAT, os);
+			ImageIO.write(screenshot.image, ConfigHandler.SAVE_FORMAT, os);
 			InputStream fis = new ByteArrayInputStream(os.toByteArray());
 
 			String path = ConfigHandler.formatImagePath(minecraft);
@@ -76,6 +79,7 @@ public class FTPUploadHandler extends UploadHandler {
 				message.appendSibling(url);
 
 				MessageHandler.sendChatMessage(message);
+				HistoryHandler.addUploadedImage(new UploadedImage(path.substring(path.lastIndexOf(File.separator), path.length() - 4), path, screenshot, new FTPImageSource()));
 			} else {
 				MessageHandler.sendChatMessage("image.upload.fail", "FTP server", client.getReplyString());
 			}
@@ -105,5 +109,4 @@ public class FTPUploadHandler extends UploadHandler {
 			}
 		}
 	}
-
 }

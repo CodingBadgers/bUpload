@@ -42,7 +42,7 @@ import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 public class bUpload {
 
 	public static final String MOD_NAME = "bUpload";
-	public static final String GUI_FACTORY = "uk.codingbadgers.bUpload.factory.GuiFactory";
+	public static final String GUI_FACTORY = "uk.codingbadgers.bUpload.factory.ConfigGuiFactory";
 
 	@Instance(
 				bUpload.MOD_NAME
@@ -56,6 +56,7 @@ public class bUpload {
 	public static Proxy proxy;
 
 	public static File AUTH_DATABASE;
+	public static File HISTORY_DATABASE;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {

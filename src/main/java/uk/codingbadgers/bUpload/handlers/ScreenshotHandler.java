@@ -8,8 +8,8 @@ import net.minecraft.client.renderer.texture.TextureUtil;
 
 import org.lwjgl.BufferUtils;
 
-import uk.codingbadgers.bUpload.Screenshot;
 import uk.codingbadgers.bUpload.handlers.upload.UploadType;
+import uk.codingbadgers.bUpload.image.Screenshot;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL12.*;

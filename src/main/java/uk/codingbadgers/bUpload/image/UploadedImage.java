@@ -15,16 +15,21 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
-package uk.codingbadgers.bUpload;
+package uk.codingbadgers.bUpload.image;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import com.google.common.collect.ImmutableList;
 
 /**
  * Represents a saved image.
  */
 public class UploadedImage {
-	private final String m_name;
-	private final String m_url;
-	private final int m_imageID;
-	private final boolean m_localFile;
+	private final String name;
+	private final List<ImageSource> source;
+	private final int imageID;
 
 	/**
 	 * Instantiates a new uploaded image.
@@ -34,11 +39,10 @@ public class UploadedImage {
 	 * @param image the image
 	 * @param localFile the local file
 	 */
-	public UploadedImage(String name, String url, Screenshot image, boolean localFile) {
-		m_name = name;
-		m_url = url;
-		m_imageID = image.imageID;
-		m_localFile = localFile;
+	public UploadedImage(String name, String url, Screenshot image, ImageSource source) {
+		this.name = name;
+		this.imageID = image.imageID;
+		this.source = new ArrayList<ImageSource>(Arrays.asList(source));
 	}
 
 	/**
@@ -47,16 +51,7 @@ public class UploadedImage {
 	 * @return the name
 	 */
 	public String getName() {
-		return m_name;
-	}
-
-	/**
-	 * Gets the url.
-	 * 
-	 * @return the url
-	 */
-	public String getUrl() {
-		return m_url;
+		return name;
 	}
 
 	/**
@@ -65,15 +60,18 @@ public class UploadedImage {
 	 * @return the image id
 	 */
 	public int getImageID() {
-		return m_imageID;
+		return imageID;
 	}
 
-	/**
-	 * Checks if is local.
-	 * 
-	 * @return true, if is local
-	 */
-	public boolean isLocal() {
-		return m_localFile;
+	public ImageSource getSource() {
+		return source.get(0);
+	}
+	
+	public List<ImageSource> getSources() {
+		return ImmutableList.copyOf(source);
+	}
+	
+	public void addSource(ImageSource source) {
+		this.source.add(source);
 	}
 }

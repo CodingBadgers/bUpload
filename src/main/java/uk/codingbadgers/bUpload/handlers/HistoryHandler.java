@@ -3,7 +3,7 @@ package uk.codingbadgers.bUpload.handlers;
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.codingbadgers.bUpload.UploadedImage;
+import uk.codingbadgers.bUpload.image.UploadedImage;
 
 public class HistoryHandler {
 
@@ -16,6 +16,15 @@ public class HistoryHandler {
 	 */
 	public static void addUploadedImage(UploadedImage newImage) {
 		synchronized (m_uploadHistory) {
+			
+			for (UploadedImage image : m_uploadHistory) {
+				if (image.getName().equals(newImage.getName()) && image.getImageID() == newImage.getImageID()) {
+					System.out.println("Adding new source to image");
+					image.addSource(newImage.getSource());
+					return;
+				}
+			}
+			
 			m_uploadHistory.add(newImage);
 		}
 	}

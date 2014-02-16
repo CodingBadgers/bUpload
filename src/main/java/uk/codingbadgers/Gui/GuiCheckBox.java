@@ -105,16 +105,17 @@ public class GuiCheckBox extends GuiButton {
 		final int hoverState = getHoverState(field_146123_n);
 
 		// work out the local offset into the image atlas
-		final int localYoffset = m_checked ? 146 : (hoverState == 2 ? 186 : 166);
-		final int hoverColor = enabled == false ? -6250336 : hoverState == 2 ? 16777120 : 14737632;
+		final int localXoffset = m_checked ? 20 : 0;
+		final int localYoffset = hoverState == 2 ? 20 : 0;
+		final int hoverColor = enabled == false ? 0xA0A0A0 : hoverState == 2 ? 0xFFFFAA : 0xE0E0E0;
 		final int labelWidth = minecraft.fontRenderer.getStringWidth(displayString);
 		final int checkboxImageSize = 20;
 		final int xOffset = xPosition + checkboxImageSize + BOX_LABEL_SPACER + (((width - checkboxImageSize - BOX_LABEL_SPACER) / 2) - ((labelWidth) / 2));
 
 		drawString(minecraft.fontRenderer, displayString, xOffset, yPosition + (height - 8) / 2, hoverColor);
-		minecraft.renderEngine.bindTexture(new ResourceLocation("bUpload:textures/gui/tcb-gui.png"));
+		minecraft.renderEngine.bindTexture(new ResourceLocation("bUpload:textures/gui/checkbox.png"));
 		glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		drawTexturedModalRect(xPosition, yPosition, 0, localYoffset, checkboxImageSize, checkboxImageSize);
+		drawTexturedModalRect(xPosition, yPosition, localXoffset, localYoffset, checkboxImageSize, checkboxImageSize);
 	}
 
 	/**

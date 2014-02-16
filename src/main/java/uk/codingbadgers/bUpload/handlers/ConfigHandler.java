@@ -72,7 +72,7 @@ public class ConfigHandler {
 	public static void save() {
 		config.load();
 		config.get(Configuration.CATEGORY_GENERAL, "version", CONFIG_VERSION).set(CONFIG_VERSION);
-		config.get(Configuration.CATEGORY_GENERAL, "copy-to-clipboard", false).getBoolean(COPY_URL_TO_CLIPBOARD);
+		config.get(Configuration.CATEGORY_GENERAL, "copy-to-clipboard", false).set(COPY_URL_TO_CLIPBOARD);
 
 		config.get("save", "ftp", false).set(SAVE_FTP);
 		config.get("save", "imgur", false).set(SAVE_IMGUR);
@@ -95,7 +95,7 @@ public class ConfigHandler {
 		String server = "";
 		String date = SAVE_DATE_FORMAT.format(new Date()).toString();
 		
-		// for some reason player is null in the menu
+		// player is null in the menu
 		if (minecraft.thePlayer == null) {
 			player = "";
 			mode = "menu";

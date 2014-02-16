@@ -1,6 +1,6 @@
 package uk.codingbadgers.bUpload.handlers.upload;
 
-import uk.codingbadgers.bUpload.Screenshot;
+import uk.codingbadgers.bUpload.image.Screenshot;
 
 public abstract class UploadHandler implements Runnable {
 

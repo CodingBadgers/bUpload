@@ -17,6 +17,8 @@ image.auth.logout=Successfully logged out from %1$s
 image.ftp.title=FTP Auth Handler
 
 image.imgur.title=Imgur Auth Handler
+image.imgur.success=Successfully logged in as %1$s
+
 image.imgur.login.ln1=Please enter the pin you were given
 image.imgur.login.ln2=from imgur
 

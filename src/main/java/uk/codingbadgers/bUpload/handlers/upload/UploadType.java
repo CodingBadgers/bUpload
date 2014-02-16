@@ -2,7 +2,7 @@ package uk.codingbadgers.bUpload.handlers.upload;
 
 import java.lang.reflect.Constructor;
 
-import uk.codingbadgers.bUpload.Screenshot;
+import uk.codingbadgers.bUpload.image.Screenshot;
 
 public enum UploadType {
 

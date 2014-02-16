@@ -31,12 +31,13 @@ import org.apache.http.util.EntityUtils;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import uk.codingbadgers.bUpload.Screenshot;
-import uk.codingbadgers.bUpload.UploadedImage;
 import uk.codingbadgers.bUpload.handlers.ConfigHandler;
 import uk.codingbadgers.bUpload.handlers.HistoryHandler;
 import uk.codingbadgers.bUpload.handlers.MessageHandler;
 import uk.codingbadgers.bUpload.handlers.auth.ImgurAuthHandler;
+import uk.codingbadgers.bUpload.image.ImgurImageSource;
+import uk.codingbadgers.bUpload.image.Screenshot;
+import uk.codingbadgers.bUpload.image.UploadedImage;
 
 public class ImgurUploadHandler extends UploadHandler {
 
@@ -88,7 +89,7 @@ public class ImgurUploadHandler extends UploadHandler {
 			if (responce.has("success") && responce.get("success").getAsBoolean()) {
 				final String uploadUrl = responceData.get("link").getAsString();
 
-				HistoryHandler.addUploadedImage(new UploadedImage(title, uploadUrl, screen, false));
+				HistoryHandler.addUploadedImage(new UploadedImage(title, uploadUrl, screen, new ImgurImageSource(uploadUrl)));
 
 				IChatComponent message = new ChatComponentTranslation("image.upload.success");
 				IChatComponent url = new ChatComponentText("Imgur");

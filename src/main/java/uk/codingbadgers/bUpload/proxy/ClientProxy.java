@@ -20,6 +20,7 @@ public class ClientProxy implements Proxy {
 			ConfigHandler.loadConfig(event.getSuggestedConfigurationFile());
 			File configFolder = event.getSuggestedConfigurationFile().getParentFile();
 			bUpload.AUTH_DATABASE = new File(configFolder, "bUpload-auth.dtb");
+			bUpload.HISTORY_DATABASE = new File(configFolder, "bUpload-history.dtb");
 
 			if (!bUpload.AUTH_DATABASE.exists()) {
 				bUpload.AUTH_DATABASE.createNewFile();

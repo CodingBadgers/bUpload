@@ -114,7 +114,7 @@ public class AddImgurAuthGui extends AddAuthGui {
 		System.out.println(json);
 		String refresh = json.get("refresh_token").getAsString();
 		ImgurAuthHandler.getInstance().setTokens(refresh);
-		displayGuiScreen(new ImgurAuthSuccessScreen(parent, "Successfully logged in as " + ImgurAuthHandler.getInstance().getUsername()));
+		displayGuiScreen(new ImgurAuthSuccessScreen(parent, TranslationManager.getTranslation("image.imgur.success", EnumChatFormatting.GOLD + ImgurAuthHandler.getInstance().getUsername())));
 	}
 
 	@Override
@@ -174,12 +174,15 @@ public class AddImgurAuthGui extends AddAuthGui {
 		super.drawScreen(par1, par2, par3);
 		
 		if (busy) {
-			int x = (this.width / 2) - 65;
-			int y = this.height / 6 + 66;
+			String message = EnumChatFormatting.BOLD + TranslationManager.getTranslation("image.auth.process").trim();
+			int width = this.fontRendererObj.getStringWidth(message);
 			
-			Gui.drawRect(x, y, x + 130, y + 16, 0xBEBEBEFF);
+			int x = (this.width / 2) - ((width / 2) + 5);
+			int y = (this.height / 6) + 66;
 			
-			drawCenteredString(this.fontRendererObj, "Checking Authentication...", this.width / 2, y + 4, 0xFFFFFF);
+			Gui.drawRect(x, y, x + width + 10, y + (this.fontRendererObj.FONT_HEIGHT * 2) - 2, 0xBEBEBEFF);
+			
+			drawCenteredString(this.fontRendererObj, message, this.width / 2, y + 4, 0xFFFFFF);
 		}
 	}
 	

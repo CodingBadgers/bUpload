@@ -14,11 +14,12 @@ import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 
-import uk.codingbadgers.bUpload.Screenshot;
-import uk.codingbadgers.bUpload.UploadedImage;
 import uk.codingbadgers.bUpload.handlers.ConfigHandler;
 import uk.codingbadgers.bUpload.handlers.HistoryHandler;
 import uk.codingbadgers.bUpload.handlers.MessageHandler;
+import uk.codingbadgers.bUpload.image.HDImageSource;
+import uk.codingbadgers.bUpload.image.Screenshot;
+import uk.codingbadgers.bUpload.image.UploadedImage;
 
 public class HDUploadHandler extends UploadHandler {
 
@@ -60,7 +61,7 @@ public class HDUploadHandler extends UploadHandler {
 				message.appendSibling(url);
 
 				MessageHandler.sendChatMessage(message);
-				HistoryHandler.addUploadedImage(new UploadedImage(outputFile.getName().substring(0, outputFile.getName().length() - 4), path, screenshot, true));
+				HistoryHandler.addUploadedImage(new UploadedImage(outputFile.getName().substring(0, outputFile.getName().length() - 4), path, screenshot, new HDImageSource(outputFile)));
 				return true;
 			}
 		}
