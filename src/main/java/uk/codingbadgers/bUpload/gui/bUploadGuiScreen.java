@@ -20,7 +20,7 @@ public class bUploadGuiScreen extends GuiScreen {
 	protected void actionPerformed(GuiButton button) {
 	}
 
-	protected void updateLogin() {
+	public void updateLogin() {
 	}
 
 	@SuppressWarnings("unchecked")

@@ -1,4 +1,4 @@
-package uk.codingbadgers.bUpload.gui;
+package uk.codingbadgers.bUpload.gui.auth;
 
 import java.awt.Desktop;
 import java.io.IOException;
@@ -16,6 +16,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import uk.codingbadgers.bUpload.gui.bUploadGuiScreen;
 import uk.codingbadgers.bUpload.handlers.auth.ImgurAuthHandler;
 import uk.codingbadgers.bUpload.manager.TranslationManager;
 

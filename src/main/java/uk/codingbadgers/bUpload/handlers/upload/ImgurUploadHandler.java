@@ -58,7 +58,6 @@ public class ImgurUploadHandler extends UploadHandler {
 				description += "on " + data.serverIP + (data.field_82821_f != 25565 ? ":" + data.field_82821_f : "");
 			}
 
-
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ImageIO.write(screen.image, "png", baos);
 			String data = Base64.encodeBase64String(baos.toByteArray());

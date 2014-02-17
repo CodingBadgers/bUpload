@@ -1,4 +1,6 @@
-package uk.codingbadgers.bUpload.gui;
+package uk.codingbadgers.bUpload.gui.auth;
+
+import uk.codingbadgers.bUpload.gui.bUploadGuiScreen;
 
 public abstract class AddAuthGui extends bUploadGuiScreen {
 

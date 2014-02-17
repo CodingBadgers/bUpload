@@ -1,5 +1,6 @@
-package uk.codingbadgers.bUpload.gui;
+package uk.codingbadgers.bUpload.gui.auth;
 
+import uk.codingbadgers.bUpload.gui.bUploadGuiScreen;
 import uk.codingbadgers.bUpload.manager.TranslationManager;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.EnumChatFormatting;

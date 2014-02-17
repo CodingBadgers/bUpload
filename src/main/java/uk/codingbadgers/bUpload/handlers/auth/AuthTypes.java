@@ -6,15 +6,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import uk.codingbadgers.bUpload.bUpload;
-import uk.codingbadgers.bUpload.gui.AddAuthGui;
-import uk.codingbadgers.bUpload.gui.AddFTPAuthGui;
-import uk.codingbadgers.bUpload.gui.AddImgurAuthGui;
 import uk.codingbadgers.bUpload.gui.bUploadGuiScreen;
+import uk.codingbadgers.bUpload.gui.auth.AddAuthGui;
+import uk.codingbadgers.bUpload.gui.auth.AddFTPAuthGui;
+import uk.codingbadgers.bUpload.gui.auth.AddImgurAuthGui;
 import uk.codingbadgers.bUpload.manager.TranslationManager;
 
 public enum AuthTypes {
 
-	IMGUR(ImgurAuthHandler.class, AddImgurAuthGui.class), FTP(FTPAuthHandler.class, AddFTPAuthGui.class), ;
+	IMGUR(ImgurAuthHandler.class, AddImgurAuthGui.class), 
+	FTP(FTPAuthHandler.class, AddFTPAuthGui.class), 
+	;
 
 	private static Map<Integer, String> by_id = new HashMap<Integer, String>();
 	private static Map<AuthTypes, AuthHandler> handlercache = new HashMap<AuthTypes, AuthHandler>();

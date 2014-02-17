@@ -1,8 +1,9 @@
-package uk.codingbadgers.bUpload.gui;
+package uk.codingbadgers.bUpload.gui.auth;
 
 import org.lwjgl.input.Keyboard;
 
 import uk.codingbadgers.Gui.GuiPasswordField;
+import uk.codingbadgers.bUpload.gui.bUploadGuiScreen;
 import uk.codingbadgers.bUpload.handlers.auth.FTPAuthHandler;
 import uk.codingbadgers.bUpload.handlers.auth.FTPAuthHandler.FTPUserData;
 import uk.codingbadgers.bUpload.manager.TranslationManager;

@@ -1,10 +1,11 @@
-package uk.codingbadgers.bUpload.gui;
+package uk.codingbadgers.bUpload.gui.auth;
 
 import java.io.IOException;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.EnumChatFormatting;
+import uk.codingbadgers.bUpload.gui.bUploadGuiScreen;
 import uk.codingbadgers.bUpload.handlers.auth.ImgurAuthHandler;
 import uk.codingbadgers.bUpload.manager.TranslationManager;
 

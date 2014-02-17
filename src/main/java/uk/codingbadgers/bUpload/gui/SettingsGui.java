@@ -18,6 +18,7 @@
 package uk.codingbadgers.bUpload.gui;
 
 import uk.codingbadgers.Gui.GuiCheckBox;
+import uk.codingbadgers.bUpload.gui.auth.AuthGui;
 import uk.codingbadgers.bUpload.handlers.ConfigHandler;
 import uk.codingbadgers.bUpload.manager.TranslationManager;
 
