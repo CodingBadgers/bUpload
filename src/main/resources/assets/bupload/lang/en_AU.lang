@@ -1,0 +1,72 @@
+image.upload.ftp.incorrectlogin=Unknown login details given (%1$s)
+image.upload.ftp.cannotconnect=Cannot connect to server (%1$s)
+
+image.upload.start=Uploading image to %1$s...
+image.upload.fail=Failed to upload image to %1$s (%2$s)
+image.upload.noupload=No sources to upload to selected
+image.upload.success=Image uploaded to 
+image.upload.copy=Url copied to clipboard
+
+image.disk.fail=Failed to save image to disk
+image.disk.success=Saved image to disk
+image.disk.click=Click to open file...
+
+image.auth.process=Checking Authentication...
+image.auth.login=Successfully logged in on %1$s as %2$s
+image.auth.logout=Successfully logged out from %1$s
+
+image.ftp.title=FTP Auth Handler
+
+image.imgur.title=Imgur Auth Handler
+image.imgur.success=Successfully logged in as %1$s
+
+image.imgur.login.ln1=Please enter the pin you were given
+image.imgur.login.ln2=from imgur
+
+image.imgur.result.ok=Ok
+
+image.imgur.confirm.ln1=You are currently logged in as %1$s
+image.imgur.confirm.ln2=Do you want to logout of this account?
+image.imgur.confirm.logout=Logout
+image.imgur.confirm.cancel=Cancel
+
+image.save.imgur=Save To Imgur
+image.save.ftp=Save To Ftp
+image.save.hd=Save To File
+
+image.history.next=Next
+image.history.previous=Previous
+image.history.exit=Exit
+image.history.login=Login to Imgur
+image.history.settings=Settings
+image.history.open=Open saved image
+image.history.empty=No upload history
+image.history.open.fail.1=Failed to open image from disk
+image.history.open.fail.2=Opening file location instead...
+image.history.oepn.fail.3=Failed to open file location
+
+image.options.copy=Copy url to clipboard
+image.options.history=History
+image.options.cancel=Close
+image.options.login=Login to Imgur
+image.options.loggedIn=Welcome %1$s
+image.options.logout=Log Out
+image.options.auth=Auth Database
+image.options.title=bUpload - Advanced Screenshot Manager
+
+image.settings.title=bUpload Settings
+
+image.auth.title=Auth Database
+image.auth.type.ftp=FTP
+image.auth.type.imgur=Imgur
+image.auth.cancel=Done
+image.auth.username=Username
+image.auth.password=Password
+image.auth.host=Host
+image.auth.port=Port
+image.auth.accept=Accept
+image.auth.cancel=Cancel
+
+image.binding.history=Screenshot history
+image.binding.screenshot=Take advanced screenshot
+image.binding.group=bUpload
