@@ -16,13 +16,14 @@ public class ConfigHandler {
 	private static Configuration config;
 
 	/* Internal config counter */
-	public static int CONFIG_VERSION = 4;
+	public static int CONFIG_VERSION = 5;
 	public static boolean COPY_URL_TO_CLIPBOARD = false;
 
 	/* save */
 	public static boolean SAVE_FTP = false;
 	public static boolean SAVE_IMGUR = false;
 	public static boolean SAVE_FILE = false;
+	public static boolean SAVE_TWITTER = false;
 	public static String SAVE_PATH = "";
 	public static String SAVE_FORMAT = "";
 	public static SimpleDateFormat SAVE_DATE_FORMAT = null;
@@ -33,6 +34,7 @@ public class ConfigHandler {
 	/* keybindings */
 	public static String KEYBIND_ADV_SS = "";
 	public static String KEYBIND_HISTORY = "";
+
 
 	public static void loadConfig(File file) throws IOException {
 		ConfigHandler.config = new Configuration(file);
@@ -57,6 +59,7 @@ public class ConfigHandler {
 		SAVE_FTP = config.get("save", "ftp", false).getBoolean(false);
 		SAVE_IMGUR = config.get("save", "imgur", false).getBoolean(false);
 		SAVE_FILE = config.get("save", "file", false).getBoolean(false);
+		SAVE_TWITTER = config.get("save", "twitter", false).getBoolean(false);
 		SAVE_PATH = config.get("save", "path", "${player}/${mode}/${server}/${date}${extention}").getString();
 		SAVE_FORMAT = config.get("save", "format", "PNG").getString();
 		SAVE_DATE_FORMAT = new SimpleDateFormat(config.get("save", "dateformat", "yyyy-MM-dd_HH.mm.ss").getString());
@@ -77,6 +80,7 @@ public class ConfigHandler {
 		config.get("save", "ftp", false).set(SAVE_FTP);
 		config.get("save", "imgur", false).set(SAVE_IMGUR);
 		config.get("save", "file", false).set(SAVE_FILE);
+		config.get("save", "twitter", false).set(SAVE_TWITTER);
 		config.get("save", "path", "${player}/${mode}/${server}/${date}${extention}").set(SAVE_PATH);
 		config.get("save", "format", "PNG");
 		config.get("save", "dateformat", "yyyy-MM-dd_HH.mm.ss").set(SAVE_DATE_FORMAT.toPattern());

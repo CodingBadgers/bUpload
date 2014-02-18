@@ -51,11 +51,14 @@ public class HDUploadHandler extends UploadHandler {
 
 				IChatComponent message = new ChatComponentTranslation("image.upload.success");
 				IChatComponent url = new ChatComponentText("Disk");
+				IChatComponent tooltip = new ChatComponentTranslation("image.history.open")
+																.setChatStyle(new ChatStyle()
+																			.setColor(EnumChatFormatting.AQUA));
 				
 				url.setChatStyle(new ChatStyle()
 									.setColor(EnumChatFormatting.GOLD)
 									.setBold(true)
-									.setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ChatComponentTranslation("image.disk.click")))
+									.setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))
 									.setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, outputFile.getAbsolutePath())));
 				
 				message.appendSibling(url);

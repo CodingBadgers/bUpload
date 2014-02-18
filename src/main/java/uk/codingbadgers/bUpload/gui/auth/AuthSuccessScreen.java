@@ -5,14 +5,16 @@ import uk.codingbadgers.bUpload.manager.TranslationManager;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.EnumChatFormatting;
 
-public class ImgurAuthSuccessScreen extends bUploadGuiScreen {
+public class AuthSuccessScreen extends bUploadGuiScreen {
 
 	private static final int OK = 0;
 	private String result;
+	private String title;
 
-	public ImgurAuthSuccessScreen(bUploadGuiScreen screen, String message) {
+	public AuthSuccessScreen(bUploadGuiScreen screen, String title, String message) {
 		super(screen);
 		this.result = message;
+		this.title = title;
 	}
 
 	@Override
@@ -35,7 +37,7 @@ public class ImgurAuthSuccessScreen extends bUploadGuiScreen {
 	@Override
 	public void drawScreen(int par1, int par2, float par3) {
 		drawBackground();
-		drawCenteredString(this.fontRendererObj, EnumChatFormatting.UNDERLINE + TranslationManager.getTranslation("image.imgur.title"), this.width / 2, (this.height / 6) + 30, 0xFFFFFF);
+		drawCenteredString(this.fontRendererObj, EnumChatFormatting.UNDERLINE + title, this.width / 2, (this.height / 6) + 30, 0xFFFFFF);
 		drawCenteredString(this.fontRendererObj, this.result, this.width / 2, (this.height / 6) + 42, 0xFFFFFF);
 		super.drawScreen(par1, par2, par3);
 	}
