@@ -17,6 +17,7 @@
  */
 package uk.codingbadgers.bUpload.handlers;
 
+import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import org.lwjgl.input.Keyboard;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -33,6 +34,7 @@ public class KeyBindingHandler {
 
 	public static KeyBinding onScreenShot = new KeyBinding(TranslationManager.getTranslation("image.binding.screenshot"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_ADV_SS), TranslationManager.getTranslation("image.binding.group"));
 	public static KeyBinding onUploadHistory = new KeyBinding(TranslationManager.getTranslation("image.binding.history"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_HISTORY), TranslationManager.getTranslation("image.binding.group"));
+    private boolean handled = false;
 
 	public KeyBindingHandler() {
 		ClientRegistry.registerKeyBinding(onScreenShot);
@@ -40,14 +42,26 @@ public class KeyBindingHandler {
 	}
 
 	@SubscribeEvent
-	public void onKeyPress(KeyInputEvent event) {
+	public void onKeyPress(PlayerTickEvent event) {
 		Minecraft minecraft = Minecraft.getMinecraft();
 
-		if (onScreenShot.getIsKeyPressed()) {
+		if (Keyboard.isKeyDown(onScreenShot.getKeyCode())) {
+            if (handled) {
+                return;
+            }
+
 			ScreenshotHandler.handleScreenshot();
-		} else if (onUploadHistory.getIsKeyPressed() && minecraft.currentScreen == null) {
-			minecraft.displayGuiScreen(new UploadHistoryGUI(null));
-		}
+            handled = true;
+		} else {
+            handled = false;
+        }
 	}
+
+    @SubscribeEvent
+    public void onKeyInput(KeyInputEvent event) {
+        if (onUploadHistory.isPressed()) {
+            Minecraft.getMinecraft().displayGuiScreen(new UploadHistoryGUI(null));
+        }
+    }
 
 }
