@@ -5,3 +5,6 @@
 bin
 build
 eclipse
+*.iml
+*.ipr
+*.iws

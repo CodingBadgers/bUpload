@@ -2,6 +2,8 @@ buildscript {
     repositories {
         mavenCentral()
 		mavenLocal()
+        jcenter()
+		
         maven {
             name = "ForgeFS"
             url = "http://files.minecraftforge.net/maven"
@@ -12,11 +14,13 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.1-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:0.8'
     }
 }
 
 apply plugin: "forge"
+apply plugin: "shadow"
 
 // define the properties file
 ext.configFile = file "build.properties"
@@ -63,6 +67,38 @@ processResources () {
     from(sourceSets.main.resources.srcDirs) {
         exclude '**/*.info'
         exclude '**/*.properties'
+    }
+}
+
+shadow {
+    destinationDir "${buildDir}/libs/"
+	
+    artifactSet {
+        include 'org.apache.httpcomponents:httpclient:*'
+		include 'commons-net:commons-net:*'
+		include 'commons-codec:commons-codec:*'
+		include 'commons-logging:commons-logging*'
+		include 'org.apache.httpcomponents:httpcore:*'
+    }
+	
+    relocation {
+        pattern = 'org.apache.commons.codec'
+        shadedPattern = 'uk.codingbadgers.libs.org.apache.commons.codec'
+    }
+	
+    relocation {
+        pattern = 'org.apache.commons.logging'
+        shadedPattern = 'uk.codingbadgers.libs.org.apache.commons.logging'
+    }
+	
+    relocation {
+        pattern = 'org.apache.commons.net'
+        shadedPattern = 'uk.codingbadgers.libs.org.apache.commons.net'
+    }
+	
+    relocation {
+        pattern = 'org.apache.http'
+        shadedPattern = 'uk.codingbadgers.libs.org.apache.http'
     }
 }
 
