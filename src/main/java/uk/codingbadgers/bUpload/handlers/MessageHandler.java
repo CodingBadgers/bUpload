@@ -41,7 +41,7 @@ public class MessageHandler {
 		IChatComponent prefix = new ChatComponentText("[bUpload] ");
 		prefix.setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD));
 		IChatComponent main = new ChatComponentTranslation(key, elements);
-		main.setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD));
+		main.setChatStyle(new ChatStyle().setColor(EnumChatFormatting.WHITE));
 		chat.appendSibling(prefix);
 		chat.appendSibling(main);
 		

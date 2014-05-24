@@ -104,7 +104,7 @@ public class ImgurAuthHandler extends AuthHandler {
 		} else {
 			accessToken = null;
 			tokenExpire = null;
-			MessageHandler.sendChatMessage(object.get("data").getAsJsonObject().get("error").getAsString());
+			MessageHandler.sendChatMessage("image.auth.error", "imgur", object.get("data").getAsJsonObject().get("error").getAsString());
 		}
 	}
 

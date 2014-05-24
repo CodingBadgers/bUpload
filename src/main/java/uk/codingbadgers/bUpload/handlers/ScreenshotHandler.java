@@ -51,13 +51,13 @@ public class ScreenshotHandler {
 	}
 
 	private static void copyScreenBuffer(int[] buffer, int width, int height) {
-		int[] var3 = new int[width];
+		int[] tempBuffer = new int[width];
 		int halfHeight = height / 2;
 
 		for (int index = 0; index < halfHeight; ++index) {
-			System.arraycopy(buffer, index * width, var3, 0, width);
+			System.arraycopy(buffer, index * width, tempBuffer, 0, width);
 			System.arraycopy(buffer, (height - 1 - index) * width, buffer, index * width, width);
-			System.arraycopy(var3, 0, buffer, (height - 1 - index) * width, width);
+			System.arraycopy(tempBuffer, 0, buffer, (height - 1 - index) * width, width);
 		}
 	}
 
@@ -86,7 +86,8 @@ public class ScreenshotHandler {
 	}
 
 	private static void runHandler(UploadType type, Screenshot screen) {
-		Thread thread = new Thread(type.newHandler(screen));
+        MessageHandler.sendChatMessage("image.upload.start", type.toString().toLowerCase());
+        Thread thread = new Thread(type.newHandler(screen));
 		thread.start();
 	}
 }

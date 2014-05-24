@@ -56,7 +56,7 @@ public class HDUploadHandler extends UploadHandler {
 									.setColor(EnumChatFormatting.GOLD)
 									.setBold(true)
 									.setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ChatComponentTranslation("image.disk.click")))
-									.setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, outputFile.getAbsolutePath())));
+									.setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, path)));
 				
 				message.appendSibling(url);
 

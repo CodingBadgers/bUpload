@@ -43,7 +43,7 @@ image.history.open=Open saved image
 image.history.empty=No upload history
 image.history.open.fail.1=Failed to open image from disk
 image.history.open.fail.2=Opening file location instead...
-image.history.oepn.fail.3=Failed to open file location
+image.history.open.fail.3=Failed to open file location
 
 image.options.copy=Copy url to clipboard
 image.options.history=History
@@ -66,6 +66,7 @@ image.auth.host=Host
 image.auth.port=Port
 image.auth.accept=Accept
 image.auth.cancel=Cancel
+image.auth.error=Error logging into %1$s: %2$s
 
 image.binding.history=Screenshot history
 image.binding.screenshot=Take advanced screenshot

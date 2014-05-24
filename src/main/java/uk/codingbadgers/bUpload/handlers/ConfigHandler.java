@@ -108,7 +108,7 @@ public class ConfigHandler {
 				server = minecraft.getIntegratedServer().getFolderName();
 			} else {
 				mode = "multiplayer";
-				server = Minecraft.getMinecraft().func_147104_D().serverIP;
+				server = Minecraft.getMinecraft().func_147104_D().serverName;
 			}
 		}
 
@@ -120,6 +120,6 @@ public class ConfigHandler {
 		path = path.replace("${date}", date);
 		path = path.replace("${format}", SAVE_FORMAT.toLowerCase());
 		path = path.replace("${extention}", "." + SAVE_FORMAT.toLowerCase());
-		return path;
+		return "screenshots" + File.separatorChar + path;
 	}
 }
