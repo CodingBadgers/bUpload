@@ -10,12 +10,14 @@ import uk.codingbadgers.bUpload.gui.bUploadGuiScreen;
 import uk.codingbadgers.bUpload.gui.auth.AddAuthGui;
 import uk.codingbadgers.bUpload.gui.auth.AddFTPAuthGui;
 import uk.codingbadgers.bUpload.gui.auth.AddImgurAuthGui;
+import uk.codingbadgers.bUpload.gui.auth.AddTwitterAuthGui;
 import uk.codingbadgers.bUpload.manager.TranslationManager;
 
 public enum AuthTypes {
 
 	IMGUR(ImgurAuthHandler.class, AddImgurAuthGui.class), 
 	FTP(FTPAuthHandler.class, AddFTPAuthGui.class), 
+	TWITTER(TwitterAuthHandler.class, AddTwitterAuthGui.class), 
 	;
 
 	private static Map<Integer, String> by_id = new HashMap<Integer, String>();

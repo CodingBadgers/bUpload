@@ -31,15 +31,17 @@ public class SettingsGui extends bUploadGuiScreen {
 	private static final int SAVE_TO_HD = 1;
 	private static final int SAVE_TO_IMGUR = 2;
 	private static final int SAVE_TO_FTP = 3;
-	private static final int COPY_TO_CLIPBOARD = 4;
-	private static final int HISTORY = 5;
-	private static final int EXIT = 6;
-	private static final int AUTH = 7;
+	private static final int SAVE_TO_TWITTER = 4;
+	private static final int COPY_TO_CLIPBOARD = 5;
+	private static final int HISTORY = 6;
+	private static final int EXIT = 7;
+	private static final int AUTH = 8;
 
 	private GuiCheckBox m_copyToClipboard;
 	private GuiCheckBox m_saveToHDD;
 	private GuiCheckBox m_saveToImgur;
 	private GuiCheckBox m_saveToFtp;
+	private GuiCheckBox m_saveToTwitter;
 	private GuiButton m_auth;
 	
 	private GuiScreen screen;
@@ -74,6 +76,10 @@ public class SettingsGui extends bUploadGuiScreen {
 		m_saveToHDD.setChecked(ConfigHandler.SAVE_FILE);
 		addControl(m_saveToHDD);
 		ypos += 24;
+
+		m_saveToTwitter = new GuiCheckBox(SAVE_TO_TWITTER, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.save.twitter"));
+		m_saveToTwitter.setChecked(ConfigHandler.SAVE_TWITTER);
+		addControl(m_saveToTwitter);
 		ypos += 24;
 		buttonwidth = 160;
 
@@ -109,6 +115,12 @@ public class SettingsGui extends bUploadGuiScreen {
 
 			case SAVE_TO_FTP: {
 				ConfigHandler.SAVE_FTP = m_saveToFtp.getChecked();
+				updatedSettings();
+				break;
+			}
+
+			case SAVE_TO_TWITTER: {
+				ConfigHandler.SAVE_TWITTER = m_saveToTwitter.getChecked();
 				updatedSettings();
 				break;
 			}

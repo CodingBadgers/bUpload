@@ -21,7 +21,7 @@ image.imgur.title=Imgur Auth Handler
 image.imgur.success=Successfully logged in as %1$s
 
 image.imgur.login.ln1=Please enter the pin you were given
-image.imgur.login.ln2=from imgur
+image.imgur.login.ln2=from imgur.
 
 image.imgur.result.ok=Ok
 
@@ -30,9 +30,23 @@ image.imgur.confirm.ln2=Do you want to logout of this account?
 image.imgur.confirm.logout=Logout
 image.imgur.confirm.cancel=Cancel
 
+image.twitter.title=Twitter Auth Handler
+image.twitter.success=Successfully logged in as %1$s
+
+image.twitter.login.ln1=Please enter the pin you were given
+image.twitter.login.ln2=from twitter.
+
+image.twitter.result.ok=Ok
+
+image.twitter.confirm.ln1=You are currently logged in as %1$s
+image.twitter.confirm.ln2=Do you want to logout of this account?
+image.twitter.confirm.logout=Logout
+image.twitter.confirm.cancel=Cancel
+
 image.save.imgur=Save To Imgur
 image.save.ftp=Save To Ftp
 image.save.hd=Save To File
+image.save.twitter=Save To Twitter
 
 image.history.next=Next
 image.history.previous=Previous
@@ -41,6 +55,8 @@ image.history.login=Login to Imgur
 image.history.settings=Settings
 image.history.open=Open saved image
 image.history.empty=No upload history
+image.history.ftp=Image uploaded to FTP
+image.history.twitter=Open twitter status
 image.history.open.fail.1=Failed to open image from disk
 image.history.open.fail.2=Opening file location instead...
 image.history.open.fail.3=Failed to open file location
@@ -59,6 +75,7 @@ image.settings.title=bUpload Settings
 image.auth.title=Auth Database
 image.auth.type.ftp=FTP
 image.auth.type.imgur=Imgur
+image.auth.type.twitter=Twitter
 image.auth.cancel=Done
 image.auth.username=Username
 image.auth.password=Password

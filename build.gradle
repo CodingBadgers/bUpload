@@ -23,8 +23,9 @@ apply plugin: "forge"
 apply plugin: "shadow"
 
 dependencies {
-    compile 'org.apache.httpcomponents:httpclient:4.3.1'
+	compile 'org.apache.httpcomponents:httpclient:4.3.1'
 	compile 'commons-net:commons-net:3.3'
+	compile 'org.twitter4j:twitter4j-core:3.0.5'
 }
 
 ext {

@@ -9,6 +9,7 @@ public enum UploadType {
 	FTP(FTPUploadHandler.class), 
 	IMGUR(ImgurUploadHandler.class), 
 	FILE(HDUploadHandler.class), 
+	TWITTER(TwitterUploadHandler.class),
 	;
 
 	private Constructor<? extends UploadHandler> ctor;

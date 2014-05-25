@@ -80,6 +80,11 @@ public class ScreenshotHandler {
 			upload = true;
 		}
 
+		if (ConfigHandler.SAVE_TWITTER) {
+			runHandler(UploadType.TWITTER, screen);
+			upload = true;
+		}
+		
 		if (!upload) {
 			MessageHandler.sendChatMessage("image.upload.noupload");
 		}

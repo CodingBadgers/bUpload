@@ -3,25 +3,6 @@ package uk.codingbadgers.bUpload.gui.auth;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-
-import uk.codingbadgers.bUpload.gui.bUploadGuiScreen;
-import uk.codingbadgers.bUpload.handlers.auth.ImgurAuthHandler;
-import uk.codingbadgers.bUpload.manager.TranslationManager;
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -29,9 +10,15 @@ import net.minecraft.client.gui.GuiConfirmOpenLink;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.EnumChatFormatting;
 
-public class AddImgurAuthGui extends AddAuthGui {
+import twitter4j.TwitterException;
+import twitter4j.auth.AccessToken;
 
-	private static final String LOGIN_URL = "https://api.imgur.com/oauth2/authorize?client_id=" + ImgurAuthHandler.CLIENT_ID + "&response_type=pin&state=bUpload";
+import uk.codingbadgers.bUpload.gui.bUploadGuiScreen;
+import uk.codingbadgers.bUpload.handlers.auth.TwitterAuthHandler;
+import uk.codingbadgers.bUpload.manager.TranslationManager;
+
+public class AddTwitterAuthGui extends AddAuthGui {
+
 	private static final int ACCEPT = 0;
 	private static final int CANCEL = 1;
 	private GuiTextField pinCode;
@@ -42,7 +29,7 @@ public class AddImgurAuthGui extends AddAuthGui {
 	private boolean busy = false;
 	private boolean init = false;
 
-	public AddImgurAuthGui(bUploadGuiScreen parent) {
+	public AddTwitterAuthGui(bUploadGuiScreen parent) {
 		super(parent);
 	}
 
@@ -92,30 +79,17 @@ public class AddImgurAuthGui extends AddAuthGui {
 		}
 	}
 
-	private void getAccessToken() throws ClientProtocolException, IOException {
-		HttpPost post = new HttpPost("https://api.imgur.com/oauth2/token");
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
-		nameValuePairs.add(new BasicNameValuePair("client_id", ImgurAuthHandler.CLIENT_ID));
-		nameValuePairs.add(new BasicNameValuePair("client_secret", "d435f03cf62b7ec5589ae4f122354d4a435105d7"));
-		nameValuePairs.add(new BasicNameValuePair("grant_type", "pin"));
-		nameValuePairs.add(new BasicNameValuePair("pin", pinCode.getText()));
-		post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-		HttpClient client = HttpClientBuilder.create().build();
-		HttpResponse resp = client.execute(post);
-		String result = EntityUtils.toString(resp.getEntity());
-
-		JsonParser parser = new JsonParser();
-		JsonObject json = parser.parse(result).getAsJsonObject();
-
-		if (json.has("success") && !json.get("success").getAsBoolean()) {
-			displayGuiScreen(new AuthSuccessScreen(parent, TranslationManager.getTranslation("image.imgur.title"), json.get("data").getAsJsonObject().get("error").getAsString()));
+	private void getAccessToken() throws TwitterException {
+		TwitterAuthHandler twitter = TwitterAuthHandler.getInstance();
+		AccessToken access = twitter.getTwitterInstance().getOAuthAccessToken(TwitterAuthHandler.getInstance().getRequestToken(), pinCode.getText());
+		
+		if (access == null) {
+			displayGuiScreen(new AuthSuccessScreen(parent, TranslationManager.getTranslation("image.twitter.title"), TranslationManager.getTranslation("image.twitter.fail")));
 			return;
 		}
-
-		System.out.println(json);
-		String refresh = json.get("refresh_token").getAsString();
-		ImgurAuthHandler.getInstance().setTokens(refresh);
-		displayGuiScreen(new AuthSuccessScreen(parent, TranslationManager.getTranslation("image.imgur.title"), TranslationManager.getTranslation("image.imgur.success", EnumChatFormatting.GOLD + ImgurAuthHandler.getInstance().getUsername())));
+		
+		twitter.setAccessToken(access);
+		displayGuiScreen(new AuthSuccessScreen(parent, TranslationManager.getTranslation("image.twitter.title"), TranslationManager.getTranslation("image.twitter.success", EnumChatFormatting.GOLD + access.getScreenName())));
 	}
 
 	@Override
@@ -131,7 +105,7 @@ public class AddImgurAuthGui extends AddAuthGui {
 	private void openLink() {
 		try {
 			Desktop dt = Desktop.getDesktop();
-			dt.browse(URI.create(LOGIN_URL));
+			dt.browse(URI.create(TwitterAuthHandler.getInstance().getRequestToken().getAuthorizationURL()));
 			linkGiven = true;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -140,14 +114,14 @@ public class AddImgurAuthGui extends AddAuthGui {
 
 	@Override
 	public void initGui() {
-		if (ImgurAuthHandler.getInstance().isLoggedIn()) {
-			displayGuiScreen(new ImgurAuthConfirmScreen(this, this.parent));
+		if (TwitterAuthHandler.getInstance().isLoggedIn()) {
+			displayGuiScreen(new TwitterAuthConfirmScreen(this, this.parent));
 			return;
 		}
 		
 		if (!linkGiven) {
 			if (this.mc.gameSettings.chatLinksPrompt) {
-				displayGuiScreen(new GuiConfirmOpenLink(this, LOGIN_URL, 0, false));
+				displayGuiScreen(new GuiConfirmOpenLink(this, TwitterAuthHandler.getInstance().getRequestToken().getAuthorizationURL(), 0, false));
 			} else {
 				openLink();
 			}
@@ -167,9 +141,9 @@ public class AddImgurAuthGui extends AddAuthGui {
 	public void drawScreen(int par1, int par2, float par3) {
 		drawBackground();
 		
-		drawCenteredString(this.fontRendererObj, EnumChatFormatting.UNDERLINE + TranslationManager.getTranslation("image.imgur.title"), this.width / 2, this.height / 6 + 20, 0xFFFFFF);
-		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.imgur.login.ln1"), this.width / 2, this.height / 6 + 32, 0xFFFFFF);
-		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.imgur.login.ln2"), this.width / 2, this.height / 6 + 44, 0xFFFFFF);
+		drawCenteredString(this.fontRendererObj, EnumChatFormatting.UNDERLINE + TranslationManager.getTranslation("image.twitter.title"), this.width / 2, this.height / 6 + 20, 0xFFFFFF);
+		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.twitter.login.ln1"), this.width / 2, this.height / 6 + 32, 0xFFFFFF);
+		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.twitter.login.ln2"), this.width / 2, this.height / 6 + 44, 0xFFFFFF);
 		
 		pinCode.drawTextBox();
 		super.drawScreen(par1, par2, par3);
