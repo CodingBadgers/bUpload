@@ -71,11 +71,11 @@ shadow {
     destinationDir "${buildDir}/libs/"
 	
     artifactSet {
-        include 'org.apache.httpcomponents:httpclient:*'
+		include 'org.apache.httpcomponents:*:*'
 		include 'commons-net:commons-net:*'
 		include 'commons-codec:commons-codec:*'
 		include 'commons-logging:commons-logging*'
-		include 'org.apache.httpcomponents:httpcore:*'
+		include 'org.twitter4j:twitter4j-core:*'
     }
 	
     relocation {

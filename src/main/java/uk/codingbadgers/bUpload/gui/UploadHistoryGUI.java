@@ -33,8 +33,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class UploadHistoryGUI extends bUploadGuiScreen {
 
-	private static final int COTAINER_WIDTH = 176;
-	private static final int CONTAINER_HIGHT = 222;
+	private static final int CONTAINER_WIDTH = 176;
+	private static final int CONTAINER_HEIGHT = 222;
 
 	private static final int PREVIOUS = 0;
 	private static final int NEXT = 1;
@@ -60,13 +60,13 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 		
 		int buttonHeight = 20;
 		int buttonWidth = 50;
-		int ypos =  ((height / 2) - (CONTAINER_HIGHT / 2) + CONTAINER_HIGHT) - 25;
+		int ypos =  ((height / 2) - (CONTAINER_HEIGHT / 2) + CONTAINER_HEIGHT) - 25;
 		
 		addControl(new GuiButton(PREVIOUS, (width / 2) - (80), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.previous")));
 		addControl(new GuiButton(NEXT, (width / 2) + (30), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.next")));
 		addControl(new GuiButton(EXIT, (width / 2) - (25), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.exit")));
 		
-		addControl(new GuiButton(SETTINGS, (width / 2) + (COTAINER_WIDTH / 2) + (10), (this.height / 2) - (CONTAINER_HIGHT / 2) + 5, 60, 20, TranslationManager.getTranslation("image.history.settings")));
+		addControl(new GuiButton(SETTINGS, (width / 2) + (CONTAINER_WIDTH / 2) + (10), (this.height / 2) - (CONTAINER_HEIGHT / 2) + 5, 60, 20, TranslationManager.getTranslation("image.history.settings")));
 	}
 
 	/**
@@ -83,25 +83,25 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 		// load our container image
 		minecraft.renderEngine.bindTexture(new ResourceLocation("bUpload:textures/gui/bupload-history.png"));
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		drawTexturedModalRect((width / 2) - (COTAINER_WIDTH / 2), (height / 2) - (CONTAINER_HIGHT / 2), 0, 0, COTAINER_WIDTH, CONTAINER_HIGHT);
+		drawTexturedModalRect((width / 2) - (CONTAINER_WIDTH / 2), (height / 2) - (CONTAINER_HEIGHT / 2), 0, 0, CONTAINER_WIDTH, CONTAINER_HEIGHT);
 		UploadedImage imageInfo = HistoryHandler.getUploadedImage(m_currentImage);
 
 		if (imageInfo != null) {
 			// draw the image information
 			int yOffset = 132;
-			drawCenteredString(minecraft.fontRenderer, imageInfo.getName(), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + yOffset, 0xFFFFFFFF);
+			drawCenteredString(minecraft.fontRenderer, imageInfo.getName(), (width / 2), ((height / 2) - (CONTAINER_HEIGHT / 2)) + yOffset, 0xFFFFFFFF);
 			yOffset += 16;
 
 			for (ImageSource source : imageInfo.getSources()) {
-				drawCenteredString(minecraft.fontRenderer, source.getDescription(), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + yOffset, 0xFFFFAA00);
+				drawCenteredString(minecraft.fontRenderer, source.getDescription(), (width / 2), ((height / 2) - (CONTAINER_HEIGHT / 2)) + yOffset, 0xFFFFAA00);
 				yOffset += 12;
 			}
 			
 			// draw the image preview
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, imageInfo.getImageID());
-			drawTexturedModalRectSized((width / 2) - (COTAINER_WIDTH / 2) + 8, (height / 2) - (CONTAINER_HIGHT / 2) + 18, 0, 0, 160, 101, 256, 256);
+			drawTexturedModalRectSized((width / 2) - (CONTAINER_WIDTH / 2) + 8, (height / 2) - (CONTAINER_HEIGHT / 2) + 18, 0, 0, 160, 101, 256, 256);
 		} else {
-			drawCenteredString(minecraft.fontRenderer, TranslationManager.getTranslation("image.history.empty"), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + 132, 0xFFFFFFFF);
+			drawCenteredString(minecraft.fontRenderer, TranslationManager.getTranslation("image.history.empty"), (width / 2), ((height / 2) - (CONTAINER_HEIGHT / 2)) + 132, 0xFFFFFFFF);
 		}
 		
 		super.drawScreen(i, j, f);
@@ -157,23 +157,23 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 	protected void mouseClicked(int x, int y, int button) {
 		super.mouseClicked(x, y, button);
 
-		if (x < (width / 2) - (COTAINER_WIDTH / 2) + 12) {
+		if (x < (width / 2) - (CONTAINER_WIDTH / 2) + 12) {
 			return;
 		}
 
-		if (x > (width / 2) - (COTAINER_WIDTH / 2) + COTAINER_WIDTH - 12) {
+		if (x > (width / 2) - (CONTAINER_WIDTH / 2) + CONTAINER_WIDTH - 12) {
 			return;
 		}
 
-		if (y < ((height / 2) - (CONTAINER_HIGHT / 2)) + 148) {
+		if (y < ((height / 2) - (CONTAINER_HEIGHT / 2)) + 148) {
 			return;
 		}
 
-		if (y > ((height / 2) - (CONTAINER_HIGHT / 2)) + 182) {
+		if (y > ((height / 2) - (CONTAINER_HEIGHT / 2)) + 182) {
 			return;
 		}
 		
-		int i = (y - ((height / 2) - (CONTAINER_HIGHT / 2) + 148)) / 12;
+		int i = (y - ((height / 2) - (CONTAINER_HEIGHT / 2) + 148)) / 12;
 		
 		UploadedImage imageInfo = HistoryHandler.getUploadedImage(m_currentImage);
 

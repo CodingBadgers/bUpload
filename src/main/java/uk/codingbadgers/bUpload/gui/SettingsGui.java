@@ -36,13 +36,13 @@ public class SettingsGui extends bUploadGuiScreen {
 	private static final int HISTORY = 6;
 	private static final int EXIT = 7;
 	private static final int AUTH = 8;
+    private static final int UPLOAD_SETTINGS = 9;
 
 	private GuiCheckBox m_copyToClipboard;
 	private GuiCheckBox m_saveToHDD;
 	private GuiCheckBox m_saveToImgur;
 	private GuiCheckBox m_saveToFtp;
 	private GuiCheckBox m_saveToTwitter;
-	private GuiButton m_auth;
 	
 	private GuiScreen screen;
 
@@ -60,7 +60,6 @@ public class SettingsGui extends bUploadGuiScreen {
 		this.buttonList.clear();
 		int ypos = (height / 5);
 		int buttonwidth = 100;
-
 
 		m_saveToImgur = new GuiCheckBox(SAVE_TO_IMGUR, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.save.imgur"));
 		m_saveToImgur.setChecked(ConfigHandler.SAVE_IMGUR);
@@ -80,20 +79,14 @@ public class SettingsGui extends bUploadGuiScreen {
 		m_saveToTwitter = new GuiCheckBox(SAVE_TO_TWITTER, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.save.twitter"));
 		m_saveToTwitter.setChecked(ConfigHandler.SAVE_TWITTER);
 		addControl(m_saveToTwitter);
-		ypos += 24;
-		buttonwidth = 160;
+		ypos += 48;
+        buttonwidth = 85;
 
-		m_copyToClipboard = new GuiCheckBox(COPY_TO_CLIPBOARD, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.options.copy"));
-		m_copyToClipboard.setChecked(ConfigHandler.COPY_URL_TO_CLIPBOARD);
-		addControl(m_copyToClipboard);
-		ypos += 24;
+        addControl(new GuiButton(AUTH, width / 2 - buttonwidth - 5, ypos, buttonwidth, 20, TranslationManager.getTranslation("image.options.auth")));
+        addControl(new GuiButton(UPLOAD_SETTINGS, width / 2 + 5, ypos, buttonwidth, 20, "Upload Settings"/*TranslationManager.getTranslation("image.options.upload")*/));
+        ypos += 24;
 
-		m_auth = new GuiButton(AUTH, width / 2 - (buttonwidth / 2), ypos, 160, 20, TranslationManager.getTranslation("image.options.auth"));
-		addControl(m_auth);
-		ypos += 24;
-		buttonwidth = 75;
-
-		addControl(new GuiButton(HISTORY, width / 2 - 80, ypos, buttonwidth, 20, TranslationManager.getTranslation("image.options.history")));
+		addControl(new GuiButton(HISTORY, width / 2 - buttonwidth - 5, ypos, buttonwidth, 20, TranslationManager.getTranslation("image.options.history")));
 		addControl(new GuiButton(EXIT, width / 2 + 5, ypos, buttonwidth, 20, TranslationManager.getTranslation("image.options.cancel")));
 		ypos += 24;
 	}
@@ -125,11 +118,15 @@ public class SettingsGui extends bUploadGuiScreen {
 				break;
 			}
 
-			case COPY_TO_CLIPBOARD: {
-				ConfigHandler.COPY_URL_TO_CLIPBOARD = m_copyToClipboard.getChecked();
-				updatedSettings();
-				break;
-			}
+            case AUTH: {
+                displayGuiScreen(new AuthGui(this));
+                break;
+            }
+
+            case UPLOAD_SETTINGS: {
+                displayGuiScreen(new UploadSettingsGui(this));
+                break;
+            }
 
 			case HISTORY: {
 				displayGuiScreen(new UploadHistoryGUI(this.screen));
@@ -138,11 +135,6 @@ public class SettingsGui extends bUploadGuiScreen {
 
 			case EXIT: {
 				displayGuiScreen(this.screen);
-				break;
-			}
-
-			case AUTH: {
-				displayGuiScreen(new AuthGui(this));
 				break;
 			}
 

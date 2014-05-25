@@ -13,7 +13,7 @@ import net.minecraftforge.common.config.Property;
 
 public class ConfigHandler {
 
-	private static Configuration config;
+    private static Configuration config;
 
 	/* Internal config counter */
 	public static int CONFIG_VERSION = 5;
@@ -26,6 +26,7 @@ public class ConfigHandler {
 	public static boolean SAVE_TWITTER = false;
 	public static String SAVE_PATH = "";
 	public static String SAVE_FORMAT = "";
+    public static String SAVE_DESCRIPTION = "";
 	public static SimpleDateFormat SAVE_DATE_FORMAT = null;
 
 	/* Auth */
@@ -56,11 +57,13 @@ public class ConfigHandler {
 
 		COPY_URL_TO_CLIPBOARD = config.get(Configuration.CATEGORY_GENERAL, "copy-to-clipboard", false).getBoolean(false);
 
-		SAVE_FTP = config.get("save", "ftp", false).getBoolean(false);
-		SAVE_IMGUR = config.get("save", "imgur", false).getBoolean(false);
-		SAVE_FILE = config.get("save", "file", false).getBoolean(false);
-		SAVE_TWITTER = config.get("save", "twitter", false).getBoolean(false);
-		SAVE_PATH = config.get("save", "path", "${player}/${mode}/${server}/${date}${extention}").getString();
+		SAVE_FTP = config.get("sources", "ftp", false).getBoolean(false);
+		SAVE_IMGUR = config.get("sources", "imgur", false).getBoolean(false);
+		SAVE_FILE = config.get("sources", "file", false).getBoolean(false);
+		SAVE_TWITTER = config.get("sources", "twitter", false).getBoolean(false);
+
+		SAVE_PATH = config.get("save", "path", "${player}/${mode}/${server}/${date}${ext}").getString();
+		SAVE_DESCRIPTION = config.get("save", "description", "A minecraft screenshot taken by ${player} in ${gamemode} on ${server} at ${date}").getString();
 		SAVE_FORMAT = config.get("save", "format", "PNG").getString();
 		SAVE_DATE_FORMAT = new SimpleDateFormat(config.get("save", "dateformat", "yyyy-MM-dd_HH.mm.ss").getString());
 
@@ -77,11 +80,13 @@ public class ConfigHandler {
 		config.get(Configuration.CATEGORY_GENERAL, "version", CONFIG_VERSION).set(CONFIG_VERSION);
 		config.get(Configuration.CATEGORY_GENERAL, "copy-to-clipboard", false).set(COPY_URL_TO_CLIPBOARD);
 
-		config.get("save", "ftp", false).set(SAVE_FTP);
-		config.get("save", "imgur", false).set(SAVE_IMGUR);
-		config.get("save", "file", false).set(SAVE_FILE);
-		config.get("save", "twitter", false).set(SAVE_TWITTER);
-		config.get("save", "path", "${player}/${mode}/${server}/${date}${extention}").set(SAVE_PATH);
+		config.get("sources", "ftp", false).set(SAVE_FTP);
+		config.get("sources", "imgur", false).set(SAVE_IMGUR);
+		config.get("sources", "file", false).set(SAVE_FILE);
+		config.get("sources", "twitter", false).set(SAVE_TWITTER);
+
+		config.get("save", "path", "${player}/${mode}/${server}/${date}${ext}").set(SAVE_PATH);
+		config.get("save", "path", "A minecraft screenshot taken by ${player} in ${gamemode} on ${server} at ${date}").set(SAVE_DESCRIPTION);
 		config.get("save", "format", "PNG");
 		config.get("save", "dateformat", "yyyy-MM-dd_HH.mm.ss").set(SAVE_DATE_FORMAT.toPattern());
 
@@ -123,7 +128,7 @@ public class ConfigHandler {
 		path = path.replace("${server}", server);
 		path = path.replace("${date}", date);
 		path = path.replace("${format}", SAVE_FORMAT.toLowerCase());
-		path = path.replace("${extention}", "." + SAVE_FORMAT.toLowerCase());
+		path = path.replace("${ext}", "." + SAVE_FORMAT.toLowerCase());
 		return "screenshots" + File.separatorChar + path;
 	}
 }

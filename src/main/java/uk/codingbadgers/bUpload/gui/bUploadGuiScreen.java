@@ -39,7 +39,7 @@ public class bUploadGuiScreen extends GuiScreen {
 
 	public void drawTexturedModalRectSized(int x, int y, int u, int v, int width, int height, int uvwidth, int uvheight) {
 		Tessellator quad = Tessellator.instance;
-		GL11.glColor3f(255f, 255f, 255f);
+		GL11.glColor3f(1f, 1f, 1f);
 		quad.startDrawingQuads();
 		quad.addVertexWithUV((double) (x), (double) (y + height), (double) zLevel, (double) (u * SCALE), (double) ((v + uvheight) * SCALE));
 		quad.addVertexWithUV((double) (x + width), (double) (y + height), (double) zLevel, (double) ((u + uvwidth) * SCALE), (double) ((v + uvheight) * SCALE));

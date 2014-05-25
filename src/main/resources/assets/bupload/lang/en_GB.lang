@@ -68,9 +68,25 @@ image.options.login=Login to Imgur
 image.options.loggedIn=Welcome %1$s
 image.options.logout=Log Out
 image.options.auth=Auth Database
+image.options.upload=Upload Settings
 image.options.title=bUpload - Advanced Screenshot Manager
 
+image.settings.ok=Ok
+image.settings.cancel=Cancel
 image.settings.title=bUpload Settings
+
+image.settings.upload.title=Upload Settings
+image.settings.upload.path=Edit Image Path
+image.settings.upload.description=Edit Image Description
+
+image.edit.path.desc=Enter the path for screenshots to be saved to...
+image.edit.description.desc=Enter the description for screenshots to have...
+image.edit.macro.player=player
+image.edit.macro.gamemode=gamemode
+image.edit.macro.server=server name
+image.edit.macro.date=current date
+image.edit.macro.format=image format
+image.edit.macro.ext=file extention
 
 image.auth.title=Auth Database
 image.auth.type.ftp=FTP
