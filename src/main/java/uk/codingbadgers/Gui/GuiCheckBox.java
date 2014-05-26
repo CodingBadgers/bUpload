@@ -24,119 +24,123 @@ import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.glColor4f;
 
 @SideOnly(Side.CLIENT)
 public class GuiCheckBox extends GuiButton {
 
-	/** The current checked state of the check box */
-	private boolean m_checked = false;
+    /**
+     * The current checked state of the check box
+     */
+    private boolean m_checked = false;
 
-	/** The amount of space between the check box and its label */
-	private final static int BOX_LABEL_SPACER = 5;
+    /**
+     * The amount of space between the check box and its label
+     */
+    private final static int BOX_LABEL_SPACER = 5;
 
-	/**
-	 * Default check box constructor
-	 * 
-	 * @param id The id of the callback used in actionPerformed.
-	 * @param xPosition The x coordinate of the position of the check box
-	 * @param yPosition The y coordinate of the position of the check box
-	 * @param width The width of the check box
-	 * @param height The height of the check box
-	 * @param label The label of the check box
-	 */
-	public GuiCheckBox(int id, int xPosition, int yPosition, int width, int height, String label) {
-		super(id, xPosition, yPosition, width, height, label);
-	}
+    /**
+     * Default check box constructor
+     *
+     * @param id        The id of the callback used in actionPerformed.
+     * @param xPosition The x coordinate of the position of the check box
+     * @param yPosition The y coordinate of the position of the check box
+     * @param width     The width of the check box
+     * @param height    The height of the check box
+     * @param label     The label of the check box
+     */
+    public GuiCheckBox(int id, int xPosition, int yPosition, int width, int height, String label) {
+        super(id, xPosition, yPosition, width, height, label);
+    }
 
-	/**
-	 * Returns 0 if the check box is disabled, 1 if the mouse is NOT hovering
-	 * over this check box and 2 if it is hovering over this check box.
-	 * 
-	 * @param isMouseOver if the mouse is over the check box
-	 */
-	@Override
-	protected int getHoverState(boolean isMouseOver) {
-		if (!this.enabled) {
-			return 0;
-		}
+    /**
+     * Returns 0 if the check box is disabled, 1 if the mouse is NOT hovering
+     * over this check box and 2 if it is hovering over this check box.
+     *
+     * @param isMouseOver if the mouse is over the check box
+     */
+    @Override
+    protected int getHoverState(boolean isMouseOver) {
+        if (!this.enabled) {
+            return 0;
+        }
 
-		if (isMouseOver) {
-			return 2;
-		}
+        if (isMouseOver) {
+            return 2;
+        }
 
-		return 1;
-	}
+        return 1;
+    }
 
-	/**
-	 * Sets the current checked state of the check box
-	 * 
-	 * @param check True to set the checked state to true, false otherwise
-	 */
-	public void setChecked(boolean check) {
-		m_checked = check;
-	}
+    /**
+     * Sets the current checked state of the check box
+     *
+     * @param check True to set the checked state to true, false otherwise
+     */
+    public void setChecked(boolean check) {
+        m_checked = check;
+    }
 
-	/**
-	 * Get the current checked state of the check box
-	 * 
-	 * @return True if checked, false otherwise
-	 */
-	public boolean getChecked() {
-		return m_checked;
-	}
+    /**
+     * Get the current checked state of the check box
+     *
+     * @return True if checked, false otherwise
+     */
+    public boolean getChecked() {
+        return m_checked;
+    }
 
-	/**
-	 * Draws the check box to the screen.
-	 * 
-	 * @param minecraft The minecraft instance
-	 * @param mouseX The x coordinate of the mouse
-	 * @param mouseY The y coordinate of the mouse
-	 */
-	@Override
-	public void drawButton(Minecraft minecraft, int mouseX, int mouseY) {
-		if (!this.visible) {
-			return;
-		}
+    /**
+     * Draws the check box to the screen.
+     *
+     * @param minecraft The minecraft instance
+     * @param mouseX    The x coordinate of the mouse
+     * @param mouseY    The y coordinate of the mouse
+     */
+    @Override
+    public void drawButton(Minecraft minecraft, int mouseX, int mouseY) {
+        if (!this.visible) {
+            return;
+        }
 
-		// field_146123_n represents if the mouse is over the check box region
-		 this.field_146123_n = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
-         // get the hover state of the mouse and check box
-		final int hoverState = getHoverState(field_146123_n);
+        // field_146123_n represents if the mouse is over the check box region
+        this.field_146123_n = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
+        // get the hover state of the mouse and check box
+        final int hoverState = getHoverState(field_146123_n);
 
-		// work out the local offset into the image atlas
-		final int localXoffset = m_checked ? 20 : 0;
-		final int localYoffset = hoverState == 2 ? 20 : 0;
-		final int hoverColor = enabled == false ? 0xA0A0A0 : hoverState == 2 ? 0xFFFFAA : 0xE0E0E0;
-		final int labelWidth = minecraft.fontRenderer.getStringWidth(displayString);
-		final int checkboxImageSize = 20;
-		final int xOffset = xPosition + checkboxImageSize + BOX_LABEL_SPACER + (((width - checkboxImageSize - BOX_LABEL_SPACER) / 2) - ((labelWidth) / 2));
+        // work out the local offset into the image atlas
+        final int localXoffset = m_checked ? 20 : 0;
+        final int localYoffset = hoverState == 2 ? 20 : 0;
+        final int hoverColor = enabled == false ? 0xA0A0A0 : hoverState == 2 ? 0xFFFFAA : 0xE0E0E0;
+        final int labelWidth = minecraft.fontRenderer.getStringWidth(displayString);
+        final int checkboxImageSize = 20;
+        final int xOffset = xPosition + checkboxImageSize + BOX_LABEL_SPACER + (((width - checkboxImageSize - BOX_LABEL_SPACER) / 2) - ((labelWidth) / 2));
 
-		drawString(minecraft.fontRenderer, displayString, xOffset, yPosition + (height - 8) / 2, hoverColor);
-		minecraft.renderEngine.bindTexture(new ResourceLocation("bUpload:textures/gui/checkbox.png"));
-		glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		drawTexturedModalRect(xPosition, yPosition, localXoffset, localYoffset, checkboxImageSize, checkboxImageSize);
-	}
+        drawString(minecraft.fontRenderer, displayString, xOffset, yPosition + (height - 8) / 2, hoverColor);
+        minecraft.renderEngine.bindTexture(new ResourceLocation("bUpload:textures/gui/checkbox.png"));
+        glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        drawTexturedModalRect(xPosition, yPosition, localXoffset, localYoffset, checkboxImageSize, checkboxImageSize);
+    }
 
-	/**
-	 * Handle a mouse pressed event
-	 * 
-	 * @param handler the current sound handler
-	 */
-	@Override
-	public void func_146113_a(SoundHandler handler) {
-		m_checked = !m_checked;
-		super.func_146113_a(handler);
-	}
+    /**
+     * Handle a mouse pressed event
+     *
+     * @param handler the current sound handler
+     */
+    @Override
+    public void func_146113_a(SoundHandler handler) {
+        m_checked = !m_checked;
+        super.func_146113_a(handler);
+    }
 
-	/**
-	 * Gets whether the mouse is currently over the check box.
-	 * 
-	 * @return if the mouse is currently over the check box
-	 * @see {@link GuiButton#func_146115_a()}
-	 */
-	@Override
-	public boolean func_146115_a() {
-		return this.field_146123_n;
-	}
+    /**
+     * Gets whether the mouse is currently over the check box.
+     *
+     * @return if the mouse is currently over the check box
+     * @see {@link GuiButton#func_146115_a()}
+     */
+    @Override
+    public boolean func_146115_a() {
+        return this.field_146123_n;
+    }
 }

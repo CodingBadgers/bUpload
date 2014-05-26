@@ -1,9 +1,9 @@
 buildscript {
     repositories {
         mavenCentral()
-		mavenLocal()
+        mavenLocal()
         jcenter()
-		
+
         maven {
             name = "ForgeFS"
             url = "http://files.minecraftforge.net/maven"
@@ -34,7 +34,7 @@ configFile.withReader {
 
 dependencies {
     compile 'org.apache.httpcomponents:httpclient:4.3.1'
-	compile 'commons-net:commons-net:3.3'
+    compile 'commons-net:commons-net:3.3'
 }
 
 group = "uk.thecodingbadgers"
@@ -49,17 +49,17 @@ minecraft {
 // add some stuff to the version
 version = "${config.minecraft_version}-${config.mod_version}"
 
-processResources () {
+processResources() {
     // replace stuff in the files we want.
     from(sourceSets.main.resources.srcDirs) {
         include '**/*.info'
         include '**/*.properties'
 
         // replaces
-        expand ([
-            'mod_version': project.config.mod_version,
-            'minecraft_version': project.config.minecraft_version,
-			'mod_url': config.mod_url
+        expand([
+                'mod_version'      : project.config.mod_version,
+                'minecraft_version': project.config.minecraft_version,
+                'mod_url'          : config.mod_url
         ])
     }
 
@@ -72,30 +72,30 @@ processResources () {
 
 shadow {
     destinationDir "${buildDir}/libs/"
-	
+
     artifactSet {
         include 'org.apache.httpcomponents:httpclient:*'
-		include 'commons-net:commons-net:*'
-		include 'commons-codec:commons-codec:*'
-		include 'commons-logging:commons-logging*'
-		include 'org.apache.httpcomponents:httpcore:*'
+        include 'commons-net:commons-net:*'
+        include 'commons-codec:commons-codec:*'
+        include 'commons-logging:commons-logging*'
+        include 'org.apache.httpcomponents:httpcore:*'
     }
-	
+
     relocation {
         pattern = 'org.apache.commons.codec'
         shadedPattern = 'uk.codingbadgers.libs.org.apache.commons.codec'
     }
-	
+
     relocation {
         pattern = 'org.apache.commons.logging'
         shadedPattern = 'uk.codingbadgers.libs.org.apache.commons.logging'
     }
-	
+
     relocation {
         pattern = 'org.apache.commons.net'
         shadedPattern = 'uk.codingbadgers.libs.org.apache.commons.net'
     }
-	
+
     relocation {
         pattern = 'org.apache.http'
         shadedPattern = 'uk.codingbadgers.libs.org.apache.http'

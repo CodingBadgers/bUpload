@@ -17,173 +17,171 @@
  */
 package uk.codingbadgers.bUpload.gui;
 
-import java.util.List;
-
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
-
 import uk.codingbadgers.bUpload.handlers.HistoryHandler;
 import uk.codingbadgers.bUpload.image.ImageSource;
 import uk.codingbadgers.bUpload.image.UploadedImage;
 import uk.codingbadgers.bUpload.manager.TranslationManager;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ResourceLocation;
+import java.util.List;
 
 public class UploadHistoryGUI extends bUploadGuiScreen {
 
-	private static final int COTAINER_WIDTH = 176;
-	private static final int CONTAINER_HIGHT = 222;
+    private static final int COTAINER_WIDTH = 176;
+    private static final int CONTAINER_HIGHT = 222;
 
-	private static final int PREVIOUS = 0;
-	private static final int NEXT = 1;
-	private static final int SETTINGS = 2;
-	private static final int EXIT = 3;
+    private static final int PREVIOUS = 0;
+    private static final int NEXT = 1;
+    private static final int SETTINGS = 2;
+    private static final int EXIT = 3;
 
-	private int m_currentImage = 0;
+    private int m_currentImage = 0;
 
-	private GuiScreen screen;
+    private GuiScreen screen;
 
-	public UploadHistoryGUI(GuiScreen screen) {
-		super(screen instanceof bUploadGuiScreen ? (bUploadGuiScreen) screen : null);
-		
-		this.screen = screen;
-	}
+    public UploadHistoryGUI(GuiScreen screen) {
+        super(screen instanceof bUploadGuiScreen ? (bUploadGuiScreen) screen : null);
 
-	/**
-	 * Initialise the gui, adding buttons to the screen
-	 */
-	@Override
-	public void initGui() {
-		this.buttonList.clear();
-		
-		int buttonHeight = 20;
-		int buttonWidth = 50;
-		int ypos =  ((height / 2) - (CONTAINER_HIGHT / 2) + CONTAINER_HIGHT) - 25;
-		
-		addControl(new GuiButton(PREVIOUS, (width / 2) - (80), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.previous")));
-		addControl(new GuiButton(NEXT, (width / 2) + (30), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.next")));
-		addControl(new GuiButton(EXIT, (width / 2) - (25), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.exit")));
-		
-		addControl(new GuiButton(SETTINGS, (width / 2) + (COTAINER_WIDTH / 2) + (10), (this.height / 2) - (CONTAINER_HIGHT / 2) + 5, 60, 20, TranslationManager.getTranslation("image.history.settings")));
-	}
+        this.screen = screen;
+    }
 
-	/**
-	 * Draw the container image to the screen
-	 * 
-	 * @param
-	 * @param
-	 * @param
-	 */
-	@Override
-	public void drawScreen(int i, int j, float f) {
-		Minecraft minecraft = Minecraft.getMinecraft();
-		drawBackground();
-		// load our container image
-		minecraft.renderEngine.bindTexture(new ResourceLocation("bUpload:textures/gui/bupload-history.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		drawTexturedModalRect((width / 2) - (COTAINER_WIDTH / 2), (height / 2) - (CONTAINER_HIGHT / 2), 0, 0, COTAINER_WIDTH, CONTAINER_HIGHT);
-		UploadedImage imageInfo = HistoryHandler.getUploadedImage(m_currentImage);
+    /**
+     * Initialise the gui, adding buttons to the screen
+     */
+    @Override
+    public void initGui() {
+        this.buttonList.clear();
 
-		if (imageInfo != null) {
-			// draw the image information
-			int yOffset = 132;
-			drawCenteredString(minecraft.fontRenderer, imageInfo.getName(), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + yOffset, 0xFFFFFFFF);
-			yOffset += 16;
+        int buttonHeight = 20;
+        int buttonWidth = 50;
+        int ypos = ((height / 2) - (CONTAINER_HIGHT / 2) + CONTAINER_HIGHT) - 25;
 
-			for (ImageSource source : imageInfo.getSources()) {
-				drawCenteredString(minecraft.fontRenderer, source.getDescription(), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + yOffset, 0xFFFFAA00);
-				yOffset += 12;
-			}
-			
-			// draw the image preview
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, imageInfo.getImageID());
-			drawTexturedModalRectSized((width / 2) - (COTAINER_WIDTH / 2) + 8, (height / 2) - (CONTAINER_HIGHT / 2) + 18, 0, 0, 160, 101, 256, 256);
-		} else {
-			drawCenteredString(minecraft.fontRenderer, TranslationManager.getTranslation("image.history.empty"), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + 132, 0xFFFFFFFF);
-		}
-		
-		super.drawScreen(i, j, f);
-		
-	}
+        addControl(new GuiButton(PREVIOUS, (width / 2) - (80), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.previous")));
+        addControl(new GuiButton(NEXT, (width / 2) + (30), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.next")));
+        addControl(new GuiButton(EXIT, (width / 2) - (25), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.exit")));
 
-	/**
-	 * Called when a button is pressed by a user
-	 */
-	@Override
-	public void actionPerformed(GuiButton button) {
-		switch (button.id) {
-			case PREVIOUS: {
-				m_currentImage--;
+        addControl(new GuiButton(SETTINGS, (width / 2) + (COTAINER_WIDTH / 2) + (10), (this.height / 2) - (CONTAINER_HIGHT / 2) + 5, 60, 20, TranslationManager.getTranslation("image.history.settings")));
+    }
 
-				if (m_currentImage < 0) {
-					m_currentImage = HistoryHandler.uploadHistorySize() - 1;
-				}
+    /**
+     * Draw the container image to the screen
+     *
+     * @param
+     * @param
+     * @param
+     */
+    @Override
+    public void drawScreen(int i, int j, float f) {
+        Minecraft minecraft = Minecraft.getMinecraft();
+        drawBackground();
+        // load our container image
+        minecraft.renderEngine.bindTexture(new ResourceLocation("bUpload:textures/gui/bupload-history.png"));
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        drawTexturedModalRect((width / 2) - (COTAINER_WIDTH / 2), (height / 2) - (CONTAINER_HIGHT / 2), 0, 0, COTAINER_WIDTH, CONTAINER_HIGHT);
+        UploadedImage imageInfo = HistoryHandler.getUploadedImage(m_currentImage);
 
-				if (m_currentImage < 0) {
-					m_currentImage = 0;
-				}
+        if (imageInfo != null) {
+            // draw the image information
+            int yOffset = 132;
+            drawCenteredString(minecraft.fontRenderer, imageInfo.getName(), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + yOffset, 0xFFFFFFFF);
+            yOffset += 16;
 
-				break;
-			}
+            for (ImageSource source : imageInfo.getSources()) {
+                drawCenteredString(minecraft.fontRenderer, source.getDescription(), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + yOffset, 0xFFFFAA00);
+                yOffset += 12;
+            }
 
-			case NEXT: {
-				m_currentImage++;
+            // draw the image preview
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, imageInfo.getImageID());
+            drawTexturedModalRectSized((width / 2) - (COTAINER_WIDTH / 2) + 8, (height / 2) - (CONTAINER_HIGHT / 2) + 18, 0, 0, 160, 101, 256, 256);
+        } else {
+            drawCenteredString(minecraft.fontRenderer, TranslationManager.getTranslation("image.history.empty"), (width / 2), ((height / 2) - (CONTAINER_HIGHT / 2)) + 132, 0xFFFFFFFF);
+        }
 
-				if (m_currentImage >= HistoryHandler.uploadHistorySize()) {
-					m_currentImage = 0;
-				}
+        super.drawScreen(i, j, f);
 
-				break;
-			}
+    }
 
-			case SETTINGS: {
-				displayGuiScreen(new SettingsGui(this.screen));
-				break;
-			}
-			
-			case EXIT: {
-				displayGuiScreen(this.screen);
-				break;
-			}
-		}
-	}
+    /**
+     * Called when a button is pressed by a user
+     */
+    @Override
+    public void actionPerformed(GuiButton button) {
+        switch (button.id) {
+            case PREVIOUS: {
+                m_currentImage--;
 
-	/**
-	 * Called when the mouse is clicked.
-	 */
-	@Override
-	protected void mouseClicked(int x, int y, int button) {
-		super.mouseClicked(x, y, button);
+                if (m_currentImage < 0) {
+                    m_currentImage = HistoryHandler.uploadHistorySize() - 1;
+                }
 
-		if (x < (width / 2) - (COTAINER_WIDTH / 2) + 12) {
-			return;
-		}
+                if (m_currentImage < 0) {
+                    m_currentImage = 0;
+                }
 
-		if (x > (width / 2) - (COTAINER_WIDTH / 2) + COTAINER_WIDTH - 12) {
-			return;
-		}
+                break;
+            }
 
-		if (y < ((height / 2) - (CONTAINER_HIGHT / 2)) + 148) {
-			return;
-		}
+            case NEXT: {
+                m_currentImage++;
 
-		if (y > ((height / 2) - (CONTAINER_HIGHT / 2)) + 182) {
-			return;
-		}
-		
-		int i = (y - ((height / 2) - (CONTAINER_HIGHT / 2) + 148)) / 12;
-		
-		UploadedImage imageInfo = HistoryHandler.getUploadedImage(m_currentImage);
+                if (m_currentImage >= HistoryHandler.uploadHistorySize()) {
+                    m_currentImage = 0;
+                }
 
-		if (imageInfo != null) {
-			List<ImageSource> sources = imageInfo.getSources();
-			
-			if (i >= 0 && i < sources.size()) {
-				ImageSource source = imageInfo.getSources().get(i);
-				source.onClick();
-			}
-		}
-	}
+                break;
+            }
+
+            case SETTINGS: {
+                displayGuiScreen(new SettingsGui(this.screen));
+                break;
+            }
+
+            case EXIT: {
+                displayGuiScreen(this.screen);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Called when the mouse is clicked.
+     */
+    @Override
+    protected void mouseClicked(int x, int y, int button) {
+        super.mouseClicked(x, y, button);
+
+        if (x < (width / 2) - (COTAINER_WIDTH / 2) + 12) {
+            return;
+        }
+
+        if (x > (width / 2) - (COTAINER_WIDTH / 2) + COTAINER_WIDTH - 12) {
+            return;
+        }
+
+        if (y < ((height / 2) - (CONTAINER_HIGHT / 2)) + 148) {
+            return;
+        }
+
+        if (y > ((height / 2) - (CONTAINER_HIGHT / 2)) + 182) {
+            return;
+        }
+
+        int i = (y - ((height / 2) - (CONTAINER_HIGHT / 2) + 148)) / 12;
+
+        UploadedImage imageInfo = HistoryHandler.getUploadedImage(m_currentImage);
+
+        if (imageInfo != null) {
+            List<ImageSource> sources = imageInfo.getSources();
+
+            if (i >= 0 && i < sources.size()) {
+                ImageSource source = imageInfo.getSources().get(i);
+                source.onClick();
+            }
+        }
+    }
 }

@@ -4,17 +4,17 @@ import uk.codingbadgers.bUpload.manager.TranslationManager;
 
 public class FTPImageSource extends ImageSource {
 
-	public FTPImageSource() {
-		super(ImageSourceType.FTP);
-	}
+    public FTPImageSource() {
+        super(ImageSourceType.FTP);
+    }
 
-	@Override
-	public String getDescription() {
-		return TranslationManager.getTranslation("image.history.ftp");
-	}
+    @Override
+    public String getDescription() {
+        return TranslationManager.getTranslation("image.history.ftp");
+    }
 
-	@Override
-	public void onClick() {
-	}
+    @Override
+    public void onClick() {
+    }
 
 }
