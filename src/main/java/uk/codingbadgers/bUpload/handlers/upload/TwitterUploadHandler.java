@@ -2,6 +2,8 @@ package uk.codingbadgers.bUpload.handlers.upload;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.net.URI;
+import java.net.URL;
 import java.util.Date;
 
 import javax.imageio.ImageIO;
@@ -27,7 +29,9 @@ import uk.codingbadgers.bUpload.image.Screenshot;
 import uk.codingbadgers.bUpload.image.TwitterImageSource;
 import uk.codingbadgers.bUpload.image.UploadedImage;
 
-public class TwitterUploadHandler extends UploadHandler {
+public class TwitterUploadHandler extends UploadHandler implements URLProvider {
+
+    private URL url;
 
 	public TwitterUploadHandler(Screenshot screen) {
 		super(screen);
@@ -55,9 +59,10 @@ public class TwitterUploadHandler extends UploadHandler {
 			
 			Status status = TwitterAuthHandler.getInstance().getTwitterInstance().updateStatus(update);
 			TwitterImageSource source = new TwitterImageSource(status);
+            this.url = URI.create(source.getUrl()).toURL();
 			HistoryHandler.addUploadedImage(new UploadedImage(title, "", screenshot, source));
-		
-			IChatComponent message = new ChatComponentTranslation("image.upload.success");
+
+            IChatComponent message = new ChatComponentTranslation("image.upload.success");
 			IChatComponent url = new ChatComponentText("Twitter");
 			IChatComponent tooltip = new ChatComponentTranslation("image.history.twitter")
 												.setChatStyle(new ChatStyle()
@@ -82,4 +87,8 @@ public class TwitterUploadHandler extends UploadHandler {
 		}
 	}
 
+    @Override
+    public URL getUrl() {
+        return url;
+    }
 }

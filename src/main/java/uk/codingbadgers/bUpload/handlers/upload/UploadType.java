@@ -1,18 +1,21 @@
 package uk.codingbadgers.bUpload.handlers.upload;
 
 import java.lang.reflect.Constructor;
+import java.util.Locale;
 
+import com.google.common.base.Preconditions;
 import uk.codingbadgers.bUpload.image.Screenshot;
 
 public enum UploadType {
 
-	FTP(FTPUploadHandler.class), 
-	IMGUR(ImgurUploadHandler.class), 
-	FILE(HDUploadHandler.class), 
+	FTP(FTPUploadHandler.class),
+	IMGUR(ImgurUploadHandler.class),
+	FILE(HDUploadHandler.class),
 	TWITTER(TwitterUploadHandler.class),
 	;
 
 	private Constructor<? extends UploadHandler> ctor;
+    private boolean providesUrl;
 
 	private UploadType(Class<? extends UploadHandler> clazz) {
 		try {
@@ -20,9 +23,20 @@ public enum UploadType {
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
+
+        this.providesUrl = hasInterface(clazz, URLProvider.class);
 	}
 
-	public UploadHandler newHandler(Screenshot screen) {
+    private boolean hasInterface(Class<?> clazz, Class<?> superface) {
+        for (Class<?> current : clazz.getInterfaces()) {
+            if (current == superface) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public UploadHandler newHandler(Screenshot screen) {
 		try {
 			return ctor.newInstance(screen);
 		} catch (Throwable e) {
@@ -31,8 +45,20 @@ public enum UploadType {
 		return null;
 	}
 
+    public int getId() {
+        return ordinal();
+    }
+
+    public boolean providesUrl() {
+        return providesUrl;
+    }
+
+    public String toString() {
+        return name().toLowerCase(Locale.UK);
+    }
+
 	public static UploadHandler newHandler(String handlertype, Screenshot screen) {
-		UploadType type = valueOf(handlertype);
+		UploadType type = valueOf(handlertype.toUpperCase());
 
 		if (type == null) {
 			return null;
@@ -40,4 +66,9 @@ public enum UploadType {
 
 		return type.newHandler(screen);
 	}
+
+    public static UploadType getById(int id) {
+        Preconditions.checkArgument(id >= 0 && id < values().length, "Id must be between 0 and " + values().length);
+        return values()[id];
+    }
 }

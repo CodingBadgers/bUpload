@@ -1,12 +1,15 @@
 package uk.codingbadgers.bUpload.handlers.upload;
 
 import java.io.ByteArrayOutputStream;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.ServerData;
@@ -39,9 +42,11 @@ import uk.codingbadgers.bUpload.image.ImgurImageSource;
 import uk.codingbadgers.bUpload.image.Screenshot;
 import uk.codingbadgers.bUpload.image.UploadedImage;
 
-public class ImgurUploadHandler extends UploadHandler {
+public class ImgurUploadHandler extends UploadHandler implements URLProvider {
 
-	public ImgurUploadHandler(Screenshot screen) {
+    private URL url;
+
+    public ImgurUploadHandler(Screenshot screen) {
 		super(screen);
 	}
 
@@ -62,7 +67,7 @@ public class ImgurUploadHandler extends UploadHandler {
 			ImageIO.write(screen.image, "png", baos);
 			String data = Base64.encodeBase64String(baos.toByteArray());
 
-			List<NameValuePair> arguments = new ArrayList<NameValuePair>(3);
+			List<NameValuePair> arguments = Lists.newArrayListWithCapacity(8);
 			arguments.add(new BasicNameValuePair("client_id", ImgurAuthHandler.CLIENT_ID));
 			arguments.add(new BasicNameValuePair("image", data));
 			arguments.add(new BasicNameValuePair("type", "base64"));
@@ -82,11 +87,12 @@ public class ImgurUploadHandler extends UploadHandler {
 			HttpResponse resp = client.execute(hpost);
 			String result = EntityUtils.toString(resp.getEntity());
 
-			JsonObject responce = new JsonParser().parse(result).getAsJsonObject();
-			JsonObject responceData = responce.get("data").getAsJsonObject();
+			JsonObject response = new JsonParser().parse(result).getAsJsonObject();
+			JsonObject responseData = response.get("data").getAsJsonObject();
 
-			if (responce.has("success") && responce.get("success").getAsBoolean()) {
-				final String uploadUrl = responceData.get("link").getAsString();
+			if (response.has("success") && response.get("success").getAsBoolean()) {
+				final String uploadUrl = responseData.get("link").getAsString();
+                this.url = URI.create(uploadUrl).toURL();
 
 				HistoryHandler.addUploadedImage(new UploadedImage(title, uploadUrl, screen, new ImgurImageSource(uploadUrl)));
 
@@ -105,14 +111,9 @@ public class ImgurUploadHandler extends UploadHandler {
 				message.appendSibling(url);
 
 				MessageHandler.sendChatMessage(message);
-
-				if (ConfigHandler.COPY_URL_TO_CLIPBOARD) {
-					GuiScreen.setClipboardString(uploadUrl);
-					MessageHandler.sendChatMessage("image.upload.copy");
-				}
 			} else {
-				MessageHandler.sendChatMessage("image.upload.fail", "Imgur", responce.get("status").getAsInt());
-				MessageHandler.sendChatMessage(responceData.get("error").getAsString());
+				MessageHandler.sendChatMessage("image.upload.fail", "Imgur", response.get("status").getAsInt());
+				MessageHandler.sendChatMessage(responseData.get("error").getAsString());
 				return false;
 			}
 			return true;
@@ -123,4 +124,8 @@ public class ImgurUploadHandler extends UploadHandler {
 		}
 	}
 
+    @Override
+    public URL getUrl() {
+        return url;
+    }
 }

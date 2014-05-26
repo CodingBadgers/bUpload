@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.texture.TextureUtil;
 import org.lwjgl.BufferUtils;
 
 import uk.codingbadgers.bUpload.handlers.upload.UploadType;
+import uk.codingbadgers.bUpload.handlers.upload.UploadWorker;
 import uk.codingbadgers.bUpload.image.Screenshot;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -92,7 +93,7 @@ public class ScreenshotHandler {
 
 	private static void runHandler(UploadType type, Screenshot screen) {
         MessageHandler.sendChatMessage("image.upload.start", type.toString().toLowerCase());
-        Thread thread = new Thread(type.newHandler(screen));
+        Thread thread = new Thread(new UploadWorker(type, screen));
 		thread.start();
 	}
 }

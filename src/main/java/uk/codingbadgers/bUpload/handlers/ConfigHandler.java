@@ -10,6 +10,7 @@ import org.apache.commons.io.FileUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import uk.codingbadgers.bUpload.handlers.upload.UploadType;
 
 public class ConfigHandler {
 
@@ -18,12 +19,14 @@ public class ConfigHandler {
 	/* Internal config counter */
 	public static int CONFIG_VERSION = 5;
 	public static boolean COPY_URL_TO_CLIPBOARD = false;
+    public static UploadType SOURCE_TO_COPY = UploadType.IMGUR;
 
 	/* save */
 	public static boolean SAVE_FTP = false;
 	public static boolean SAVE_IMGUR = false;
 	public static boolean SAVE_FILE = false;
 	public static boolean SAVE_TWITTER = false;
+
 	public static String SAVE_PATH = "";
 	public static String SAVE_FORMAT = "";
     public static String SAVE_DESCRIPTION = "";
@@ -56,6 +59,7 @@ public class ConfigHandler {
 		encrypt.comment = "This will leave your passwords open to attack, do not use unless you know what you are doing";
 
 		COPY_URL_TO_CLIPBOARD = config.get(Configuration.CATEGORY_GENERAL, "copy-to-clipboard", false).getBoolean(false);
+        SOURCE_TO_COPY = UploadType.valueOf(config.get(Configuration.CATEGORY_GENERAL, "source-to-copy", "IMGUR").getString().toUpperCase());
 
 		SAVE_FTP = config.get("sources", "ftp", false).getBoolean(false);
 		SAVE_IMGUR = config.get("sources", "imgur", false).getBoolean(false);
@@ -79,6 +83,7 @@ public class ConfigHandler {
 		config.load();
 		config.get(Configuration.CATEGORY_GENERAL, "version", CONFIG_VERSION).set(CONFIG_VERSION);
 		config.get(Configuration.CATEGORY_GENERAL, "copy-to-clipboard", false).set(COPY_URL_TO_CLIPBOARD);
+        config.get(Configuration.CATEGORY_GENERAL, "source-to-copy", 0).set(SOURCE_TO_COPY.name());
 
 		config.get("sources", "ftp", false).set(SAVE_FTP);
 		config.get("sources", "imgur", false).set(SAVE_IMGUR);

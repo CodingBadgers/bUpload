@@ -4,11 +4,11 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.EnumChatFormatting;
 import uk.codingbadgers.Gui.GuiCheckBox;
 import uk.codingbadgers.Gui.GuiComboBox;
+import uk.codingbadgers.Gui.GuiComboBox.ComboBoxChangeListener;
 import uk.codingbadgers.bUpload.gui.edit.EditDescriptionGui;
 import uk.codingbadgers.bUpload.gui.edit.EditPathGui;
-import uk.codingbadgers.bUpload.gui.edit.EditStringGui;
-import uk.codingbadgers.bUpload.gui.edit.EditStringGui.EditStringCallback;
 import uk.codingbadgers.bUpload.handlers.ConfigHandler;
+import uk.codingbadgers.bUpload.handlers.upload.UploadType;
 import uk.codingbadgers.bUpload.manager.TranslationManager;
 
 public class UploadSettingsGui extends bUploadGuiScreen {
@@ -20,7 +20,7 @@ public class UploadSettingsGui extends bUploadGuiScreen {
     private static final int EDIT_DESCRIPTION = 5;
 
     private GuiCheckBox m_copyToClipboard;
-    private GuiComboBox m_comboBox;
+    private GuiComboBox<UploadType> m_comboBox;
 
     public UploadSettingsGui(bUploadGuiScreen parent) {
         super(parent);
@@ -45,9 +45,28 @@ public class UploadSettingsGui extends bUploadGuiScreen {
         addControl(m_copyToClipboard);
         ypos += 28;
 
-        m_comboBox = new GuiComboBox(width / 2 - (buttonWidth / 2), ypos, "Copy url from");
-        m_comboBox.addItem("Imgur");
-        m_comboBox.addItem("Twitter");
+        m_comboBox = new GuiComboBox<UploadType>(width / 2 - (buttonWidth / 2), ypos, "Copy url from");
+        m_comboBox.setChangeListener(new ComboBoxChangeListener<UploadType>() {
+            @Override
+            public void onSelectedChanged(UploadType uploadType) {
+                ConfigHandler.SOURCE_TO_COPY = uploadType;
+                ConfigHandler.save();
+            }
+        });
+
+        for (int i = 0; i < UploadType.values().length; i++) {
+            UploadType type = UploadType.getById(i);
+            if (!type.providesUrl()) {
+                continue;
+            }
+
+            m_comboBox.addItem(type);
+
+            if (type == ConfigHandler.SOURCE_TO_COPY) {
+                m_comboBox.setSelectedItem(type);
+            }
+        }
+
         ypos += 48;
 
         addControl(new GuiButton(EDIT_PATH, width / 2 - (buttonWidth / 2), ypos, buttonWidth, 20, TranslationManager.getTranslation("image.settings.upload.path")));
