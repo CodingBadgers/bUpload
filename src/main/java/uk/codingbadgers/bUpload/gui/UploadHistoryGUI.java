@@ -17,6 +17,7 @@
  */
 package uk.codingbadgers.bUpload.gui;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
@@ -33,15 +34,16 @@ import net.minecraft.util.ResourceLocation;
 
 public class UploadHistoryGUI extends bUploadGuiScreen {
 
-	private static final int CONTAINER_WIDTH = 176;
+    private static final int CONTAINER_WIDTH = 176;
 	private static final int CONTAINER_HEIGHT = 222;
 
 	private static final int PREVIOUS = 0;
 	private static final int NEXT = 1;
 	private static final int SETTINGS = 2;
 	private static final int EXIT = 3;
+    public static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation("bUpload:textures/gui/bupload-history.png");
 
-	private int m_currentImage = 0;
+    private int m_currentImage = 0;
 
 	private GuiScreen screen;
 
@@ -77,38 +79,51 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 	 * @param
 	 */
 	@Override
-	public void drawScreen(int i, int j, float f) {
+	public void drawScreen(int mouseX, int mouseY, float f) {
 		Minecraft minecraft = Minecraft.getMinecraft();
 		drawBackground();
-		// load our container image
-		minecraft.renderEngine.bindTexture(new ResourceLocation("bUpload:textures/gui/bupload-history.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		drawTexturedModalRect((width / 2) - (CONTAINER_WIDTH / 2), (height / 2) - (CONTAINER_HEIGHT / 2), 0, 0, CONTAINER_WIDTH, CONTAINER_HEIGHT);
-		UploadedImage imageInfo = HistoryHandler.getUploadedImage(m_currentImage);
+        int xPos = (width / 2) - (CONTAINER_WIDTH / 2);
+        int yPos = (height / 2) - (CONTAINER_HEIGHT / 2);
 
+        // load our container image
+		minecraft.renderEngine.bindTexture(BACKGROUND_TEXTURE);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        drawTexturedModalRect(xPos, yPos, 0, 0, CONTAINER_WIDTH, CONTAINER_HEIGHT);
+
+		UploadedImage imageInfo = HistoryHandler.getUploadedImage(m_currentImage);
+        super.drawScreen(mouseX, mouseY, f);
+
+        drawRect(xPos + 8, yPos + 144, xPos + 168, yPos + 144 + (4 * 10), -1);
 		if (imageInfo != null) {
 			// draw the image information
 			int yOffset = 132;
-			drawCenteredString(minecraft.fontRenderer, imageInfo.getName(), (width / 2), ((height / 2) - (CONTAINER_HEIGHT / 2)) + yOffset, 0xFFFFFFFF);
-			yOffset += 16;
+			drawCenteredString(minecraft.fontRenderer, imageInfo.getName(), (width / 2), yPos + yOffset, 0xFFFFFFFF);
+			yOffset += 12;
 
+            int sources = 0;
 			for (ImageSource source : imageInfo.getSources()) {
-				drawCenteredString(minecraft.fontRenderer, source.getDescription(), (width / 2), ((height / 2) - (CONTAINER_HEIGHT / 2)) + yOffset, 0xFFFFAA00);
-				yOffset += 12;
+				drawCenteredString(minecraft.fontRenderer, source.getDescription(), (width / 2), yPos + yOffset, 0xFFFFAA00);
+				yOffset += 10;
+                sources++;
 			}
 			
 			// draw the image preview
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, imageInfo.getImageID());
-			drawTexturedModalRectSized((width / 2) - (CONTAINER_WIDTH / 2) + 8, (height / 2) - (CONTAINER_HEIGHT / 2) + 18, 0, 0, 160, 101, 256, 256);
+			drawTexturedModalRectSized(xPos + 8, yPos + 18, 0, 0, 160, 101, 256, 256);
+
+            if (inBounds(mouseX, mouseY)) {
+                int hover = (int) Math.floor((mouseY - ((height / 2) - (CONTAINER_HEIGHT / 2) + 140)) / 12);
+
+                if (imageInfo.getSources().get(hover).hasTooltip() && hover >= 0 && hover < imageInfo.getSources().size()) {
+                    drawHoveringText(Arrays.asList(imageInfo.getSources().get(hover).getTooltip()), mouseX, mouseY, mc.fontRenderer);
+                }
+            }
 		} else {
-			drawCenteredString(minecraft.fontRenderer, TranslationManager.getTranslation("image.history.empty"), (width / 2), ((height / 2) - (CONTAINER_HEIGHT / 2)) + 132, 0xFFFFFFFF);
+			drawCenteredString(minecraft.fontRenderer, TranslationManager.getTranslation("image.history.empty"), (width / 2), yPos + 132, 0xFFFFFFFF);
 		}
-		
-		super.drawScreen(i, j, f);
-		
 	}
 
-	/**
+    /**
 	 * Called when a button is pressed by a user
 	 */
 	@Override
@@ -157,23 +172,11 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 	protected void mouseClicked(int x, int y, int button) {
 		super.mouseClicked(x, y, button);
 
-		if (x < (width / 2) - (CONTAINER_WIDTH / 2) + 12) {
-			return;
-		}
-
-		if (x > (width / 2) - (CONTAINER_WIDTH / 2) + CONTAINER_WIDTH - 12) {
-			return;
-		}
-
-		if (y < ((height / 2) - (CONTAINER_HEIGHT / 2)) + 148) {
-			return;
-		}
-
-		if (y > ((height / 2) - (CONTAINER_HEIGHT / 2)) + 182) {
-			return;
-		}
+        if (!this.inBounds(x, y)) {
+            return;
+        }
 		
-		int i = (y - ((height / 2) - (CONTAINER_HEIGHT / 2) + 148)) / 12;
+		int i = (y - ((height / 2) - (CONTAINER_HEIGHT / 2) + 140)) / 10;
 		
 		UploadedImage imageInfo = HistoryHandler.getUploadedImage(m_currentImage);
 
@@ -186,4 +189,25 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
 			}
 		}
 	}
+
+    private boolean inBounds(int x, int y) {
+        if (x < (width / 2) - (CONTAINER_WIDTH / 2) + 12) {
+            return false;
+        }
+
+        if (x > (width / 2) - (CONTAINER_WIDTH / 2) + CONTAINER_WIDTH - 12) {
+            return false;
+        }
+
+        if (y < ((height / 2) - (CONTAINER_HEIGHT / 2)) + 148) {
+            return false;
+        }
+
+        if (y > ((height / 2) - (CONTAINER_HEIGHT / 2)) + 182) {
+            return false;
+        }
+
+        return true;
+    }
+
 }

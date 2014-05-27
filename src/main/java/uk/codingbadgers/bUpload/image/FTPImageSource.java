@@ -13,7 +13,12 @@ public class FTPImageSource extends ImageSource {
 		return TranslationManager.getTranslation("image.history.ftp");
 	}
 
-	@Override
+    @Override
+    public String getTooltip() {
+        return null;
+    }
+
+    @Override
 	public void onClick() {
 	}
 

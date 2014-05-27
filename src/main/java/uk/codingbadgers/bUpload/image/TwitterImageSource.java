@@ -22,7 +22,12 @@ public class TwitterImageSource extends ImageSource {
 		return TranslationManager.getTranslation("image.history.twitter");
 	}
 
-	public String getUrl() {
+    @Override
+    public String getTooltip() {
+        return TranslationManager.getTranslation("image.history.twitter.tooltip");
+    }
+
+    public String getUrl() {
 		return url;
 	}
 	

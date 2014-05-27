@@ -1,5 +1,7 @@
 package uk.codingbadgers.bUpload.image;
 
+import uk.codingbadgers.bUpload.manager.TranslationManager;
+
 import java.awt.Desktop;
 import java.net.URI;
 
@@ -14,10 +16,15 @@ public class ImgurImageSource extends ImageSource {
 
 	@Override
 	public String getDescription() {
-		return url;
+		return TranslationManager.getTranslation("image.history.imgur");
 	}
-	
-	public String getUrl() {
+
+    @Override
+    public String getTooltip() {
+        return TranslationManager.getTranslation("image.history.imgur.tooltip");
+    }
+
+    public String getUrl() {
 		return url;
 	}
 	

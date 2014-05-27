@@ -10,3 +10,7 @@ eclipse
 *.iws
 out
 *.orig
+changelog.bat
+changelog.github
+changelog.log
+gradle-app.setting

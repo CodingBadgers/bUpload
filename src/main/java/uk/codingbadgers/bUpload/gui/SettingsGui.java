@@ -32,18 +32,18 @@ public class SettingsGui extends bUploadGuiScreen {
 	private static final int SAVE_TO_IMGUR = 2;
 	private static final int SAVE_TO_FTP = 3;
 	private static final int SAVE_TO_TWITTER = 4;
-	private static final int COPY_TO_CLIPBOARD = 5;
+	private static final int SAVE_TO_DROPBOX = 5;
 	private static final int HISTORY = 6;
 	private static final int EXIT = 7;
 	private static final int AUTH = 8;
     private static final int UPLOAD_SETTINGS = 9;
 
-	private GuiCheckBox m_copyToClipboard;
 	private GuiCheckBox m_saveToHDD;
 	private GuiCheckBox m_saveToImgur;
 	private GuiCheckBox m_saveToFtp;
 	private GuiCheckBox m_saveToTwitter;
-	
+	private GuiCheckBox m_saveToDropbox;
+
 	private GuiScreen screen;
 
 	public SettingsGui(GuiScreen screen) {
@@ -59,7 +59,7 @@ public class SettingsGui extends bUploadGuiScreen {
 	public void initGui() {
 		this.buttonList.clear();
 		int ypos = (height / 5);
-		int buttonwidth = 100;
+		int buttonwidth = 120;
 
 		m_saveToImgur = new GuiCheckBox(SAVE_TO_IMGUR, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.save.imgur"));
 		m_saveToImgur.setChecked(ConfigHandler.SAVE_IMGUR);
@@ -79,7 +79,12 @@ public class SettingsGui extends bUploadGuiScreen {
 		m_saveToTwitter = new GuiCheckBox(SAVE_TO_TWITTER, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.save.twitter"));
 		m_saveToTwitter.setChecked(ConfigHandler.SAVE_TWITTER);
 		addControl(m_saveToTwitter);
-		ypos += 48;
+		ypos += 24;
+
+		m_saveToDropbox = new GuiCheckBox(SAVE_TO_DROPBOX, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.save.dropbox"));
+        m_saveToDropbox.setChecked(ConfigHandler.SAVE_DROPBOX);
+		addControl(m_saveToDropbox);
+		ypos += 24;
         buttonwidth = 85;
 
         addControl(new GuiButton(AUTH, width / 2 - buttonwidth - 5, ypos, buttonwidth, 20, TranslationManager.getTranslation("image.options.auth")));
@@ -114,6 +119,12 @@ public class SettingsGui extends bUploadGuiScreen {
 
 			case SAVE_TO_TWITTER: {
 				ConfigHandler.SAVE_TWITTER = m_saveToTwitter.getChecked();
+				updatedSettings();
+				break;
+			}
+
+			case SAVE_TO_DROPBOX: {
+				ConfigHandler.SAVE_DROPBOX = m_saveToDropbox.getChecked();
 				updatedSettings();
 				break;
 			}

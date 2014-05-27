@@ -22,7 +22,7 @@ public class AuthSuccessScreen extends bUploadGuiScreen {
 		int buttonWidth = 216;
 		int buttonHeight = 20;
 
-		addControl(new GuiButton(OK, (this.width / 2) - (buttonWidth / 2), this.height / 6 + 96, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.imgur.result.ok")));
+		addControl(new GuiButton(OK, (this.width / 2) - (buttonWidth / 2), this.height / 6 + 96, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.login.ok")));
 	}
 
 	@Override

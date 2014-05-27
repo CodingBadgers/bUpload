@@ -5,7 +5,11 @@ import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Maps;
+import org.apache.commons.lang3.Validate;
 import uk.codingbadgers.bUpload.bUpload;
+import uk.codingbadgers.bUpload.gui.auth.AddDropboxAuthGui;
 import uk.codingbadgers.bUpload.gui.bUploadGuiScreen;
 import uk.codingbadgers.bUpload.gui.auth.AddAuthGui;
 import uk.codingbadgers.bUpload.gui.auth.AddFTPAuthGui;
@@ -17,20 +21,13 @@ public enum AuthTypes {
 
 	IMGUR(ImgurAuthHandler.class, AddImgurAuthGui.class), 
 	FTP(FTPAuthHandler.class, AddFTPAuthGui.class), 
-	TWITTER(TwitterAuthHandler.class, AddTwitterAuthGui.class), 
-	;
+	TWITTER(TwitterAuthHandler.class, AddTwitterAuthGui.class),
+    DROPBOX(DropboxAuthHandler.class, AddDropboxAuthGui.class);
 
-	private static Map<Integer, String> by_id = new HashMap<Integer, String>();
-	private static Map<AuthTypes, AuthHandler> handlercache = new HashMap<AuthTypes, AuthHandler>();
-	private static Map<AuthTypes, AddAuthGui> guicache = new HashMap<AuthTypes, AddAuthGui>();
+	private static Map<AuthTypes, AuthHandler> handlercache = Maps.newHashMap();
+	private static Map<AuthTypes, AddAuthGui> guiCache = Maps.newHashMap();
 	private Constructor<? extends AuthHandler> handlerctor;
 	private Constructor<? extends AddAuthGui> guictor;
-
-	static {
-		for (AuthTypes type : values()) {
-			by_id.put(type.ordinal(), type.toString());
-		}
-	}
 
 	private AuthTypes(Class<? extends AuthHandler> handlerclazz, Class<? extends AddAuthGui> guiclazz) {
 		try {
@@ -56,11 +53,11 @@ public enum AuthTypes {
 	}
 
 	public AddAuthGui getAuthGui(bUploadGuiScreen screen) throws Exception {
-		if (!guicache.containsKey(this)) {
-			guicache.put(this, newGui(screen));
+		if (!guiCache.containsKey(this)) {
+			guiCache.put(this, newGui(screen));
 		}
 
-		return guicache.get(this);
+		return guiCache.get(this);
 	}
 
 	private AddAuthGui newGui(bUploadGuiScreen screen) throws Exception {
@@ -72,13 +69,8 @@ public enum AuthTypes {
 	}
 
 	public static AuthTypes getByID(int id) {
-		String type = by_id.get(id);
-
-		if (type == null) {
-			return null;
-		}
-
-		return valueOf(type);
+        Validate.inclusiveBetween(0, values().length - 1, id);
+        return values()[id];
 	}
 
 	public static void loadData() {

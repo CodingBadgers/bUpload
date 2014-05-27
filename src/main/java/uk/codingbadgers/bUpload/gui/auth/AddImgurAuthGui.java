@@ -168,8 +168,8 @@ public class AddImgurAuthGui extends AddAuthGui {
 		drawBackground();
 		
 		drawCenteredString(this.fontRendererObj, EnumChatFormatting.UNDERLINE + TranslationManager.getTranslation("image.imgur.title"), this.width / 2, this.height / 6 + 20, 0xFFFFFF);
-		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.imgur.login.ln1"), this.width / 2, this.height / 6 + 32, 0xFFFFFF);
-		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.imgur.login.ln2"), this.width / 2, this.height / 6 + 44, 0xFFFFFF);
+		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.login.ln1"), this.width / 2, this.height / 6 + 32, 0xFFFFFF);
+		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image..lgin.ln2", TranslationManager.getTranslation("image.auth.type.imgur")), this.width / 2, this.height / 6 + 44, 0xFFFFFF);
 		
 		pinCode.drawTextBox();
 		super.drawScreen(par1, par2, par3);

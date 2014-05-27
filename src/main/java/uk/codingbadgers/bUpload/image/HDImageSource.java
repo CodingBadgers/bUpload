@@ -20,10 +20,15 @@ public class HDImageSource extends ImageSource {
 
 	@Override
 	public String getDescription() {
-		return TranslationManager.getTranslation("image.history.open");
+		return TranslationManager.getTranslation("image.history.disk");
 	}
-	
-	public File getFile() {
+
+    @Override
+    public String getTooltip() {
+        return TranslationManager.getTranslation("image.history.disk.tooltip");
+    }
+
+    public File getFile() {
 		return file;
 	}
 	

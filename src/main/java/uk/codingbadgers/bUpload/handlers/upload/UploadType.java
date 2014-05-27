@@ -12,6 +12,7 @@ public enum UploadType {
 	IMGUR(ImgurUploadHandler.class),
 	FILE(HDUploadHandler.class),
 	TWITTER(TwitterUploadHandler.class),
+    DROPBOX(DropboxUploadHandler.class),
 	;
 
 	private Constructor<? extends UploadHandler> ctor;

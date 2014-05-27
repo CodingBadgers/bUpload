@@ -85,6 +85,11 @@ public class ScreenshotHandler {
 			runHandler(UploadType.TWITTER, screen);
 			upload = true;
 		}
+
+        if (ConfigHandler.SAVE_DROPBOX) {
+            runHandler(UploadType.DROPBOX, screen);
+            upload = true;
+        }
 		
 		if (!upload) {
 			MessageHandler.sendChatMessage("image.upload.noupload");

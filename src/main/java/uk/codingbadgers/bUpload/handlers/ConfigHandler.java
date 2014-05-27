@@ -26,6 +26,7 @@ public class ConfigHandler {
 	public static boolean SAVE_IMGUR = false;
 	public static boolean SAVE_FILE = false;
 	public static boolean SAVE_TWITTER = false;
+	public static boolean SAVE_DROPBOX = false;
 
 	public static String SAVE_PATH = "";
 	public static String SAVE_FORMAT = "";
@@ -65,6 +66,7 @@ public class ConfigHandler {
 		SAVE_IMGUR = config.get("sources", "imgur", false).getBoolean(false);
 		SAVE_FILE = config.get("sources", "file", false).getBoolean(false);
 		SAVE_TWITTER = config.get("sources", "twitter", false).getBoolean(false);
+		SAVE_DROPBOX = config.get("sources", "dropbox", false).getBoolean(false);
 
 		SAVE_PATH = config.get("save", "path", "${player}/${mode}/${server}/${date}${ext}").getString();
 		SAVE_DESCRIPTION = config.get("save", "description", "A minecraft screenshot taken by ${player} in ${gamemode} on ${server} at ${date}").getString();
@@ -89,9 +91,10 @@ public class ConfigHandler {
 		config.get("sources", "imgur", false).set(SAVE_IMGUR);
 		config.get("sources", "file", false).set(SAVE_FILE);
 		config.get("sources", "twitter", false).set(SAVE_TWITTER);
+		config.get("sources", "dropbox", false).set(SAVE_DROPBOX);
 
 		config.get("save", "path", "${player}/${mode}/${server}/${date}${ext}").set(SAVE_PATH);
-		config.get("save", "path", "A minecraft screenshot taken by ${player} in ${gamemode} on ${server} at ${date}").set(SAVE_DESCRIPTION);
+		config.get("save", "description", "A minecraft screenshot taken by ${player} in ${gamemode} on ${server} at ${date}").set(SAVE_DESCRIPTION);
 		config.get("save", "format", "PNG");
 		config.get("save", "dateformat", "yyyy-MM-dd_HH.mm.ss").set(SAVE_DATE_FORMAT.toPattern());
 

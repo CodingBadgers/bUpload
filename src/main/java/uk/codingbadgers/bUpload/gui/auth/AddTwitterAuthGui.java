@@ -84,12 +84,12 @@ public class AddTwitterAuthGui extends AddAuthGui {
 		AccessToken access = twitter.getTwitterInstance().getOAuthAccessToken(TwitterAuthHandler.getInstance().getRequestToken(), pinCode.getText());
 		
 		if (access == null) {
-			displayGuiScreen(new AuthSuccessScreen(parent, TranslationManager.getTranslation("image.twitter.title"), TranslationManager.getTranslation("image.twitter.fail")));
+			displayGuiScreen(new AuthSuccessScreen(parent, TranslationManager.getTranslation("image.twitter.title"), TranslationManager.getTranslation("image.login.fail", TranslationManager.getTranslation("image.auth.type.twitter"))));
 			return;
 		}
 		
 		twitter.setAccessToken(access);
-		displayGuiScreen(new AuthSuccessScreen(parent, TranslationManager.getTranslation("image.twitter.title"), TranslationManager.getTranslation("image.twitter.success", EnumChatFormatting.GOLD + access.getScreenName())));
+		displayGuiScreen(new AuthSuccessScreen(parent, TranslationManager.getTranslation("image.twitter.title"), TranslationManager.getTranslation("image.login.success", EnumChatFormatting.GOLD + access.getScreenName())));
 	}
 
 	@Override
@@ -142,8 +142,8 @@ public class AddTwitterAuthGui extends AddAuthGui {
 		drawBackground();
 		
 		drawCenteredString(this.fontRendererObj, EnumChatFormatting.UNDERLINE + TranslationManager.getTranslation("image.twitter.title"), this.width / 2, this.height / 6 + 20, 0xFFFFFF);
-		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.twitter.login.ln1"), this.width / 2, this.height / 6 + 32, 0xFFFFFF);
-		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.twitter.login.ln2"), this.width / 2, this.height / 6 + 44, 0xFFFFFF);
+		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.login.ln1"), this.width / 2, this.height / 6 + 32, 0xFFFFFF);
+		drawCenteredString(this.fontRendererObj, TranslationManager.getTranslation("image.login.ln2", TranslationManager.getTranslation("image.auth.type.twitter")), this.width / 2, this.height / 6 + 44, 0xFFFFFF);
 		
 		pinCode.drawTextBox();
 		super.drawScreen(par1, par2, par3);

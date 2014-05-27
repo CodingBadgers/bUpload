@@ -15,48 +15,45 @@ image.auth.process=Checking Authentication...
 image.auth.login=Successfully logged in on %1$s as %2$s
 image.auth.logout=Successfully logged out from %1$s
 
+image.login.success=Successfully logged in as %1$s
+image.login.fail=Could not login to %1$s
+image.login.ln1=Please enter the pin you were given
+image.login.ln2=from %1$s
+image.login.ok=Ok
+
+image.confirm.ln1=You are currently logged in as %1$s
+image.confirm.ln2=Do you want to logout of this account?
+image.confirm.logout=Logout
+image.confirm.cancel=Cancel
+
 image.ftp.title=FTP Auth Handler
-
 image.imgur.title=Imgur Auth Handler
-image.imgur.success=Successfully logged in as %1$s
-
-image.imgur.login.ln1=Please enter the pin you were given
-image.imgur.login.ln2=from imgur.
-
-image.imgur.result.ok=Ok
-
-image.imgur.confirm.ln1=You are currently logged in as %1$s
-image.imgur.confirm.ln2=Do you want to logout of this account?
-image.imgur.confirm.logout=Logout
-image.imgur.confirm.cancel=Cancel
-
 image.twitter.title=Twitter Auth Handler
-image.twitter.success=Successfully logged in as %1$s
-
-image.twitter.login.ln1=Please enter the pin you were given
-image.twitter.login.ln2=from twitter.
-
-image.twitter.result.ok=Ok
-
-image.twitter.confirm.ln1=You are currently logged in as %1$s
-image.twitter.confirm.ln2=Do you want to logout of this account?
-image.twitter.confirm.logout=Logout
-image.twitter.confirm.cancel=Cancel
+image.dropbox.title=Dropbox Auth Handler
 
 image.save.imgur=Save To Imgur
 image.save.ftp=Save To Ftp
 image.save.hd=Save To File
 image.save.twitter=Save To Twitter
+image.save.dropbox=Save To Dropbox
 
 image.history.next=Next
 image.history.previous=Previous
 image.history.exit=Exit
 image.history.login=Login to Imgur
 image.history.settings=Settings
-image.history.open=Open saved image
 image.history.empty=No upload history
-image.history.ftp=Image uploaded to FTP
-image.history.twitter=Open twitter status
+
+image.history.imgur=Image saved to imgur
+image.history.disk=Image saved to disk
+image.history.ftp=Image saved to FTP
+image.history.twitter=Image posted to twitter
+image.history.dropbox=Image uploaded to your dropbox
+
+image.history.imgur.tooltip=Open image on imgur
+image.history.disk.tooltip=Open image from disk
+image.history.twitter.tooltip=Open tweet
+
 image.history.open.fail.1=Failed to open image from disk
 image.history.open.fail.2=Opening file location instead...
 image.history.open.fail.3=Failed to open file location
@@ -92,6 +89,7 @@ image.auth.title=Auth Database
 image.auth.type.ftp=FTP
 image.auth.type.imgur=Imgur
 image.auth.type.twitter=Twitter
+image.auth.type.dropbox=Dropbox
 image.auth.cancel=Done
 image.auth.username=Username
 image.auth.password=Password

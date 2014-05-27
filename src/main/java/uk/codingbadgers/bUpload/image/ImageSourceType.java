@@ -5,7 +5,8 @@ public enum ImageSourceType {
 	HD(HDImageSource.class),
 	IMGUR(ImgurImageSource.class),
 	FTP(FTPImageSource.class), 
-	TWITTER(TwitterImageSource.class);
+	TWITTER(TwitterImageSource.class),
+    DROPBOX(DropboxImageSource.class);
 
 	@SuppressWarnings("unused")
 	private Class<? extends ImageSource> clazz;

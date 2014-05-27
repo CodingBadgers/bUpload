@@ -14,6 +14,12 @@ public abstract class ImageSource {
 	
 	public abstract String getDescription();
 
+    public abstract String getTooltip();
+
 	public abstract void onClick();
-	
+
+    public boolean hasTooltip() {
+        return getTooltip() != null;
+    }
+
 }

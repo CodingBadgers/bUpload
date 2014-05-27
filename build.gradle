@@ -12,24 +12,31 @@ buildscript {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
+        maven {
+            name = "changelog"
+            url = "http://thefishlive.github.io/gradle-changelog"
+        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
         classpath 'com.github.jengelman.gradle.plugins:shadow:0.8'
+		classpath 'io.github.thefishlive:ChangeLog:1.0.0'
     }
 }
 
 apply plugin: "forge"
 apply plugin: "shadow"
+apply plugin: "changelog"
 
 dependencies {
 	compile 'org.apache.httpcomponents:httpclient:4.3.1'
 	compile 'commons-net:commons-net:3.3'
 	compile 'org.twitter4j:twitter4j-core:3.0.5'
+	compile 'com.dropbox.core:dropbox-core-sdk:1.7.6'
 }
 
 ext {
-	modVersion="1.4.1-SNAPSHOT"
+	modVersion="1.5.0-SNAPSHOT"
 	url = "http://tinyurl.com/bUpload-MF"
 }
 
@@ -75,7 +82,8 @@ shadow {
 		include 'commons-net:commons-net:*'
 		include 'commons-codec:commons-codec:*'
 		include 'commons-logging:commons-logging*'
-		include 'org.twitter4j:twitter4j-core:*'
+		include 'org.twitter4j:*:*'
+		include 'com.dropbox.core:*:*'
     }
 	
     relocation {
@@ -96,6 +104,16 @@ shadow {
     relocation {
         pattern = 'org.apache.http'
         shadedPattern = 'uk.codingbadgers.libs.org.apache.http'
+    }
+	
+    relocation {
+        pattern = 'twitter4j'
+        shadedPattern = 'uk.codingbadgers.libs.twitter4j'
+    }
+	
+    relocation {
+        pattern = 'com.dropbox'
+        shadedPattern = 'uk.codingbadgers.libs.com.dropbox'
     }
 }
 
@@ -118,3 +136,4 @@ artifacts {
 
 shadowJar.dependsOn(reobf)
 build.dependsOn(shadowJar)
+build.dependsOn(changelog)

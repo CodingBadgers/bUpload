@@ -70,7 +70,7 @@ public class FTPUploadHandler extends UploadHandler {
 			path = path.substring(0, path.lastIndexOf(File.separatorChar));
 			navToDir(client, path);
 
-			boolean uploaded = client.storeFile(ConfigHandler.SAVE_DATE_FORMAT.format(new Date()).toString() + ".png", fis);
+			boolean uploaded = client.storeFile(ConfigHandler.SAVE_DATE_FORMAT.format(new Date()) + ".png", fis);
 
 			if (uploaded) {
 				ChatComponentTranslation message = new ChatComponentTranslation("image.upload.success");
