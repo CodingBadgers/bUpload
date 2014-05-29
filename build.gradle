@@ -129,6 +129,19 @@ task deobfJar(type: Jar) {
     appendix = 'deobf'
 }
 
+task copyDistJar(type: Copy, dependsOn: shadowJar) {    
+	from("${buildDir}/libs") {
+		include '*-shadow.jar'
+		include '*-src-*.jar'
+	}
+	
+    into("${buildDir}/dist")
+	
+    rename { String fileName ->
+        fileName.replace('-shadow', '')
+    }
+}
+
 artifacts {
     archives sourceJar
     archives deobfJar
@@ -137,3 +150,4 @@ artifacts {
 shadowJar.dependsOn(reobf)
 build.dependsOn(shadowJar)
 build.dependsOn(changelog)
+build.dependsOn(copyDistJar)
