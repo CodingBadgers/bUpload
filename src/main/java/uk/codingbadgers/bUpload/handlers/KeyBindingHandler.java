@@ -18,6 +18,7 @@
 package uk.codingbadgers.bUpload.handlers;
 
 import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
+
 import org.lwjgl.input.Keyboard;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -43,6 +44,10 @@ public class KeyBindingHandler {
 
 	@SubscribeEvent
 	public void onKeyPress(PlayerTickEvent event) {
+        if ("Server Thread".equalsIgnoreCase(Thread.currentThread().getName())) {
+            return;
+        }
+
 		Minecraft minecraft = Minecraft.getMinecraft();
 
 		if (Keyboard.isKeyDown(onScreenShot.getKeyCode())) {

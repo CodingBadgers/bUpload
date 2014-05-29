@@ -1,6 +1,7 @@
 image.upload.ftp.incorrectlogin=Unknown login details given (%1$s)
 image.upload.ftp.cannotconnect=Cannot connect to server (%1$s)
 
+image.capture.fail=Failed to capture image (%1$s)
 image.upload.start=Uploading image to %1$s...
 image.upload.fail=Failed to upload image to %1$s (%2$s)
 image.upload.noupload=No sources to upload to selected
