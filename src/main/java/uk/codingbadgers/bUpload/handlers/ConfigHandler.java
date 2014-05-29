@@ -22,8 +22,8 @@ public class ConfigHandler {
 
     /* save */
     public static boolean SAVE_FTP = false;
-    public static boolean SAVE_IMGUR = false;
-    public static boolean SAVE_FILE = false;
+    public static boolean SAVE_IMGUR = true;
+    public static boolean SAVE_FILE = true;
     public static boolean SAVE_TWITTER = false;
     public static boolean SAVE_DROPBOX = false;
 
@@ -62,8 +62,8 @@ public class ConfigHandler {
         SOURCE_TO_COPY = UploadType.valueOf(config.get(Configuration.CATEGORY_GENERAL, "source-to-copy", "IMGUR").getString().toUpperCase());
 
         SAVE_FTP = config.get("sources", "ftp", false).getBoolean(false);
-        SAVE_IMGUR = config.get("sources", "imgur", false).getBoolean(false);
-        SAVE_FILE = config.get("sources", "file", false).getBoolean(false);
+        SAVE_IMGUR = config.get("sources", "imgur", true).getBoolean(true);
+        SAVE_FILE = config.get("sources", "file", true).getBoolean(true);
         SAVE_TWITTER = config.get("sources", "twitter", false).getBoolean(false);
         SAVE_DROPBOX = config.get("sources", "dropbox", false).getBoolean(false);
 
@@ -87,8 +87,8 @@ public class ConfigHandler {
         config.get(Configuration.CATEGORY_GENERAL, "source-to-copy", 0).set(SOURCE_TO_COPY.name());
 
         config.get("sources", "ftp", false).set(SAVE_FTP);
-        config.get("sources", "imgur", false).set(SAVE_IMGUR);
-        config.get("sources", "file", false).set(SAVE_FILE);
+        config.get("sources", "imgur", true).set(SAVE_IMGUR);
+        config.get("sources", "file", true).set(SAVE_FILE);
         config.get("sources", "twitter", false).set(SAVE_TWITTER);
         config.get("sources", "dropbox", false).set(SAVE_DROPBOX);
 
