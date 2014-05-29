@@ -17,99 +17,97 @@
  */
 package uk.codingbadgers.bUpload.gui;
 
-import java.util.Arrays;
-import java.util.List;
-
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
-
 import uk.codingbadgers.bUpload.handlers.HistoryHandler;
 import uk.codingbadgers.bUpload.image.ImageSource;
 import uk.codingbadgers.bUpload.image.UploadedImage;
 import uk.codingbadgers.bUpload.manager.TranslationManager;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ResourceLocation;
+import java.util.Arrays;
+import java.util.List;
 
 public class UploadHistoryGUI extends bUploadGuiScreen {
 
     private static final int CONTAINER_WIDTH = 176;
-	private static final int CONTAINER_HEIGHT = 222;
+    private static final int CONTAINER_HEIGHT = 222;
 
-	private static final int PREVIOUS = 0;
-	private static final int NEXT = 1;
-	private static final int SETTINGS = 2;
-	private static final int EXIT = 3;
+    private static final int PREVIOUS = 0;
+    private static final int NEXT = 1;
+    private static final int SETTINGS = 2;
+    private static final int EXIT = 3;
     public static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation("bUpload:textures/gui/bupload-history.png");
 
     private int m_currentImage = 0;
 
-	private GuiScreen screen;
+    private GuiScreen screen;
 
-	public UploadHistoryGUI(GuiScreen screen) {
-		super(screen instanceof bUploadGuiScreen ? (bUploadGuiScreen) screen : null);
-		
-		this.screen = screen;
-	}
+    public UploadHistoryGUI(GuiScreen screen) {
+        super(screen instanceof bUploadGuiScreen ? (bUploadGuiScreen) screen : null);
 
-	/**
-	 * Initialise the gui, adding buttons to the screen
-	 */
-	@Override
-	public void initGui() {
-		this.buttonList.clear();
-		
-		int buttonHeight = 20;
-		int buttonWidth = 50;
-		int ypos =  ((height / 2) - (CONTAINER_HEIGHT / 2) + CONTAINER_HEIGHT) - 25;
-		
-		addControl(new GuiButton(PREVIOUS, (width / 2) - (80), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.previous")));
-		addControl(new GuiButton(NEXT, (width / 2) + (30), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.next")));
-		addControl(new GuiButton(EXIT, (width / 2) - (25), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.exit")));
-		
-		addControl(new GuiButton(SETTINGS, (width / 2) + (CONTAINER_WIDTH / 2) + (10), (this.height / 2) - (CONTAINER_HEIGHT / 2) + 5, 60, 20, TranslationManager.getTranslation("image.history.settings")));
-	}
+        this.screen = screen;
+    }
 
-	/**
-	 * Draw the container image to the screen
-	 * 
-	 * @param
-	 * @param
-	 * @param
-	 */
-	@Override
-	public void drawScreen(int mouseX, int mouseY, float f) {
-		Minecraft minecraft = Minecraft.getMinecraft();
-		drawBackground();
+    /**
+     * Initialise the gui, adding buttons to the screen
+     */
+    @Override
+    public void initGui() {
+        this.buttonList.clear();
+
+        int buttonHeight = 20;
+        int buttonWidth = 50;
+        int ypos = ((height / 2) - (CONTAINER_HEIGHT / 2) + CONTAINER_HEIGHT) - 25;
+
+        addControl(new GuiButton(PREVIOUS, (width / 2) - (80), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.previous")));
+        addControl(new GuiButton(NEXT, (width / 2) + (30), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.next")));
+        addControl(new GuiButton(EXIT, (width / 2) - (25), ypos, buttonWidth, buttonHeight, TranslationManager.getTranslation("image.history.exit")));
+
+        addControl(new GuiButton(SETTINGS, (width / 2) + (CONTAINER_WIDTH / 2) + (10), (this.height / 2) - (CONTAINER_HEIGHT / 2) + 5, 60, 20, TranslationManager.getTranslation("image.history.settings")));
+    }
+
+    /**
+     * Draw the container image to the screen
+     *
+     * @param
+     * @param
+     * @param
+     */
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float f) {
+        Minecraft minecraft = Minecraft.getMinecraft();
+        drawBackground();
         int xPos = (width / 2) - (CONTAINER_WIDTH / 2);
         int yPos = (height / 2) - (CONTAINER_HEIGHT / 2);
 
         // load our container image
-		minecraft.renderEngine.bindTexture(BACKGROUND_TEXTURE);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        minecraft.renderEngine.bindTexture(BACKGROUND_TEXTURE);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         drawTexturedModalRect(xPos, yPos, 0, 0, CONTAINER_WIDTH, CONTAINER_HEIGHT);
 
-		UploadedImage imageInfo = HistoryHandler.getUploadedImage(m_currentImage);
+        UploadedImage imageInfo = HistoryHandler.getUploadedImage(m_currentImage);
         super.drawScreen(mouseX, mouseY, f);
 
         drawRect(xPos + 8, yPos + 144, xPos + 168, yPos + 144 + (4 * 10), -1);
-		if (imageInfo != null) {
-			// draw the image information
-			int yOffset = 132;
-			drawCenteredString(minecraft.fontRenderer, imageInfo.getName(), (width / 2), yPos + yOffset, 0xFFFFFFFF);
-			yOffset += 12;
+        if (imageInfo != null) {
+            // draw the image information
+            int yOffset = 132;
+            drawCenteredString(minecraft.fontRenderer, imageInfo.getName(), (width / 2), yPos + yOffset, 0xFFFFFFFF);
+            yOffset += 12;
 
             int sources = 0;
-			for (ImageSource source : imageInfo.getSources()) {
-				drawCenteredString(minecraft.fontRenderer, source.getDescription(), (width / 2), yPos + yOffset, 0xFFFFAA00);
-				yOffset += 10;
+            for (ImageSource source : imageInfo.getSources()) {
+                drawCenteredString(minecraft.fontRenderer, source.getDescription(), (width / 2), yPos + yOffset, 0xFFFFAA00);
+                yOffset += 10;
                 sources++;
-			}
-			
-			// draw the image preview
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, imageInfo.getImageID());
-			drawTexturedModalRectSized(xPos + 8, yPos + 18, 0, 0, 160, 101, 256, 256);
+            }
+
+            // draw the image preview
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, imageInfo.getImageID());
+            drawTexturedModalRectSized(xPos + 8, yPos + 18, 0, 0, 160, 101, 256, 256);
 
             if (inBounds(mouseX, mouseY)) {
                 int hover = (int) Math.floor((mouseY - ((height / 2) - (CONTAINER_HEIGHT / 2) + 140)) / 12);
@@ -118,77 +116,77 @@ public class UploadHistoryGUI extends bUploadGuiScreen {
                     drawHoveringText(Arrays.asList(imageInfo.getSources().get(hover).getTooltip()), mouseX, mouseY, mc.fontRenderer);
                 }
             }
-		} else {
-			drawCenteredString(minecraft.fontRenderer, TranslationManager.getTranslation("image.history.empty"), (width / 2), yPos + 132, 0xFFFFFFFF);
-		}
-	}
+        } else {
+            drawCenteredString(minecraft.fontRenderer, TranslationManager.getTranslation("image.history.empty"), (width / 2), yPos + 132, 0xFFFFFFFF);
+        }
+    }
 
     /**
-	 * Called when a button is pressed by a user
-	 */
-	@Override
-	public void actionPerformed(GuiButton button) {
-		switch (button.id) {
-			case PREVIOUS: {
-				m_currentImage--;
+     * Called when a button is pressed by a user
+     */
+    @Override
+    public void actionPerformed(GuiButton button) {
+        switch (button.id) {
+            case PREVIOUS: {
+                m_currentImage--;
 
-				if (m_currentImage < 0) {
-					m_currentImage = HistoryHandler.uploadHistorySize() - 1;
-				}
+                if (m_currentImage < 0) {
+                    m_currentImage = HistoryHandler.uploadHistorySize() - 1;
+                }
 
-				if (m_currentImage < 0) {
-					m_currentImage = 0;
-				}
+                if (m_currentImage < 0) {
+                    m_currentImage = 0;
+                }
 
-				break;
-			}
+                break;
+            }
 
-			case NEXT: {
-				m_currentImage++;
+            case NEXT: {
+                m_currentImage++;
 
-				if (m_currentImage >= HistoryHandler.uploadHistorySize()) {
-					m_currentImage = 0;
-				}
+                if (m_currentImage >= HistoryHandler.uploadHistorySize()) {
+                    m_currentImage = 0;
+                }
 
-				break;
-			}
+                break;
+            }
 
-			case SETTINGS: {
-				displayGuiScreen(new SettingsGui(this.screen));
-				break;
-			}
-			
-			case EXIT: {
-				displayGuiScreen(this.screen);
-				break;
-			}
-		}
-	}
+            case SETTINGS: {
+                displayGuiScreen(new SettingsGui(this.screen));
+                break;
+            }
 
-	/**
-	 * Called when the mouse is clicked.
-	 */
-	@Override
-	protected void mouseClicked(int x, int y, int button) {
-		super.mouseClicked(x, y, button);
+            case EXIT: {
+                displayGuiScreen(this.screen);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Called when the mouse is clicked.
+     */
+    @Override
+    protected void mouseClicked(int x, int y, int button) {
+        super.mouseClicked(x, y, button);
 
         if (!this.inBounds(x, y)) {
             return;
         }
-		
-		int i = (y - ((height / 2) - (CONTAINER_HEIGHT / 2) + 140)) / 10;
-		
-		UploadedImage imageInfo = HistoryHandler.getUploadedImage(m_currentImage);
 
-		if (imageInfo != null) {
-			List<ImageSource> sources = imageInfo.getSources();
-			
-			if (i >= 0 && i < sources.size()) {
-				ImageSource source = imageInfo.getSources().get(i);
-				source.onClick();
-			}
-		}
-	}
+        int i = (y - ((height / 2) - (CONTAINER_HEIGHT / 2) + 140)) / 10;
+
+        UploadedImage imageInfo = HistoryHandler.getUploadedImage(m_currentImage);
+
+        if (imageInfo != null) {
+            List<ImageSource> sources = imageInfo.getSources();
+
+            if (i >= 0 && i < sources.size()) {
+                ImageSource source = imageInfo.getSources().get(i);
+                source.onClick();
+            }
+        }
+    }
 
     private boolean inBounds(int x, int y) {
         if (x < (width / 2) - (CONTAINER_WIDTH / 2) + 12) {

@@ -17,50 +17,46 @@
  */
 package uk.codingbadgers.bUpload.handlers;
 
-import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
-
-import org.lwjgl.input.Keyboard;
-
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
-
+import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
+import org.lwjgl.input.Keyboard;
 import uk.codingbadgers.bUpload.gui.UploadHistoryGUI;
 import uk.codingbadgers.bUpload.manager.TranslationManager;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-
 public class KeyBindingHandler {
 
-	public static KeyBinding onScreenShot = new KeyBinding(TranslationManager.getTranslation("image.binding.screenshot"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_ADV_SS), TranslationManager.getTranslation("image.binding.group"));
-	public static KeyBinding onUploadHistory = new KeyBinding(TranslationManager.getTranslation("image.binding.history"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_HISTORY), TranslationManager.getTranslation("image.binding.group"));
+    public static KeyBinding onScreenShot = new KeyBinding(TranslationManager.getTranslation("image.binding.screenshot"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_ADV_SS), TranslationManager.getTranslation("image.binding.group"));
+    public static KeyBinding onUploadHistory = new KeyBinding(TranslationManager.getTranslation("image.binding.history"), Keyboard.getKeyIndex(ConfigHandler.KEYBIND_HISTORY), TranslationManager.getTranslation("image.binding.group"));
     private boolean handled = false;
 
-	public KeyBindingHandler() {
-		ClientRegistry.registerKeyBinding(onScreenShot);
-		ClientRegistry.registerKeyBinding(onUploadHistory);
-	}
+    public KeyBindingHandler() {
+        ClientRegistry.registerKeyBinding(onScreenShot);
+        ClientRegistry.registerKeyBinding(onUploadHistory);
+    }
 
-	@SubscribeEvent
-	public void onKeyPress(PlayerTickEvent event) {
+    @SubscribeEvent
+    public void onKeyPress(PlayerTickEvent event) {
         if ("Server Thread".equalsIgnoreCase(Thread.currentThread().getName())) {
             return;
         }
 
-		Minecraft minecraft = Minecraft.getMinecraft();
+        Minecraft minecraft = Minecraft.getMinecraft();
 
-		if (Keyboard.isKeyDown(onScreenShot.getKeyCode())) {
+        if (Keyboard.isKeyDown(onScreenShot.getKeyCode())) {
             if (handled) {
                 return;
             }
 
-			ScreenshotHandler.handleScreenshot();
+            ScreenshotHandler.handleScreenshot();
             handled = true;
-		} else {
+        } else {
             handled = false;
         }
-	}
+    }
 
     @SubscribeEvent
     public void onKeyInput(KeyInputEvent event) {

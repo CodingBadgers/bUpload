@@ -17,117 +17,116 @@
  */
 package uk.codingbadgers.bUpload.gui;
 
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.EnumChatFormatting;
 import uk.codingbadgers.Gui.GuiCheckBox;
 import uk.codingbadgers.bUpload.gui.auth.AuthGui;
 import uk.codingbadgers.bUpload.handlers.ConfigHandler;
 import uk.codingbadgers.bUpload.manager.TranslationManager;
 
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.EnumChatFormatting;
-
 public class SettingsGui extends bUploadGuiScreen {
 
-	private static final int SAVE_TO_HD = 1;
-	private static final int SAVE_TO_IMGUR = 2;
-	private static final int SAVE_TO_FTP = 3;
-	private static final int SAVE_TO_TWITTER = 4;
-	private static final int SAVE_TO_DROPBOX = 5;
-	private static final int HISTORY = 6;
-	private static final int EXIT = 7;
-	private static final int AUTH = 8;
+    private static final int SAVE_TO_HD = 1;
+    private static final int SAVE_TO_IMGUR = 2;
+    private static final int SAVE_TO_FTP = 3;
+    private static final int SAVE_TO_TWITTER = 4;
+    private static final int SAVE_TO_DROPBOX = 5;
+    private static final int HISTORY = 6;
+    private static final int EXIT = 7;
+    private static final int AUTH = 8;
     private static final int UPLOAD_SETTINGS = 9;
 
-	private GuiCheckBox m_saveToHDD;
-	private GuiCheckBox m_saveToImgur;
-	private GuiCheckBox m_saveToFtp;
-	private GuiCheckBox m_saveToTwitter;
-	private GuiCheckBox m_saveToDropbox;
+    private GuiCheckBox m_saveToHDD;
+    private GuiCheckBox m_saveToImgur;
+    private GuiCheckBox m_saveToFtp;
+    private GuiCheckBox m_saveToTwitter;
+    private GuiCheckBox m_saveToDropbox;
 
-	private GuiScreen screen;
+    private GuiScreen screen;
 
-	public SettingsGui(GuiScreen screen) {
-		super(screen instanceof bUploadGuiScreen ? (bUploadGuiScreen) screen : null);
-		
-		this.screen = screen;
-	}
+    public SettingsGui(GuiScreen screen) {
+        super(screen instanceof bUploadGuiScreen ? (bUploadGuiScreen) screen : null);
 
-	@Override
-	public void updateLogin() {
-	}
+        this.screen = screen;
+    }
 
-	public void initGui() {
-		this.buttonList.clear();
-		int ypos = (height / 5);
-		int buttonwidth = 120;
+    @Override
+    public void updateLogin() {
+    }
 
-		m_saveToImgur = new GuiCheckBox(SAVE_TO_IMGUR, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.save.imgur"));
-		m_saveToImgur.setChecked(ConfigHandler.SAVE_IMGUR);
-		addControl(m_saveToImgur);
-		ypos += 24;
+    public void initGui() {
+        this.buttonList.clear();
+        int ypos = (height / 5);
+        int buttonwidth = 120;
 
-		m_saveToFtp = new GuiCheckBox(SAVE_TO_FTP, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.save.ftp"));
-		m_saveToFtp.setChecked(ConfigHandler.SAVE_FTP);
-		addControl(m_saveToFtp);
-		ypos += 24;
+        m_saveToImgur = new GuiCheckBox(SAVE_TO_IMGUR, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.save.imgur"));
+        m_saveToImgur.setChecked(ConfigHandler.SAVE_IMGUR);
+        addControl(m_saveToImgur);
+        ypos += 24;
 
-		m_saveToHDD = new GuiCheckBox(SAVE_TO_HD, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.save.hd"));
-		m_saveToHDD.setChecked(ConfigHandler.SAVE_FILE);
-		addControl(m_saveToHDD);
-		ypos += 24;
+        m_saveToFtp = new GuiCheckBox(SAVE_TO_FTP, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.save.ftp"));
+        m_saveToFtp.setChecked(ConfigHandler.SAVE_FTP);
+        addControl(m_saveToFtp);
+        ypos += 24;
 
-		m_saveToTwitter = new GuiCheckBox(SAVE_TO_TWITTER, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.save.twitter"));
-		m_saveToTwitter.setChecked(ConfigHandler.SAVE_TWITTER);
-		addControl(m_saveToTwitter);
-		ypos += 24;
+        m_saveToHDD = new GuiCheckBox(SAVE_TO_HD, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.save.hd"));
+        m_saveToHDD.setChecked(ConfigHandler.SAVE_FILE);
+        addControl(m_saveToHDD);
+        ypos += 24;
 
-		m_saveToDropbox = new GuiCheckBox(SAVE_TO_DROPBOX, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.save.dropbox"));
+        m_saveToTwitter = new GuiCheckBox(SAVE_TO_TWITTER, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.save.twitter"));
+        m_saveToTwitter.setChecked(ConfigHandler.SAVE_TWITTER);
+        addControl(m_saveToTwitter);
+        ypos += 24;
+
+        m_saveToDropbox = new GuiCheckBox(SAVE_TO_DROPBOX, width / 2 - (buttonwidth / 2), ypos, buttonwidth, 20, TranslationManager.getTranslation("image.save.dropbox"));
         m_saveToDropbox.setChecked(ConfigHandler.SAVE_DROPBOX);
-		addControl(m_saveToDropbox);
-		ypos += 24;
+        addControl(m_saveToDropbox);
+        ypos += 24;
         buttonwidth = 85;
 
         addControl(new GuiButton(AUTH, width / 2 - buttonwidth - 5, ypos, buttonwidth, 20, TranslationManager.getTranslation("image.options.auth")));
         addControl(new GuiButton(UPLOAD_SETTINGS, width / 2 + 5, ypos, buttonwidth, 20, "Upload Settings"/*TranslationManager.getTranslation("image.options.upload")*/));
         ypos += 24;
 
-		addControl(new GuiButton(HISTORY, width / 2 - buttonwidth - 5, ypos, buttonwidth, 20, TranslationManager.getTranslation("image.options.history")));
-		addControl(new GuiButton(EXIT, width / 2 + 5, ypos, buttonwidth, 20, TranslationManager.getTranslation("image.options.cancel")));
-		ypos += 24;
-	}
+        addControl(new GuiButton(HISTORY, width / 2 - buttonwidth - 5, ypos, buttonwidth, 20, TranslationManager.getTranslation("image.options.history")));
+        addControl(new GuiButton(EXIT, width / 2 + 5, ypos, buttonwidth, 20, TranslationManager.getTranslation("image.options.cancel")));
+        ypos += 24;
+    }
 
-	@Override
-	public void actionPerformed(GuiButton button) {
-		switch (button.id) {
-			case SAVE_TO_HD: {
-				ConfigHandler.SAVE_FILE = m_saveToHDD.getChecked();
-				updatedSettings();
-				break;
-			}
+    @Override
+    public void actionPerformed(GuiButton button) {
+        switch (button.id) {
+            case SAVE_TO_HD: {
+                ConfigHandler.SAVE_FILE = m_saveToHDD.getChecked();
+                updatedSettings();
+                break;
+            }
 
-			case SAVE_TO_IMGUR: {
-				ConfigHandler.SAVE_IMGUR = m_saveToImgur.getChecked();
-				updatedSettings();
-				break;
-			}
+            case SAVE_TO_IMGUR: {
+                ConfigHandler.SAVE_IMGUR = m_saveToImgur.getChecked();
+                updatedSettings();
+                break;
+            }
 
-			case SAVE_TO_FTP: {
-				ConfigHandler.SAVE_FTP = m_saveToFtp.getChecked();
-				updatedSettings();
-				break;
-			}
+            case SAVE_TO_FTP: {
+                ConfigHandler.SAVE_FTP = m_saveToFtp.getChecked();
+                updatedSettings();
+                break;
+            }
 
-			case SAVE_TO_TWITTER: {
-				ConfigHandler.SAVE_TWITTER = m_saveToTwitter.getChecked();
-				updatedSettings();
-				break;
-			}
+            case SAVE_TO_TWITTER: {
+                ConfigHandler.SAVE_TWITTER = m_saveToTwitter.getChecked();
+                updatedSettings();
+                break;
+            }
 
-			case SAVE_TO_DROPBOX: {
-				ConfigHandler.SAVE_DROPBOX = m_saveToDropbox.getChecked();
-				updatedSettings();
-				break;
-			}
+            case SAVE_TO_DROPBOX: {
+                ConfigHandler.SAVE_DROPBOX = m_saveToDropbox.getChecked();
+                updatedSettings();
+                break;
+            }
 
             case AUTH: {
                 displayGuiScreen(new AuthGui(this));
@@ -139,29 +138,29 @@ public class SettingsGui extends bUploadGuiScreen {
                 break;
             }
 
-			case HISTORY: {
-				displayGuiScreen(new UploadHistoryGUI(this.screen));
-				break;
-			}
+            case HISTORY: {
+                displayGuiScreen(new UploadHistoryGUI(this.screen));
+                break;
+            }
 
-			case EXIT: {
-				displayGuiScreen(this.screen);
-				break;
-			}
+            case EXIT: {
+                displayGuiScreen(this.screen);
+                break;
+            }
 
-			default: {
-				break;
-			}
-		}
-	}
+            default: {
+                break;
+            }
+        }
+    }
 
-	private void updatedSettings() {
-		ConfigHandler.save();
-	}
+    private void updatedSettings() {
+        ConfigHandler.save();
+    }
 
-	public void drawScreen(int i, int j, float f) {
-		drawBackground();
-		drawCenteredString(this.fontRendererObj, EnumChatFormatting.UNDERLINE +  TranslationManager.getTranslation("image.settings.title"), width / 2, height / 5 - 20, 0xffffff);
-		super.drawScreen(i, j, f);
-	}
+    public void drawScreen(int i, int j, float f) {
+        drawBackground();
+        drawCenteredString(this.fontRendererObj, EnumChatFormatting.UNDERLINE + TranslationManager.getTranslation("image.settings.title"), width / 2, height / 5 - 20, 0xffffff);
+        super.drawScreen(i, j, f);
+    }
 }

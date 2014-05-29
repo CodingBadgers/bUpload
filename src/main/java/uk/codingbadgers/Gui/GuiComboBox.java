@@ -3,7 +3,6 @@ package uk.codingbadgers.Gui;
 import com.google.common.collect.Lists;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.ResourceLocation;
@@ -121,7 +120,7 @@ public class GuiComboBox<T> extends Gui {
 
         int hover = this.items.indexOf(selected);
 
-        if (mouseX > this.x&& mouseY > this.y + HEIGHT + 10 && mouseX < this.x + WIDTH && mouseY < this.y + (this.items.size() * HEIGHT) + HEIGHT + 10) {
+        if (mouseX > this.x && mouseY > this.y + HEIGHT + 10 && mouseX < this.x + WIDTH && mouseY < this.y + (this.items.size() * HEIGHT) + HEIGHT + 10) {
             hover = (int) Math.floor((mouseY - (this.y + HEIGHT + 10)) / 20);
         }
 
@@ -147,7 +146,7 @@ public class GuiComboBox<T> extends Gui {
             return false;
         }
 
-        if (x > this.x + 140 && y > this.y + 10&& x < this.x + WIDTH && y < this.y + HEIGHT + 10) {
+        if (x > this.x + 140 && y > this.y + 10 && x < this.x + WIDTH && y < this.y + HEIGHT + 10) {
             popupOpen = !popupOpen;
             return true;
         } else if (popupOpen) {

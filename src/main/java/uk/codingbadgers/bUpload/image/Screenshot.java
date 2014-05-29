@@ -20,7 +20,7 @@ package uk.codingbadgers.bUpload.image;
 import java.awt.image.BufferedImage;
 
 public class Screenshot {
-	public BufferedImage image = null;
+    public BufferedImage image = null;
 
-	public int imageID = 0;
+    public int imageID = 0;
 }

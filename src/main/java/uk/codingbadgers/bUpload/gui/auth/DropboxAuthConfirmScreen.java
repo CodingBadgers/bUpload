@@ -5,7 +5,6 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.EnumChatFormatting;
 import uk.codingbadgers.bUpload.gui.bUploadGuiScreen;
 import uk.codingbadgers.bUpload.handlers.auth.DropboxAuthHandler;
-import uk.codingbadgers.bUpload.handlers.auth.ImgurAuthHandler;
 import uk.codingbadgers.bUpload.manager.TranslationManager;
 
 import java.io.IOException;

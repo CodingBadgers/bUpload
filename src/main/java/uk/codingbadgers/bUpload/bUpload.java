@@ -17,11 +17,6 @@
  */
 package uk.codingbadgers.bUpload;
 
-import java.io.File;
-
-import uk.codingbadgers.bUpload.handlers.ConfigHandler;
-import uk.codingbadgers.bUpload.proxy.Proxy;
-
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -30,52 +25,56 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
+import uk.codingbadgers.bUpload.handlers.ConfigHandler;
+import uk.codingbadgers.bUpload.proxy.Proxy;
+
+import java.io.File;
 
 /**
  * The main mod class for bUpload, entry point for the whole mod.
  */
 @Mod(
-		modid = bUpload.MOD_NAME, 
-		name = bUpload.MOD_NAME,
-		guiFactory = bUpload.GUI_FACTORY
-	)
+        modid = bUpload.MOD_NAME,
+        name = bUpload.MOD_NAME,
+        guiFactory = bUpload.GUI_FACTORY
+)
 public class bUpload {
 
-	public static final String MOD_NAME = "bUpload";
-	public static final String GUI_FACTORY = "uk.codingbadgers.bUpload.factory.ConfigGuiFactory";
+    public static final String MOD_NAME = "bUpload";
+    public static final String GUI_FACTORY = "uk.codingbadgers.bUpload.factory.ConfigGuiFactory";
 
-	@Instance(
-				bUpload.MOD_NAME
-			)
-	public static bUpload INSTANCE = null;
+    @Instance(
+            bUpload.MOD_NAME
+    )
+    public static bUpload INSTANCE = null;
 
-	@SidedProxy(
-				clientSide = "uk.codingbadgers.bUpload.proxy.ClientProxy", 
-				serverSide = "uk.codingbadgers.bUpload.proxy.ServerProxy"
-			)
-	public static Proxy proxy;
+    @SidedProxy(
+            clientSide = "uk.codingbadgers.bUpload.proxy.ClientProxy",
+            serverSide = "uk.codingbadgers.bUpload.proxy.ServerProxy"
+    )
+    public static Proxy proxy;
 
-	public static File AUTH_DATABASE;
-	public static File HISTORY_DATABASE;
+    public static File AUTH_DATABASE;
+    public static File HISTORY_DATABASE;
 
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
-		proxy.preInit(event);
-	}
+    @EventHandler
+    public void preInit(FMLPreInitializationEvent event) {
+        proxy.preInit(event);
+    }
 
-	@EventHandler
-	public void load(FMLInitializationEvent event) {
-		proxy.load(event);
-	}
+    @EventHandler
+    public void load(FMLInitializationEvent event) {
+        proxy.load(event);
+    }
 
-	@EventHandler
-	public void serverStart(FMLServerStartingEvent event) {
-		ConfigHandler.save();
-	}
+    @EventHandler
+    public void serverStart(FMLServerStartingEvent event) {
+        ConfigHandler.save();
+    }
 
-	@EventHandler
-	public void serverStop(FMLServerStoppingEvent event) {
-		ConfigHandler.save();
-	}
+    @EventHandler
+    public void serverStop(FMLServerStoppingEvent event) {
+        ConfigHandler.save();
+    }
 
 }

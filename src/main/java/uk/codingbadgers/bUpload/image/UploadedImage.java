@@ -17,61 +17,61 @@
  */
 package uk.codingbadgers.bUpload.image;
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import com.google.common.collect.ImmutableList;
 
 /**
  * Represents a saved image.
  */
 public class UploadedImage {
-	private final String name;
-	private final List<ImageSource> source;
-	private final int imageID;
+    private final String name;
+    private final List<ImageSource> source;
+    private final int imageID;
 
-	/**
-	 * Instantiates a new uploaded image.
-	 * 
-	 * @param name the name
-	 * @param url the url of the image
-	 * @param image the image
-	 * @param localFile the local file
-	 */
-	public UploadedImage(String name, String url, Screenshot image, ImageSource source) {
-		this.name = name;
-		this.imageID = image.imageID;
-		this.source = new ArrayList<ImageSource>(Arrays.asList(source));
-	}
+    /**
+     * Instantiates a new uploaded image.
+     *
+     * @param name      the name
+     * @param url       the url of the image
+     * @param image     the image
+     * @param localFile the local file
+     */
+    public UploadedImage(String name, String url, Screenshot image, ImageSource source) {
+        this.name = name;
+        this.imageID = image.imageID;
+        this.source = new ArrayList<ImageSource>(Arrays.asList(source));
+    }
 
-	/**
-	 * Gets the name.
-	 * 
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
+    /**
+     * Gets the name.
+     *
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * Gets the image id.
-	 * 
-	 * @return the image id
-	 */
-	public int getImageID() {
-		return imageID;
-	}
+    /**
+     * Gets the image id.
+     *
+     * @return the image id
+     */
+    public int getImageID() {
+        return imageID;
+    }
 
-	public ImageSource getSource() {
-		return source.get(0);
-	}
-	
-	public List<ImageSource> getSources() {
-		return ImmutableList.copyOf(source);
-	}
-	
-	public void addSource(ImageSource source) {
-		this.source.add(source);
-	}
+    public ImageSource getSource() {
+        return source.get(0);
+    }
+
+    public List<ImageSource> getSources() {
+        return ImmutableList.copyOf(source);
+    }
+
+    public void addSource(ImageSource source) {
+        this.source.add(source);
+    }
 }

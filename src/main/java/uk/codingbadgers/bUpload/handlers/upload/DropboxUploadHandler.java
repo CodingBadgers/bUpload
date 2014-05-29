@@ -2,8 +2,6 @@ package uk.codingbadgers.bUpload.handlers.upload;
 
 import com.dropbox.core.DbxEntry;
 import com.dropbox.core.DbxWriteMode;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
