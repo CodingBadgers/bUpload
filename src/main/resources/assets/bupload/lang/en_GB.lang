@@ -75,6 +75,7 @@ image.settings.title=bUpload Settings
 image.settings.upload.title=Upload Settings
 image.settings.upload.path=Edit Image Path
 image.settings.upload.description=Edit Image Description
+image.settings.upload.source=Edit upload sources
 
 image.edit.path.desc=Enter the path for screenshots to be saved to...
 image.edit.description.desc=Enter the description for screenshots to have...

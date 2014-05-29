@@ -18,6 +18,7 @@ public class UploadSettingsGui extends bUploadGuiScreen {
 
     private static final int EDIT_PATH = 4;
     private static final int EDIT_DESCRIPTION = 5;
+    private static final int EDIT_SOURCES = 6;
 
     private GuiCheckBox m_copyToClipboard;
     private GuiComboBox<UploadType> m_comboBox;
@@ -37,13 +38,13 @@ public class UploadSettingsGui extends bUploadGuiScreen {
 
     @Override
     public void initGui() {
-        int ypos = (height / 5);
+        int ypos = (height / 5) - 2;
         int buttonWidth = 160;
 
         m_copyToClipboard = new GuiCheckBox(COPY_TO_CLIPBOARD, width / 2 - (buttonWidth / 2), ypos, buttonWidth, 20, TranslationManager.getTranslation("image.options.copy"));
         m_copyToClipboard.setChecked(ConfigHandler.COPY_URL_TO_CLIPBOARD);
         addControl(m_copyToClipboard);
-        ypos += 28;
+        ypos += 26;
 
         m_comboBox = new GuiComboBox<UploadType>(width / 2 - (buttonWidth / 2), ypos, "Copy url from");
         m_comboBox.setChangeListener(new ComboBoxChangeListener<UploadType>() {
@@ -75,7 +76,9 @@ public class UploadSettingsGui extends bUploadGuiScreen {
         addControl(new GuiButton(EDIT_DESCRIPTION, width / 2 - (buttonWidth / 2), ypos, buttonWidth, 20, TranslationManager.getTranslation("image.settings.upload.description")));
         ypos += 24;
 
+        addControl(new GuiButton(EDIT_SOURCES, width / 2 - (buttonWidth / 2), ypos, buttonWidth, 20, TranslationManager.getTranslation("image.settings.upload.source")));
         ypos = (height / 5) * 4;
+
         addControl(new GuiButton(CANCEL, width / 2 - (buttonWidth / 2), ypos, buttonWidth, 20, TranslationManager.getTranslation("image.settings.cancel")));
     }
 

@@ -33,7 +33,7 @@ public class HDUploadHandler extends UploadHandler {
 
 		if (screenshot != null && screenshot.imageID != 0) {
 
-			String path = ConfigHandler.formatImagePath(minecraft);
+			String path = ConfigHandler.formatImagePath();
 			File outputFile = new File(minecraft.mcDataDir, path);
 
 			if (outputFile != null) {

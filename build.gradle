@@ -45,7 +45,7 @@ version = ext.modVersion
 archivesBaseName = "bUpload"
 
 minecraft {
-    version = "1.7.2-10.12.1.1091"
+    version = "1.7.2-10.12.1.1099"
 	mcVersion = "1.7.2"
     assetDir = "eclipse/assets"
 }

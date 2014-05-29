@@ -69,7 +69,7 @@ public class ConfigHandler {
 		SAVE_DROPBOX = config.get("sources", "dropbox", false).getBoolean(false);
 
 		SAVE_PATH = config.get("save", "path", "${player}/${mode}/${server}/${date}${ext}").getString();
-		SAVE_DESCRIPTION = config.get("save", "description", "A minecraft screenshot taken by ${player} in ${gamemode} on ${server} at ${date}").getString();
+		SAVE_DESCRIPTION = config.get("save", "description", "A minecraft screenshot taken on New World").getString();
 		SAVE_FORMAT = config.get("save", "format", "PNG").getString();
 		SAVE_DATE_FORMAT = new SimpleDateFormat(config.get("save", "dateformat", "yyyy-MM-dd_HH.mm.ss").getString());
 
@@ -93,8 +93,8 @@ public class ConfigHandler {
 		config.get("sources", "twitter", false).set(SAVE_TWITTER);
 		config.get("sources", "dropbox", false).set(SAVE_DROPBOX);
 
-		config.get("save", "path", "${player}/${mode}/${server}/${date}${ext}").set(SAVE_PATH);
-		config.get("save", "description", "A minecraft screenshot taken by ${player} in ${gamemode} on ${server} at ${date}").set(SAVE_DESCRIPTION);
+		config.get("save", "path", "screenshots/${player}/${mode}/${server}/${date}${ext}").set(SAVE_PATH);
+		config.get("save", "description", "A minecraft screenshot taken on ${server}").set(SAVE_DESCRIPTION);
 		config.get("save", "format", "PNG");
 		config.get("save", "dateformat", "yyyy-MM-dd_HH.mm.ss").set(SAVE_DATE_FORMAT.toPattern());
 
@@ -106,37 +106,46 @@ public class ConfigHandler {
 		config.save();
 	}
 
-	public static String formatImagePath(Minecraft minecraft) {
-		String player = "";
-		String mode = "";
-		String server = "";
-		String date = SAVE_DATE_FORMAT.format(new Date()).toString();
-		
-		// player is null in the menu
-		if (minecraft.thePlayer == null) {
-			player = "";
-			mode = "menu";
-			server = "";
-		} else {
-			player = minecraft.thePlayer.getDisplayName();
-
-			if (minecraft.isSingleplayer()) {
-				mode = "single player";
-				server = minecraft.getIntegratedServer().getFolderName();
-			} else {
-				mode = "multiplayer";
-				server = Minecraft.getMinecraft().func_147104_D().serverName;
-			}
-		}
-
-		String path = SAVE_PATH;
-		path = path.replace('/', File.separatorChar);
-		path = path.replace("${player}", player);
-		path = path.replace("${mode}", mode);
-		path = path.replace("${server}", server);
-		path = path.replace("${date}", date);
-		path = path.replace("${format}", SAVE_FORMAT.toLowerCase());
-		path = path.replace("${ext}", "." + SAVE_FORMAT.toLowerCase());
-		return "screenshots" + File.separatorChar + path;
+	public static String formatImagePath() {
+		return replaceMacros(SAVE_PATH);
 	}
+
+    public static String formatDescription() {
+        return replaceMacros(SAVE_DESCRIPTION);
+    }
+
+    private static String replaceMacros(String path) {
+        Minecraft minecraft = Minecraft.getMinecraft();
+
+        String player = "";
+        String mode = "";
+        String server = "";
+        String date = SAVE_DATE_FORMAT.format(new Date());
+
+        // player is null in the menu
+        if (minecraft.thePlayer == null) {
+            player = "";
+            mode = "menu";
+            server = "";
+        } else {
+            player = minecraft.thePlayer.getDisplayName();
+
+            if (minecraft.isSingleplayer()) {
+                mode = "single player";
+                server = minecraft.getIntegratedServer().getFolderName();
+            } else {
+                mode = "multiplayer";
+                server = Minecraft.getMinecraft().func_147104_D().serverName;
+            }
+        }
+
+        path = path.replace('/', File.separatorChar);
+        path = path.replace("${player}", player);
+        path = path.replace("${mode}", mode);
+        path = path.replace("${server}", server);
+        path = path.replace("${date}", date);
+        path = path.replace("${format}", SAVE_FORMAT.toLowerCase());
+        path = path.replace("${ext}", "." + SAVE_FORMAT.toLowerCase());
+        return path;
+    }
 }

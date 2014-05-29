@@ -34,15 +34,7 @@ public class DropboxUploadHandler extends UploadHandler {
     protected boolean run(Screenshot screenshot) {
         try {
             String title = ConfigHandler.SAVE_DATE_FORMAT.format(new Date());
-            String path = "/" + ConfigHandler.formatImagePath(Minecraft.getMinecraft()).replace(File.separatorChar, '/');
-            String description = "A minecraft screenshot ";
-
-            if (Minecraft.getMinecraft().isSingleplayer()) {
-                description += "in " + Minecraft.getMinecraft().getIntegratedServer().getFolderName();
-            } else {
-                ServerData data = Minecraft.getMinecraft().func_147104_D();
-                description += "on " + data.serverIP + (data.field_82821_f != 25565 ? ":" + data.field_82821_f : "");
-            }
+            String path = "/" + ConfigHandler.formatImagePath().replace(File.separatorChar, '/');
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(screenshot.image, "png", baos);

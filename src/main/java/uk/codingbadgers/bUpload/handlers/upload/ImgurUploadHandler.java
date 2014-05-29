@@ -54,14 +54,7 @@ public class ImgurUploadHandler extends UploadHandler implements URLProvider {
 	public boolean run(Screenshot screen) {
 		try {
 			String title = ConfigHandler.SAVE_DATE_FORMAT.format(new Date());
-			String description = "A minecraft screenshot ";
-
-			if (Minecraft.getMinecraft().isSingleplayer()) {
-				description += "in " + Minecraft.getMinecraft().getIntegratedServer().getFolderName();
-			} else {
-				ServerData data = Minecraft.getMinecraft().func_147104_D();
-				description += "on " + data.serverIP + (data.field_82821_f != 25565 ? ":" + data.field_82821_f : "");
-			}
+			String description = ConfigHandler.formatDescription();
 
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ImageIO.write(screen.image, "png", baos);

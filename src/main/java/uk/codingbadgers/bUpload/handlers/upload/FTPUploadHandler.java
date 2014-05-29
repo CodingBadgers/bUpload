@@ -66,7 +66,7 @@ public class FTPUploadHandler extends UploadHandler {
 			ImageIO.write(screenshot.image, ConfigHandler.SAVE_FORMAT, os);
 			InputStream fis = new ByteArrayInputStream(os.toByteArray());
 
-			String path = ConfigHandler.formatImagePath(minecraft);
+			String path = ConfigHandler.formatImagePath();
 			path = path.substring(0, path.lastIndexOf(File.separatorChar));
 			navToDir(client, path);
 
@@ -75,7 +75,7 @@ public class FTPUploadHandler extends UploadHandler {
 			if (uploaded) {
 				ChatComponentTranslation message = new ChatComponentTranslation("image.upload.success");
 				ChatComponentText url = new ChatComponentText("FTP server");
-				url.setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD));
+				url.setChatStyle(new ChatStyle().setBold(true).setColor(EnumChatFormatting.GOLD));
 				message.appendSibling(url);
 
 				MessageHandler.sendChatMessage(message);
